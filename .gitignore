@@ -1,0 +1,21 @@
+# Ignorar archivos generados por Django y Python
+*.pyc
+__pycache__/
+*.py[cod]
+
+# Ignorar archivos generados por Node.js y npm
+node_modules/
+
+# Ignorar archivos de entorno local de desarrollo
+.env
+.env.local
+.env.*.local
+
+# Ignorar archivos de build de React
+/build
+
+# Ignorar la carpeta del entorno virtual de Python
+venv/
+
+#Ignorar configuracion de vscode
+.vscode/
