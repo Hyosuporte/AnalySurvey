@@ -136,19 +136,18 @@ table {
 
 body {
   background: linear-gradient(180deg, #191825 39.91%, #865dff 100%);
-  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
 }
 
 h2,
 h3 {
   color: #865dff;
-  font-size: 2.5em;
+  font-size: 3em;
   margin: 0 0 0.5em;
   font-weight: 900;
 }
 
 p {
-  font-size: 16px;
+  font-size: 1rem;
   color: white;
   line-height: 1.5;
 }
@@ -157,23 +156,22 @@ span {
   color: #ffa3fd;
 }
 
-/* CSS Navbar Lnading */
-
+/* Nav */
 nav {
   display: flex;
   flex-direction: row;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 }
 
 .navbar-landi {
   display: flex;
-  padding: 2rem;
+  padding: 1.5rem;
   flex-grow: 1;
   align-items: center;
 }
 
 .navbar-landi li {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: white;
   margin: 1.5rem;
 }
@@ -194,8 +192,7 @@ nav {
   margin-right: 4rem;
 }
 
-/* CSS Main Lnading */
-
+/* Main Landing */
 .main-Landig {
   display: flex;
   justify-content: flex-end;
@@ -204,15 +201,17 @@ nav {
 }
 
 .main-Landig h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: #865dff;
-  width: 60%;
-  line-height: 1.5;
+  width: 75%;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
 .main-Landig p {
-  width: 50%;
+  width: 65%;
   margin-bottom: 2rem;
+  font-size: 1.3rem;
 }
 
 .main-Landig div {
@@ -220,12 +219,11 @@ nav {
 }
 
 .main-Landig img {
-  width: 48%;
+  width: 40%;
   border-radius: 60px 0 0 60px;
 }
 
-/*  CSS cards Landings */
-
+/* Cards Landings */
 .card-list-landig {
   width: 80%;
   text-align: center;
@@ -242,17 +240,12 @@ nav {
   margin-right: 10rem;
 }
 
-.card-landig:nth-child(1) div {
-  width: 40%;
-  margin-right: 10rem;
-  margin-top: 10rem;
-  float: right;
-}
-
+.card-landig:nth-child(1) div,
 .card-landig:nth-child(3) div {
   width: 40%;
-  margin-right: 10rem;
+  margin-right: 5rem;
   margin-top: 10rem;
+  margin-left: 6rem;
   float: right;
 }
 
@@ -263,14 +256,11 @@ nav {
 .card-landig h2,
 p {
   text-align: justify;
+  font-size: 1.8rem;
 }
 
 .card-landig p {
-  font-size: 1.5em;
-}
-
-.card-landig span {
-  font-size: 1.5em;
+  font-size: 1.2rem;
 }
 
 .card-landig img {
@@ -279,24 +269,21 @@ p {
   vertical-align: middle;
 }
 
-/* CSS carusel templates */
-
+/* Carousel Templates */
 .carusel-template {
   width: 90%;
   margin: auto;
 }
 
-.carusel-template h2 {
-  color: white;
-  font-weight: bold;
-  margin-bottom: 5rem;
-}
-
 .carusel-template h3 {
   color: white;
-  font-size: 1.5rem;
   font-weight: 400;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.carusel-template h2 {
+  color: white;
+  font-size: 2rem;
 }
 
 .item-carusel {
@@ -306,7 +293,7 @@ p {
 
 .text-carusel {
   margin-right: 5rem;
-  margin-top: 10rem;
+  margin-top: 4rem;
   width: 45%;
   float: right;
 }
@@ -319,7 +306,7 @@ p {
 }
 
 .text-carusel p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: inherit;
   margin-bottom: 2.5rem;
 }
@@ -339,8 +326,7 @@ button {
   padding: 1rem;
 }
 
-/*  CSS footer */
-
+/* Footer */
 footer {
   width: 80%;
   text-align: center;

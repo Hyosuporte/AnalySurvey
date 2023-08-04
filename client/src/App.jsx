@@ -13,7 +13,6 @@ function App() {
         <Route path="/createfrom" element={<Profile />} />
         <Route path="/templates" element={<Profile />} />
       </Routes>
-      <h2>checho</h2>
     </div>
   );
 }
