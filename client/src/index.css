@@ -1,0 +1,362 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*  Fin del reset */
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #191825 39.91%, #865dff 100%);
+  /* box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); */
+}
+
+h2,
+h3 {
+  color: #865dff;
+  font-size: 2.5em;
+  margin: 0 0 0.5em;
+  font-weight: 900;
+}
+
+p {
+  font-size: 16px;
+  color: white;
+  line-height: 1.5;
+}
+
+span {
+  color: #ffa3fd;
+}
+
+/* CSS Navbar Lnading */
+
+nav {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5rem;
+}
+
+.navbar-landi {
+  display: flex;
+  padding: 2rem;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.navbar-landi li {
+  font-size: 1.5rem;
+  color: white;
+  margin: 1.5rem;
+}
+
+.navbar-btnLand {
+  display: flex;
+  padding: 2rem;
+}
+
+.navbar-btnLand button {
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.navbar-btnLand li:nth-child(1) button {
+  background-color: #191825;
+  border: 1px solid #865dff;
+  margin-right: 4rem;
+}
+
+/* CSS Main Lnading */
+
+.main-Landig {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 15rem;
+}
+
+.main-Landig h1 {
+  font-size: 3rem;
+  color: #865dff;
+  width: 60%;
+  line-height: 1.5;
+}
+
+.main-Landig p {
+  width: 50%;
+  margin-bottom: 2rem;
+}
+
+.main-Landig div {
+  margin-left: 12rem;
+}
+
+.main-Landig img {
+  width: 48%;
+  border-radius: 60px 0 0 60px;
+}
+
+/*  CSS cards Landings */
+
+.card-list-landig {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+}
+
+.card-landig {
+  margin-bottom: 12rem;
+}
+
+.card-landig div {
+  display: inline-block;
+  width: 40%;
+  margin-right: 10rem;
+}
+
+.card-landig:nth-child(1) div {
+  width: 40%;
+  margin-right: 10rem;
+  margin-top: 10rem;
+  float: right;
+}
+
+.card-landig:nth-child(3) div {
+  width: 40%;
+  margin-right: 10rem;
+  margin-top: 10rem;
+  float: right;
+}
+
+.card-list-landig div:last-child h2 {
+  color: #ffa3fd;
+}
+
+.card-landig h2,
+p {
+  text-align: justify;
+}
+
+.card-landig p {
+  font-size: 1.5em;
+}
+
+.card-landig span {
+  font-size: 1.5em;
+}
+
+.card-landig img {
+  width: 40%;
+  height: auto;
+  vertical-align: middle;
+}
+
+/* CSS carusel templates */
+
+.carusel-template {
+  width: 90%;
+  margin: auto;
+}
+
+.carusel-template h2 {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5rem;
+}
+
+.carusel-template h3 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.item-carusel {
+  background-color: #191825;
+  width: 90%;
+}
+
+.text-carusel {
+  margin-right: 5rem;
+  margin-top: 10rem;
+  width: 45%;
+  float: right;
+}
+
+.text-carusel h4 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #865dff;
+  margin-bottom: 2rem;
+}
+
+.text-carusel p {
+  font-size: 1.5rem;
+  text-align: inherit;
+  margin-bottom: 2.5rem;
+}
+
+.carusel-template img {
+  width: 45%;
+  height: auto;
+  vertical-align: middle;
+}
+
+button {
+  background-color: #865dff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  padding: 1rem;
+}
+
+/*  CSS footer */
+
+footer {
+  width: 80%;
+  text-align: center;
+  margin: auto;
+  margin-top: 10rem;
+}
+
+footer h1 {
+  font-size: 4.5rem;
+  margin-bottom: 3rem;
+  color: white;
+}
+
+footer p {
+  width: 80%;
+  margin: auto;
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
+}
