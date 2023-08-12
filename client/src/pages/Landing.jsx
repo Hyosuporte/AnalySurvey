@@ -38,18 +38,19 @@ const cardData = [
 
 export function Landing() {
   return (
-    <main>
-      <NavbarLandig/>
-      <MainLandi/>
+    <main className="landing-body">
+      <NavbarLandig />
+      <MainLandi />
       <CardList data={cardData} />
       <CaruselTemplate />
-      <footer>
+      <footer id="footerLandi" >
         <h1>Lo que ofrecemos</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta
           nisi at metus iaculis, ac congue ex fringilla. Fusce id orci suscipit,
-          ultricies tellus id, consequat quam. Duis rutrum luctus nisl, eu maximus
-          orci tristique id. Suspendisse pellentesque risus nec mollis blandit.
+          ultricies tellus id, consequat quam. Duis rutrum luctus nisl, eu
+          maximus orci tristique id. Suspendisse pellentesque risus nec mollis
+          blandit.
         </p>
       </footer>
     </main>

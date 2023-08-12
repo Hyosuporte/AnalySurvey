@@ -17,7 +17,7 @@ function Card({ title, content, img }) {
 export function CardList({ data }) {
   return (
     // eslint-disable-next-line react/jsx-no-comment-textnodes
-    <section className="card-list-landig">
+    <section className="card-list-landig" id="CardList">
       {data.map((item) => (
         <Card
           key={item.id}

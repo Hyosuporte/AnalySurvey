@@ -1,5 +1,62 @@
+import { useState } from "react";
+import { AppBar, Toolbar, Button, Box } from "@mui/material";
+import { FormRegist } from "../components/FormRegist";
+import { FormLogin } from "../components/FormLogin";
+
+// eslint-disable-next-line react/prop-types
+function Navbar({ onOptionClick }) {
+  return (
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "#865dff",
+        borderRadius: "10px 10px 0 0",
+        overflow: "hidden",
+        marginBottom: "2rem",
+      }}
+    >
+      <Toolbar>
+        <Button color="inherit" onClick={() => onOptionClick("FormLogin")}
+        sx={{marginRight:"2rem",marginLeft:"2rem"}}>
+          Iniciar Sesión
+        </Button>
+        <Button color="inherit" onClick={() => onOptionClick("FormRegist")}>
+          Registrarse
+        </Button>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
 export function Login() {
-  return <main>
-    
-  </main>;
+  const [ShowComponent, setShowComponent] = useState("FormLogin"); // Inicializar con "FormLogin"
+
+  const handleOptionClick = (component) => {
+    setShowComponent(component);
+  };
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "calc(100vh - 64px)",
+      }}
+    >
+      <Box
+        sx={{
+          width: "35%",
+          minHeight: "35vh",
+          backgroundColor: "#cccccc",
+          border: "3px solid #865dff",
+          borderRadius: "15px 15px 15px 15px",
+        }}
+      >
+        <Navbar onOptionClick={handleOptionClick} />
+        {ShowComponent === "FormLogin" && <FormLogin />}
+        {ShowComponent === "FormRegist" && <FormRegist />}
+      </Box>
+    </Box>
+  );
 }
