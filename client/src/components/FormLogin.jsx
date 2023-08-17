@@ -2,7 +2,14 @@ import { useForm } from "react-hook-form";
 import { TextField, Box, Button } from "@mui/material";
 
 export function FormLogin() {
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
   return (
     <Box
       component="form"
@@ -12,6 +19,7 @@ export function FormLogin() {
         margin: "auto",
         textAlign: "center",
       }}
+      onSubmit={onSubmit}
     >
       <Box sx={{ marginBottom: "2rem" }}>
         <TextField
@@ -19,10 +27,13 @@ export function FormLogin() {
           type="email"
           variant="outlined"
           color="secondary"
-          required
           fullWidth
-          helperText="Ingresar un correo valido"
-          {...register("emal")}
+          helperText={errors.email?.message || "Ingresar un correo valido"}
+          error={Boolean(errors.email)}
+          autoComplete="off"
+          {...register("email", {
+            required: { value: true, message: "El correo es obligatorio*" },
+          })}
         />
       </Box>
       <Box sx={{ marginBottom: "2rem" }}>
@@ -31,10 +42,23 @@ export function FormLogin() {
           type="password"
           variant="outlined"
           color="secondary"
-          helperText="La contraseña debe tener minimo 8 caracteres"
-          required
+          helperText={
+            errors.password?.message ||
+            "La contraseña debe tener minimo 8 caracteres"
+          }
+          error={Boolean(errors.password)}
           fullWidth
-          {...register("password")}
+          {...register("password", {
+            required: {
+              value: true,
+              message: "Contraseña es obligatoria*",
+            },
+            minLength: { value: 8, message: "Debe tener minimo 8 caracteres*" },
+            maxLength: {
+              value: 15,
+              message: "Debe tener maximo 15 caracteres*",
+            },
+          })}
         />
       </Box>
       <Button
@@ -50,6 +74,7 @@ export function FormLogin() {
             backgroundColor: "#4A29A6",
           },
         }}
+        type="submit"
       >
         Enviar
       </Button>

@@ -16,8 +16,15 @@ function Navbar({ onOptionClick }) {
       }}
     >
       <Toolbar>
-        <Button color="inherit" onClick={() => onOptionClick("FormLogin")}
-        sx={{marginRight:"2rem",marginLeft:"2rem"}}>
+        <Button
+          color="inherit"
+          onClick={() => onOptionClick("FormLogin")}
+          sx={{
+            marginRight: "2rem",
+            marginLeft: "2rem",
+            fontFamily: "Poppins",
+          }}
+        >
           Iniciar Sesión
         </Button>
         <Button color="inherit" onClick={() => onOptionClick("FormRegist")}>

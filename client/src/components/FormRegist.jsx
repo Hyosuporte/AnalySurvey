@@ -2,7 +2,15 @@ import { useForm } from "react-hook-form";
 import { TextField, Box, Button, Grid } from "@mui/material";
 
 export function FormRegist() {
-  const { register } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
+  const onSubmit = handleSubmit((data) => {
+    console.log(data, errors);
+  });
   return (
     <Box
       component="form"
@@ -12,6 +20,7 @@ export function FormRegist() {
         margin: "auto",
         textAlign: "center",
       }}
+      onSubmit={onSubmit}
     >
       <Grid container rowSpacing={4} spacing={2}>
         <Grid item xs={6}>
@@ -20,9 +29,17 @@ export function FormRegist() {
             type="text"
             variant="outlined"
             color="secondary"
-            required
             fullWidth
-            {...register("last_name")}
+            helperText={
+              errors.last_name?.message || "Ingresar un nombre valido"
+            }
+            error={Boolean(errors.last_name)}
+            {...register("last_name", {
+              required: {
+                value: true,
+                message: "El nombre es requerido",
+              },
+            })}
           />
         </Grid>
         <Grid item xs={6}>
@@ -33,8 +50,12 @@ export function FormRegist() {
             color="secondary"
             required
             fullWidth
-            helperText="Ingresar un correo valido"
-            {...register("emal")}
+            helperText={errors.email?.message || "Ingresar un correo valido"}
+            error={Boolean(errors.email)}
+            autoComplete="off"
+            {...register("email", {
+              required: { value: true, message: "El correo es obligatorio*" },
+            })}
           />
         </Grid>
         <Grid item xs={6}>
@@ -43,10 +64,25 @@ export function FormRegist() {
             type="password"
             variant="outlined"
             color="secondary"
-            helperText="La contraseña debe tener minimo 8 caracteres"
-            required
             fullWidth
-            {...register("password")}
+            helperText={
+              errors.password?.message || "Debe tener minimo 8 caracteres"
+            }
+            error={Boolean(errors.password)}
+            {...register("password", {
+              required: {
+                value: true,
+                message: "La contraseña es obligatoria",
+              },
+              minLength: {
+                value: 8,
+                message: "Debe tener minimo 8 caracteres*",
+              },
+              maxLength: {
+                value: 15,
+                message: "Debe tener maximo 15 caracteres*",
+              },
+            })}
           />
         </Grid>
         <Grid item xs={6}>
@@ -55,10 +91,13 @@ export function FormRegist() {
             type="password"
             variant="outlined"
             color="secondary"
-            helperText="Las contraseñas deben considir"
-            required
             fullWidth
-            {...register("password")}
+            helperText={errors.Trypassword?.message}
+            error={Boolean(errors.Trypassword)}
+            {...register("Trypassword", {
+              validate: (value) =>
+                value == watch("password") || "Las contraseñas deben concidir",
+            })}
           />
         </Grid>
       </Grid>
@@ -68,6 +107,7 @@ export function FormRegist() {
         sx={{
           backgroundColor: "#865DFF",
           color: "white",
+          margin: "1rem",
           "&:hover": {
             backgroundColor: "#6340D1",
           },
@@ -75,9 +115,13 @@ export function FormRegist() {
             backgroundColor: "#4A29A6",
           },
         }}
+        type="submit"
       >
         Enviar
       </Button>
+      {/*TODO:  Quitar el mensaje de validacion del JSON del formulari oregistrar
+       */}
+      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </Box>
   );
 }
