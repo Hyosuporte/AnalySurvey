@@ -2,11 +2,6 @@
   background: linear-gradient(180deg, #191825 39.91%, #865dff 100%);
 }
 
-/* Nav */
-.navbar-btnLand {
-  flex-direction: row-reverse;
-}
-
 /* Cards Landings */
 .card-list-landig {
   width: 80%;

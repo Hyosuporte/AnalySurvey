@@ -36,7 +36,7 @@ function Navbar({ onOptionClick }) {
 }
 
 export function Login() {
-  const [ShowComponent, setShowComponent] = useState("FormLogin"); // Inicializar con "FormLogin"
+  const [ShowComponent, setShowComponent] = useState("FormLogin");
 
   const handleOptionClick = (component) => {
     setShowComponent(component);
