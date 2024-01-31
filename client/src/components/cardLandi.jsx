@@ -1,31 +1,56 @@
-// eslint-disable-next-line react/prop-types
-function Card({ title, content, img }) {
+/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+
+function Card({ title, content, img, row, maxImg, maxText, clasN }) {
   return (
-    <div className="card-landig">
-      <div>
-        <h2>
-          {title} <span>.</span>
-        </h2>
-        <p>{content} </p>
-      </div>
-      <img src={img} alt="" />
-    </div>
+    <Grid
+      container
+      direction={row}
+      justifyContent="center"
+      alignItems="center"
+      marginTop={10}
+    >
+      <Grid item xs={maxText}>
+        <div className={clasN}>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "#865DFF",
+            }}
+          >
+            {title}
+          </Typography>
+          <p>{content}</p>
+        </div>
+      </Grid>
+      <Grid item xs={maxImg}>
+        <img src={img} alt="" width="510vw" />
+      </Grid>
+    </Grid>
   );
 }
 
-// eslint-disable-next-line react/prop-types
 export function CardList({ data }) {
   return (
-    // eslint-disable-next-line react/jsx-no-comment-textnodes
-    <section className="card-list-landig" id="CardList">
+    <section id="CardList">
       {data.map((item) => (
         <Card
           key={item.id}
           title={item.title}
           content={item.content}
           img={item.img}
+          row={item.row}
+          maxImg={item.maxImg}
+          maxText={item.maxText}
+          clasN={item.clasN}
         />
       ))}
     </section>
   );
 }
+
+CardList.prototype = {
+  data: PropTypes.array.isRequired,
+};

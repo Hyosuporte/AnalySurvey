@@ -1,9 +1,12 @@
 import { NavbarLandig } from "../components/NavbarLandig";
-import { MainLandi } from "../components/MainLandi";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { CardList } from "../components/cardLandi";
 import { CaruselTemplate } from "../components/CaruselTemplate";
-import img1 from "../assets/image/img3.jpg";
+
+import img1 from "../assets/image/img1.jpg";
 import img2 from "../assets/image/img2.jpg";
+import img3 from "../assets/image/img3.jpg";
 
 const cardData = [
   {
@@ -11,21 +14,33 @@ const cardData = [
     title: "Lorem ipsum dolor sit amet",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus ut ex quis ullamcorper. Vestibulum ultrices cursus mi. Curabitur ut nulla ac lorem interdum vestibulum sed eget nibh",
-    img: img1,
+    img: img2,
+    row: "row",
+    maxImg: 4,
+    maxText: 5,
+    clasN: "card",
   },
   {
     id: 2,
     title: "Lorem ipsum dolor sit amet",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus ut ex quis ullamcorper. Vestibulum ultrices cursus mi. Curabitur ut nulla ac lorem interdum vestibulum sed eget nibh",
-    img: img2,
+    img: img3,
+    row: "row-reverse",
+    maxImg: 5,
+    maxText: 4,
+    clasN: "card-reverse",
   },
   {
     id: 3,
     title: "Lorem ipsum dolor sit amet",
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus ut ex quis ullamcorper. Vestibulum ultrices cursus mi. Curabitur ut nulla ac lorem interdum vestibulum sed eget nibh",
-    img: img1,
+    img: img3,
+    row: "row",
+    maxImg: 4,
+    maxText: 5,
+    clasN: "card",
   },
   {
     id: 4,
@@ -33,6 +48,10 @@ const cardData = [
     content:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut faucibus ut ex quis ullamcorper. Vestibulum ultrices cursus mi. Curabitur ut nulla ac lorem interdum vestibulum sed eget nibh",
     img: img2,
+    row: "row-reverse",
+    maxImg: 5,
+    maxText: 4,
+    clasN: "card-reverse",
   },
 ];
 
@@ -40,10 +59,32 @@ export function Landing() {
   return (
     <main className="landing-body">
       <NavbarLandig />
-      <MainLandi />
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <div className="textCard">
+          <Typography
+            variant="h4"
+            sx={{
+              color: "#865DFF",
+            }}
+          >
+            Lorem Ipsum es simplemente el texto de relleno de las imprentas y
+            archivos de texto
+          </Typography>
+          <p>
+            Lorem Ipsum es simplemente el texto de relleno de las imprentas y
+            archivos de texto. Lorem Ipsum
+          </p>
+        </div>
+        <img src={img1} alt="" width="740" />
+      </Grid>
       <CardList data={cardData} />
       <CaruselTemplate />
-      <footer id="footerLandi" >
+      <footer id="footerLandi">
         <h1>Lo que ofrecemos</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta

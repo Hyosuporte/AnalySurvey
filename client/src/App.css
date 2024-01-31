@@ -174,3 +174,20 @@ a:hover {
 span {
   color: #ffa3fd;
 }
+
+.textCard {
+  width: 50%;
+  margin: auto;
+}
+
+.card {
+  width: 70%;
+}
+
+.card-reverse {
+  width: 89%;
+}
+
+#CardList {
+  margin-top: 10rem;
+}
