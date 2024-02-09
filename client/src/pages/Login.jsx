@@ -11,7 +11,6 @@ function Navbar({ onOptionClick }) {
       sx={{
         backgroundColor: "#865dff",
         borderRadius: "10px 10px 0 0",
-        overflow: "hidden",
         marginBottom: "2rem",
       }}
     >
@@ -27,7 +26,15 @@ function Navbar({ onOptionClick }) {
         >
           Iniciar Sesión
         </Button>
-        <Button color="inherit" onClick={() => onOptionClick("FormRegist")}>
+        <Button
+          color="inherit"
+          onClick={() => onOptionClick("FormRegist")}
+          sx={{
+            marginRight: "2rem",
+            marginLeft: "2rem",
+            fontFamily: "Poppins",
+          }}
+        >
           Registrarse
         </Button>
       </Toolbar>
@@ -43,27 +50,29 @@ export function Login() {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "calc(100vh - 64px)",
-      }}
-    >
+    <main className="login-body">
       <Box
         sx={{
-          width: "35%",
-          minHeight: "35vh",
-          backgroundColor: "#cccccc",
-          border: "3px solid #865dff",
-          borderRadius: "15px 15px 15px 15px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 64px)",
         }}
       >
-        <Navbar onOptionClick={handleOptionClick} />
-        {ShowComponent === "FormLogin" && <FormLogin />}
-        {ShowComponent === "FormRegist" && <FormRegist />}
+        <Box
+          sx={{
+            width: "35%",
+            minHeight: "35vh",
+            backgroundColor: "#cccccc",
+            border: "3px solid #865dff",
+            borderRadius: "15px 15px 15px 15px",
+          }}
+        >
+          <Navbar onOptionClick={handleOptionClick} />
+          {ShowComponent === "FormLogin" && <FormLogin />}
+          {ShowComponent === "FormRegist" && <FormRegist />}
+        </Box>
       </Box>
-    </Box>
+    </main>
   );
 }

@@ -64,6 +64,7 @@ export function Landing() {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
+        id="home"
       >
         <div className="textCard">
           <Typography
@@ -80,7 +81,7 @@ export function Landing() {
             archivos de texto. Lorem Ipsum
           </p>
         </div>
-        <img src={img1} alt="" width="740" />
+        <img src={img1} alt="" width="40%" />
       </Grid>
       <CardList data={cardData} />
       <CaruselTemplate />

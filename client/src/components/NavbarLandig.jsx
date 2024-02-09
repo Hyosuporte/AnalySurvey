@@ -16,10 +16,10 @@ import { Link } from "@mui/material";
 const pages = [
   {
     title: "Funciones",
-    href: "#funciones",
+    href: "#CardList",
   },
-  { title: "Plantillas", href: "#platillas" },
-  { title: "Acerca de", href: "#CardList" },
+  { title: "Plantillas", href: "#CaruselTemplate" },
+  { title: "Acerca de", href: "#footerLandi" },
   { title: "Inicio", href: "#home" },
 ];
 const settings = ["Perfil", "Dashboard", "Cerrar Sesion"];
@@ -66,10 +66,10 @@ export function NavbarLandig() {
             component="a"
             href="/"
             sx={{
-              mr: 2,
+              mr: 4,
               display: { xs: "none", md: "flex" },
               fontWeight: 600,
-              letterSpacing: ".3rem",
+              letterSpacing: ".2rem",
               color: "#865DFF",
               textDecoration: "none",
             }}

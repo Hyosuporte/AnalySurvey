@@ -10,7 +10,7 @@ function Card({ title, content, img, row, maxImg, maxText, clasN }) {
       direction={row}
       justifyContent="center"
       alignItems="center"
-      marginTop={10}
+      marginTop={15}
     >
       <Grid item xs={maxText}>
         <div className={clasN}>
@@ -26,7 +26,7 @@ function Card({ title, content, img, row, maxImg, maxText, clasN }) {
         </div>
       </Grid>
       <Grid item xs={maxImg}>
-        <img src={img} alt="" width="510vw" />
+        <img src={img} alt="" width="90%" />
       </Grid>
     </Grid>
   );

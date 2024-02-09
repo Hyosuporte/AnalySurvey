@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Grid } from "@mui/material";
 import Slider from "react-slick";
 import img1 from "../assets/image/img4.jpg";
 import img2 from "../assets/image/img5.jpg";
@@ -19,36 +19,21 @@ let settings = {
 export function CaruselTemplate() {
   return (
     <section className="carusel-template" id="CaruselTemplate">
-      <Typography
-        variant="h3"
-        sx={{
-          color: "white",
-          fontFamily: "Poppins",
-        }}
-      >
-        Plantillas
-      </Typography>
+      <Typography variant="h6">Plantillas</Typography>
+
       <Typography
         variant="h2"
         sx={{
-          color: "white",
-          fontFamily: "Poppins",
           fontWeight: "900",
         }}
       >
         Nuestras plantillas recomendadas
       </Typography>
+
       <Slider {...settings} className="item-carusel">
         <div>
           <div className="text-carusel">
-            <Typography
-              variant="h4"
-              sx={{
-                fontFamily: "Poppins",
-              }}
-            >
-              Valoracion
-            </Typography>
+            <Typography variant="h4">Valoracion</Typography>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
               porta nisi at metus iaculis, ac congue ex fringilla. Fusce id orci

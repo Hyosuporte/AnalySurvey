@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const settings = ["Perfil","Dashboard", "Salir"];
+const settings = ["Perfil", "Dashboard", "Salir"];
 
 export function NavbarProfile() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -37,7 +37,7 @@ export function NavbarProfile() {
               fontFamily: "Poppins",
               fontWeight: 700,
               letterSpacing: ".2rem",
-              color: "inherit",
+              color: "#865DFF",
               textDecoration: "none",
             }}
           >

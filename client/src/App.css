@@ -107,7 +107,7 @@ section {
 body {
   line-height: 1;
   color: white;
-  background-color: #191825;
+  /* background-color: #191825; */
 }
 ol,
 ul {
@@ -130,6 +130,11 @@ table {
 }
 
 /*  Fin del reset */
+
+html {
+  height: 100%;
+  width: 100%;
+}
 
 * {
   font-family: "Poppins", sans-serif;
@@ -159,7 +164,7 @@ p,
 input {
   text-align: justify;
   line-height: 1.5;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 a {
