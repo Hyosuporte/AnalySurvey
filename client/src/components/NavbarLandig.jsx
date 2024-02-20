@@ -209,7 +209,13 @@ export function NavbarLandig() {
                     sx={{
                       color: "white",
                       background: "#865DFF",
+                      "&:hover": {
+                        backgroundColor: "#8c66ff",
+                        borderColor: "#0062cc",
+                        boxShadow: "none",
+                      },
                     }}
+                    variant="contained"
                   >
                     <Link
                       href="/login"

@@ -58,6 +58,7 @@ const cardData = [
 export function Landing() {
   return (
     <main className="landing-body">
+      {/*  FIXME: Corregir button del navbar de Plantilllas (No redirecciona) */}
       <NavbarLandig />
       <Grid
         container
@@ -67,12 +68,7 @@ export function Landing() {
         id="home"
       >
         <div className="textCard">
-          <Typography
-            variant="h4"
-            sx={{
-              color: "#865DFF",
-            }}
-          >
+          <Typography variant="h5">
             Lorem Ipsum es simplemente el texto de relleno de las imprentas y
             archivos de texto
           </Typography>
@@ -86,7 +82,9 @@ export function Landing() {
       <CardList data={cardData} />
       <CaruselTemplate />
       <footer id="footerLandi">
-        <h1>Lo que ofrecemos</h1>
+        <Typography variant="h3" sx={{ color: "white" }}>
+          Lo que ofrecemos
+        </Typography>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta
           nisi at metus iaculis, ac congue ex fringilla. Fusce id orci suscipit,

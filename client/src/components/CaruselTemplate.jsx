@@ -1,7 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import { Button, Typography, Grid } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Slider from "react-slick";
 import img1 from "../assets/image/img4.jpg";
 import img2 from "../assets/image/img5.jpg";
@@ -69,25 +69,24 @@ export function CaruselTemplate() {
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce .
             </p>
-            <Link to="/templates">
-              <Button
-                variant="contained"
-                size="large"
-                sx={{
-                  backgroundColor: "#865DFF",
-                  color: "white",
-                  padding: "1rem",
-                  "&:hover": {
-                    backgroundColor: "#6340D1",
-                  },
-                  "&:active": {
-                    backgroundColor: "#4A29A6",
-                  },
-                }}
-              >
-                Comenzar ahora
-              </Button>
-            </Link>
+
+            <Button
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: "#865DFF",
+                color: "white",
+                padding: "1rem",
+                "&:hover": {
+                  backgroundColor: "#6340D1",
+                },
+                "&:active": {
+                  backgroundColor: "#4A29A6",
+                },
+              }}
+            >
+              <Link to="/templates">Comenzar ahora</Link>
+            </Button>
           </div>
           <img src={img2} />
         </div>

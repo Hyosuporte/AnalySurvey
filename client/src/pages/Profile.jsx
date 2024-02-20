@@ -7,6 +7,8 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useState } from "react";
 import img1 from "../assets/image/img1.jpg";
+import { Link } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const data = [
   {
@@ -29,18 +31,47 @@ export function Profile() {
   return (
     <main id="mainProfile">
       <NavbarProfile />
-      <section>
+      <section className="work-space">
         <Typography
-          variant="h5"
+          variant="h6"
           sx={{
             color: "black",
           }}
         >
           Espacio de trabajo
         </Typography>
-        <Grid container>
+        <Grid
+          className="list-changeView"
+          container
+          justifyContent="space-between"
+        >
           <Grid item>
-            <Button> Crear Encuesta </Button>
+            <Button
+              startIcon={
+                <AddIcon
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              }
+              sx={{
+                color: "white",
+                background: "#865DFF",
+                "&:hover": {
+                  backgroundColor: "#794dff",
+                },
+              }}
+            >
+              <Link
+                href="/login"
+                sx={{
+                  color: "white",
+                  textDecoration: "none",
+                }}
+              >
+                Crear Encuesta
+              </Link>
+            </Button>
           </Grid>
           <Grid item>
             <ToggleButtonGroup
@@ -51,13 +82,16 @@ export function Profile() {
               aria-label="View-Alignment"
               size="small"
             >
-              <ToggleButton value="Grid" color="secondary" >Grid</ToggleButton>
+              <ToggleButton value="Grid" color="secondary">
+                Grid
+              </ToggleButton>
               <ToggleButton value="List">List</ToggleButton>
             </ToggleButtonGroup>
           </Grid>
         </Grid>
       </section>
-      {/* <GridView data={data} /> */}
+      { /* TODO: Terminar componente Grid */ }
+      <GridView data={data} />
     </main>
   );
 }

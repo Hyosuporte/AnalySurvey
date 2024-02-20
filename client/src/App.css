@@ -1,153 +1,3 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-  display: block;
-}
-body {
-  line-height: 1;
-  color: white;
-  /* background-color: #191825; */
-}
-ol,
-ul {
-  list-style: none;
-}
-blockquote,
-q {
-  quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-  content: "";
-  content: none;
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/*  Fin del reset */
-
-html {
-  height: 100%;
-  width: 100%;
-}
-
-* {
-  font-family: "Poppins", sans-serif;
-}
-
-h2,
-h3 {
-  color: #865dff;
-  font-size: 3em;
-  margin: 0 0 0.5em;
-  font-weight: 900;
-}
-
 ul {
   display: flex;
   padding: 1.5rem;
@@ -195,4 +45,84 @@ span {
 
 #CardList {
   margin-top: 10rem;
+}
+
+.landing-body {
+  background: linear-gradient(180deg, #191825 39.91%, #865dff 100%);
+  height: 100%;
+}
+
+.login-body {
+  background: url("assets/image/fondoLogin.svg");
+  background-size: cover;
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Carousel Templates */
+.carusel-template {
+  width: 85%;
+  margin: auto;
+  margin-top: 10rem;
+}
+
+.carusel-template h3 {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.carusel-template h2 {
+  color: white;
+  font-size: 2rem;
+}
+
+.item-carusel {
+  background-color: #191825;
+}
+
+.text-carusel {
+  margin-right: 5rem;
+  margin-top: 4rem;
+  width: 45%;
+  float: right;
+}
+
+.text-carusel h4 {
+  margin-bottom: 2rem;
+  font-weight: bold;
+  color: #865dff;
+  font-size: 2rem;
+}
+
+.text-carusel p {
+  margin-bottom: 2rem;
+}
+
+.carusel-template img {
+  width: 45%;
+  height: auto;
+  vertical-align: middle;
+}
+
+/* Footer */
+
+/* CSS view Profile */
+#mainProfile {
+  background-color: #cccccc;
+  height: 100vh;
+  width: 100%;
+}
+
+.work-space {
+  border-bottom: 2px solid #865dff;
+  width: 90vw;
+  margin: auto;
+  & h6 {
+    padding: 1rem;
+  }
+  & .list-changeView {
+    padding: 0 1rem 1rem 1rem;
+  }
 }
