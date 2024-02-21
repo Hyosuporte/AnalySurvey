@@ -61,21 +61,7 @@ export function FormLogin() {
           })}
         />
       </Box>
-      <Button
-        variant="contained"
-        size="large"
-        sx={{
-          backgroundColor: "#865DFF",
-          color: "white",
-          "&:hover": {
-            backgroundColor: "#6340D1",
-          },
-          "&:active": {
-            backgroundColor: "#4A29A6",
-          },
-        }}
-        type="submit"
-      >
+      <Button variant="contained" size="large" className="button" type="submit">
         Enviar
       </Button>
     </Box>

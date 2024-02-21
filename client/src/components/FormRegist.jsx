@@ -101,22 +101,7 @@ export function FormRegist() {
           />
         </Grid>
       </Grid>
-      <Button
-        variant="contained"
-        size="large"
-        sx={{
-          backgroundColor: "#865DFF",
-          color: "white",
-          margin: "1rem",
-          "&:hover": {
-            backgroundColor: "#6340D1",
-          },
-          "&:active": {
-            backgroundColor: "#4A29A6",
-          },
-        }}
-        type="submit"
-      >
+      <Button variant="contained" size="large" className="button" type="submit">
         Enviar
       </Button>
       {/*TODO:  Quitar el mensaje de validacion del JSON del formulari oregistrar

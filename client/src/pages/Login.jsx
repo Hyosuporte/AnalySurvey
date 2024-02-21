@@ -9,7 +9,7 @@ function Navbar({ onOptionClick }) {
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#865dff",
+        backgroundColor: "#794dff",
         borderRadius: "10px 10px 0 0",
         marginBottom: "2rem",
       }}

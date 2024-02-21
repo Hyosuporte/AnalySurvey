@@ -191,39 +191,18 @@ export function NavbarLandig() {
                   <Button
                     sx={{
                       mr: 3,
-                      color: "white",
                       border: "1px solid var(--Color-2, #865DFF)",
+                      "&: hover": {
+                        background: "#865DFF",
+                      },
                     }}
                   >
-                    <Link
-                      href="/login"
-                      sx={{
-                        color: "white",
-                        textDecoration: "none",
-                      }}
-                    >
+                    <Link className="link" href="/login">
                       Log In/Sing Up
                     </Link>
                   </Button>
-                  <Button
-                    sx={{
-                      color: "white",
-                      background: "#865DFF",
-                      "&:hover": {
-                        backgroundColor: "#8c66ff",
-                        borderColor: "#0062cc",
-                        boxShadow: "none",
-                      },
-                    }}
-                    variant="contained"
-                  >
-                    <Link
-                      href="/login"
-                      sx={{
-                        color: "white",
-                        textDecoration: "none",
-                      }}
-                    >
+                  <Button className="button" variant="contained">
+                    <Link className="link" href="/login">
                       Comenzar Encuesta
                     </Link>
                   </Button>

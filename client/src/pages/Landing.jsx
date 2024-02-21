@@ -58,7 +58,6 @@ const cardData = [
 export function Landing() {
   return (
     <main className="landing-body">
-      {/*  FIXME: Corregir button del navbar de Plantilllas (No redirecciona) */}
       <NavbarLandig />
       <Grid
         container

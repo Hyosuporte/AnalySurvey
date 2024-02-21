@@ -9,6 +9,8 @@ import { useState } from "react";
 import img1 from "../assets/image/img1.jpg";
 import { Link } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import GridViewIcon from "@mui/icons-material/GridView";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
 const data = [
   {
@@ -47,50 +49,35 @@ export function Profile() {
         >
           <Grid item>
             <Button
-              startIcon={
-                <AddIcon
-                  sx={{
-                    color: "white",
-                  }}
-                />
-              }
-              sx={{
-                color: "white",
-                background: "#865DFF",
-                "&:hover": {
-                  backgroundColor: "#794dff",
-                },
-              }}
+              className="button"
+              startIcon={<AddIcon className="icon-white" />}
             >
-              <Link
-                href="/login"
-                sx={{
-                  color: "white",
-                  textDecoration: "none",
-                }}
-              >
+              <Link className="link" href="/login">
                 Crear Encuesta
               </Link>
             </Button>
           </Grid>
           <Grid item>
             <ToggleButtonGroup
-              color="primary"
               value={alignment}
               exclusive
               onChange={handleChange}
               aria-label="View-Alignment"
               size="small"
             >
-              <ToggleButton value="Grid" color="secondary">
+              <ToggleButton className="button-view" value="Grid">
+                <GridViewIcon />
                 Grid
               </ToggleButton>
-              <ToggleButton value="List">List</ToggleButton>
+              <ToggleButton className="button-view" value="List">
+                <FormatListBulletedIcon />
+                List
+              </ToggleButton>
             </ToggleButtonGroup>
           </Grid>
         </Grid>
       </section>
-      { /* TODO: Terminar componente Grid */ }
+      {/* TODO: Terminar componente Grid */}
       <GridView data={data} />
     </main>
   );

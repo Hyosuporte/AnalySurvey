@@ -30,6 +30,10 @@ span {
   color: #ffa3fd;
 }
 
+.icon-white {
+  color: white;
+}
+
 .textCard {
   width: 50%;
   margin: auto;
@@ -125,4 +129,27 @@ span {
   & .list-changeView {
     padding: 0 1rem 1rem 1rem;
   }
+}
+
+.button {
+  color: white;
+  background-color: #865dff !important;
+  &:hover {
+    background-color: #6340d1 !important;
+  }
+}
+
+.link {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.button-view {
+  background-color: #e384ff !important;
+  color: white !important;
+  margin-left: 0.2rem !important;
+}
+
+.button-view.Mui-selected {
+  background-color: #865dff !important;
 }
