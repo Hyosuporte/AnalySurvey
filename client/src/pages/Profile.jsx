@@ -1,25 +1,28 @@
-import { NavbarProfile } from "../components/NavbarProfile";
-import { GridView } from "../components/GridView";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useState } from "react";
-import img1 from "../assets/image/img1.jpg";
-import { Link } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import GridViewIcon from "@mui/icons-material/GridView";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { NavbarProfile } from "../components/NavbarProfile";
+import GridViewIcon from "@mui/icons-material/GridView";
+import ToggleButton from "@mui/material/ToggleButton";
+import { GridView } from "../components/GridView";
+import { ListView } from "../components/ListView";
+import Typography from "@mui/material/Typography";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import { Link } from "@mui/material";
+import { useState } from "react";
 
 const data = [
   {
     id: 1,
     title: "Item 1",
     description: "Description for Item 1",
-    image: img1,
   },
-  { id: 2, title: "Item 2", description: "Description for Item 2" },
+  {
+    id: 2,
+    title: "Item 2",
+    description: "Description for Item 2",
+  },
   // Agrega más datos aquí
 ];
 
@@ -78,7 +81,7 @@ export function Profile() {
         </Grid>
       </section>
       {/* TODO: Terminar componente Grid */}
-      <GridView data={data} />
+      {alignment == "Grid" ? <GridView data={data} /> : <ListView />}
     </main>
   );
 }

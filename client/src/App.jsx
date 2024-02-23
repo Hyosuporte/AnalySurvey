@@ -12,6 +12,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/createfrom" element={<Profile />} />
       <Route path="/templates" element={<Profile />} />
+      <Route path="/profile/create" element={<Landing />} />
     </Routes>
   );
 }

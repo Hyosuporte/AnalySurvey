@@ -1,32 +1,38 @@
 /* eslint-disable react/prop-types */
+import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+import { LogMenu } from "./LogMenu";
 
 // eslint-disable-next-line react/prop-types
 export function GridView({ data }) {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className="GridView">
       {data.map((item) => (
-        <Grid item xs={12} md={4} key={item.id}>
-          <Card>
-            <CardMedia
-              component="img"
-              height="140"
-              image={item.image} // Reemplaza con la URL de la imagen
-              alt={item.title}
-            />
-            <CardContent>
-              <Typography variant="h6">{item.title}</Typography>
-              <Typography>{item.description}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
+        <Grid item xs={10} md={2} key={item.id}>
+          <Card
+            sx={{
+              "&: hover": {
+                boxShadow: "2px 2px 10px 0px rgba(0,0,0,0.53)",
+              },
+            }}
+          >
+            <CardActionArea>
+              <CardContent>
+                <Link to="create">
+                  <Typography variant="h5" className="text-center">
+                    {item.title}
+                  </Typography>
+                </Link>
+              </CardContent>
+            </CardActionArea>
+            <CardActions disableSpacing>
+              <p> Respuestas </p>
+              <LogMenu />
             </CardActions>
           </Card>
         </Grid>

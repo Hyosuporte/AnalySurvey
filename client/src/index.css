@@ -227,3 +227,7 @@ footer p {
   font-size: 1.3rem;
   margin-bottom: 4rem;
 }
+
+.text-center {
+  text-align: center;
+}

@@ -153,3 +153,21 @@ span {
 .button-view.Mui-selected {
   background-color: #865dff !important;
 }
+
+.GridView {
+  background-color: red;
+  width: 90vw !important;
+  margin-top: 1px !important;
+  margin: auto !important;
+}
+
+#long-menu {
+  & ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.div-more {
+  margin-left: auto;
+}
