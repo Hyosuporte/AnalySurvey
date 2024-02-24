@@ -115,7 +115,8 @@ span {
 /* CSS view Profile */
 #mainProfile {
   background-color: #cccccc;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
@@ -155,7 +156,6 @@ span {
 }
 
 .GridView {
-  background-color: red;
   width: 90vw !important;
   margin-top: 1px !important;
   margin: auto !important;
@@ -170,4 +170,23 @@ span {
 
 .div-more {
   margin-left: auto;
+}
+
+.ListView {
+  width: 90vw !important;
+  margin-top: 11rem !important;
+  margin: auto !important;
+  & #stack {
+    margin-top: 1.5rem;
+  }
+}
+
+#stack {
+  color: black;
+  & #stack-list {
+    background-color: white;
+    border-radius: 5px;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
 }

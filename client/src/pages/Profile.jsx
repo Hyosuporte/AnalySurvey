@@ -17,11 +17,109 @@ const data = [
     id: 1,
     title: "Item 1",
     description: "Description for Item 1",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
   },
   {
     id: 2,
     title: "Item 2",
     description: "Description for Item 2",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 3,
+    title: "Item 3",
+    description: "Description for Item 3",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 4,
+    title: "Item 4",
+    description: "Description for Item 4",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 5,
+    title: "Item 5",
+    description: "Description for Item 5",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 6,
+    title: "Item 6",
+    description: "Description for Item 6",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 7,
+    title: "Item 7",
+    description: "Description for Item 7",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 8,
+    title: "Item 8",
+    description: "Description for Item 8",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 9,
+    title: "Item 9",
+    description: "Description for Item 9",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 10,
+    title: "Item 10",
+    description: "Description for Item 10",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 11,
+    title: "Item 11",
+    description: "Description for Item 11",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
+  },
+  {
+    id: 12,
+    title: "Item 12",
+    description: "Description for Item 12",
+    created: "22 Feb 2024",
+    questions: "4",
+    response: "14",
+    updated: "14 Enero 2024"
   },
   // Agrega más datos aquí
 ];
@@ -81,7 +179,11 @@ export function Profile() {
         </Grid>
       </section>
       {/* TODO: Terminar componente Grid */}
-      {alignment == "Grid" ? <GridView data={data} /> : <ListView />}
+      {alignment == "Grid" ? (
+        <GridView data={data} />
+      ) : (
+        <ListView data={data} />
+      )}
     </main>
   );
 }
