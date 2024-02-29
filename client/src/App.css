@@ -34,6 +34,10 @@ span {
   color: white;
 }
 
+.icon-black {
+  color: black;
+}
+
 .textCard {
   width: 50%;
   margin: auto;
@@ -63,6 +67,11 @@ span {
   background-position: center;
   height: 100vh;
   width: 100%;
+}
+
+.not-found-page {
+  background: linear-gradient(180deg, #9678ef 38%, #cccccc 100%);
+  height: 100vh;
 }
 
 /* Carousel Templates */
@@ -143,6 +152,17 @@ span {
 .link {
   color: white !important;
   text-decoration: none !important;
+}
+
+.link-black {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.img {
+  display: block;
+  margin: auto;
+  width: 39%;
 }
 
 .button-view {
