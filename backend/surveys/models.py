@@ -1,5 +1,5 @@
+from django.contrib.auth.models import User
 from django.db import models
-from users.models import Users
 
 
 class Formulario(models.Model):
@@ -39,6 +39,6 @@ class RespuestaFormulario(models.Model):
     campoFormularioID = models.ForeignKey(
         CampoFormulario, on_delete=models.CASCADE, related_name='respuestas')
     usuarioID = models.ForeignKey(
-        Users, on_delete=models.SET_NULL, null=True, related_name='respuestas')
+        User, on_delete=models.SET_NULL, null=True, related_name='respuestas')
     valor = models.TextField(null=False)
     creado_en = models.DateTimeField(auto_now_add=True, auto_now=False)
