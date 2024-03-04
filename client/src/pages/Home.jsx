@@ -1,8 +1,8 @@
-import { NavbarLandig } from "../components/NavbarLandig";
+import { NavbarLandig } from "../components/landing/NavbarLandig";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { CardList } from "../components/cardLandi";
-import { CaruselTemplate } from "../components/CaruselTemplate";
+import { CardList } from "../components/landing/cardLandi";
+import { CaruselTemplate } from "../components/landing/CaruselTemplate";
 
 import img1 from "../assets/image/img1.jpg";
 import img2 from "../assets/image/img2.jpg";
@@ -55,7 +55,7 @@ const cardData = [
   },
 ];
 
-export function Landing() {
+export function Home() {
   return (
     <main className="landing-body">
       <NavbarLandig />

@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
@@ -50,7 +49,3 @@ export function CardList({ data }) {
     </section>
   );
 }
-
-CardList.prototype = {
-  data: PropTypes.array.isRequired,
-};

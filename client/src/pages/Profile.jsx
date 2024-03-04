@@ -1,16 +1,16 @@
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { NavbarProfile } from "../components/NavbarProfile";
+import { NavbarProfile } from "../components/profile/NavbarProfile";
 import GridViewIcon from "@mui/icons-material/GridView";
 import ToggleButton from "@mui/material/ToggleButton";
-import { GridView } from "../components/GridView";
-import { ListView } from "../components/ListView";
+import { GridView } from "../components/profile/GridView";
+import { ListView } from "../components/profile/ListView";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { Link } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -20,7 +20,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 5,
@@ -56,7 +56,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 7,
@@ -74,7 +74,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 8,
@@ -83,7 +83,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 9,
@@ -92,7 +92,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 10,
@@ -101,7 +101,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 11,
@@ -110,7 +110,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   {
     id: 12,
@@ -119,7 +119,7 @@ const data = [
     created: "22 Feb 2024",
     questions: "4",
     response: "14",
-    updated: "14 Enero 2024"
+    updated: "14 Enero 2024",
   },
   // Agrega más datos aquí
 ];
@@ -153,7 +153,7 @@ export function Profile() {
               className="button"
               startIcon={<AddIcon className="icon-white" />}
             >
-              <Link className="link" href="/login">
+              <Link className="link" to="/login">
                 Crear Encuesta
               </Link>
             </Button>

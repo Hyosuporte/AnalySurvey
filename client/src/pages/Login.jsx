@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
-import { FormRegist } from "../components/FormRegist";
-import { FormLogin } from "../components/FormLogin";
+import { FormRegist } from "../components/auth/FormRegist";
+import { FormLogin } from "../components/auth/FormLogin";
 
-// eslint-disable-next-line react/prop-types
 function Navbar({ onOptionClick }) {
   return (
     <AppBar

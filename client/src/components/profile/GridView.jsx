@@ -8,7 +8,6 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import { LogMenu } from "./LogMenu";
 
-// eslint-disable-next-line react/prop-types
 export function GridView({ data }) {
   return (
     <Grid container spacing={2} className="GridView">

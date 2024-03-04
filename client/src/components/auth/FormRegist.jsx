@@ -8,9 +8,8 @@ export function FormRegist() {
     formState: { errors },
     watch,
   } = useForm();
-  const onSubmit = handleSubmit((data) => {
-    console.log(data, errors);
-  });
+  const onSubmit = (data) => console.log(data, errors);
+
   return (
     <Box
       component="form"
@@ -20,24 +19,24 @@ export function FormRegist() {
         margin: "auto",
         textAlign: "center",
       }}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Grid container rowSpacing={4} spacing={2}>
         <Grid item xs={6}>
           <TextField
-            label="Nombre"
+            label="Usuario"
             type="text"
             variant="outlined"
             color="secondary"
             fullWidth
             helperText={
-              errors.last_name?.message || "Ingresar un nombre valido"
+              errors.username?.message || "Ingresar un usuario valido"
             }
-            error={Boolean(errors.last_name)}
-            {...register("last_name", {
+            error={Boolean(errors.username)}
+            {...register("username", {
               required: {
                 value: true,
-                message: "El nombre es requerido",
+                message: "El usuario es requerido",
               },
             })}
           />
@@ -104,9 +103,6 @@ export function FormRegist() {
       <Button variant="contained" size="large" className="button" type="submit">
         Enviar
       </Button>
-      {/*TODO:  Quitar el mensaje de validacion del JSON del formulari oregistrar
-       */}
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </Box>
   );
 }

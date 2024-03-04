@@ -1,5 +1,9 @@
 import { useForm } from "react-hook-form";
 import { TextField, Box, Button } from "@mui/material";
+import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 export function FormLogin() {
   const {
@@ -7,9 +11,17 @@ export function FormLogin() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
+  const navigate = useNavigate();
+  const { singIn, isAuthenticated, errors: singInError } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+  }, [isAuthenticated, navigate]);
+
+  const onSubmit = (data) => singIn(data);
+
   return (
     <Box
       component="form"
@@ -19,7 +31,7 @@ export function FormLogin() {
         margin: "auto",
         textAlign: "center",
       }}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Box sx={{ marginBottom: "2rem" }}>
         <TextField
@@ -53,7 +65,11 @@ export function FormLogin() {
               value: true,
               message: "Contraseña es obligatoria*",
             },
-            minLength: { value: 8, message: "Debe tener minimo 8 caracteres*" },
+            /*  TODO:Recordar que la contraseña esta con 2 caracteres en vez de 8 */
+            minLength: {
+              value: 2,
+              message: "Debe tener minimo 8 caracteres*",
+            },
             maxLength: {
               value: 15,
               message: "Debe tener maximo 15 caracteres*",
@@ -64,6 +80,10 @@ export function FormLogin() {
       <Button variant="contained" size="large" className="button" type="submit">
         Enviar
       </Button>
+      {/* FIXME:Mejorar styles alert */}
+      {singInError.map((e) => (
+        <Alert severity="error">{e}</Alert>
+      ))}
     </Box>
   );
 }

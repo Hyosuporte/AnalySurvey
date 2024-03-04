@@ -2,18 +2,18 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import imgNotFound from "../assets/image/notfound.png";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 export function NotFoundPage() {
   return (
     <main className="not-found-page">
       <Box position="fixed" width="fit-content" top="2.5rem" left="4rem">
-        <Button startIcon={<ArrowBackIosIcon className="icon-black" />}>
-          <Link className="link-black" href="/">
+        <Link to="/">
+          <Button className="button-black" startIcon={<ArrowBackIosIcon className="icon-black" />}>
             Home
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       </Box>
 
       <Box textAlign="center">

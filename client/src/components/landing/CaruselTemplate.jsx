@@ -3,8 +3,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import Slider from "react-slick";
-import img1 from "../assets/image/img4.jpg";
-import img2 from "../assets/image/img5.jpg";
+import img1 from "../../assets/image/img4.jpg";
+import img2 from "../../assets/image/img5.jpg";
 
 let settings = {
   dots: true,
