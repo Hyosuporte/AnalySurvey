@@ -9,14 +9,29 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { useAuth } from "../../context/AuthContext";
 
 const settings = ["Perfil", "Dashboard", "Salir"];
 
 export function NavbarProfile() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const { logout } = useAuth();
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleOptionMenu = (setting) => (event) => {
+    switch (setting) {
+      case "Perfil":
+        break;
+      case "Dashboard":
+        break;
+      case "Salir":
+        logout();
+        break;
+    }
   };
 
   const handleCloseUserMenu = () => {
@@ -69,7 +84,12 @@ export function NavbarProfile() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography
+                    textAlign="center"
+                    onClick={handleOptionMenu(setting)}
+                  >
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

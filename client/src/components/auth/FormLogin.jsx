@@ -81,8 +81,10 @@ export function FormLogin() {
         Enviar
       </Button>
       {/* FIXME:Mejorar styles alert */}
-      {singInError.map((e) => (
-        <Alert severity="error">{e}</Alert>
+      {singInError.map((e, i) => (
+        <Alert key={i} severity="error">
+          {e}
+        </Alert>
       ))}
     </Box>
   );

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useState, useEffect } from "react";
-import { login, register } from "../api/auth";
+import { login, register, verify } from "../api/auth";
 
 export const AuthContext = createContext();
 
@@ -25,12 +26,40 @@ export const AuthProvider = ({ children }) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    const checkLogin = async () => {
+      const token = window.localStorage.getItem("token");
+      if (!token) {
+        setIsAuthenticated(false);
+        setUser(null);
+        return;
+      }
+
+      try {
+        const res = await verify(token);
+        console.log(res.data);
+        if (!res.data) {
+          setIsAuthenticated(false);
+          setUser(null);
+          return;
+        }
+        setIsAuthenticated(true);
+        setUser(res.data);
+      } catch (error) {
+        setIsAuthenticated(false);
+        console.log(error);
+      }
+    };
+
+    checkLogin();
+  }, []);
+
   const singUp = async (user) => {
     try {
       const res = await register(user);
       setUser(res.data);
       setIsAuthenticated(true);
-      console.log(res.data);
+      window.localStorage.setItem("token", res.data.token);
     } catch (error) {
       setErrors(error.response.data);
     }
@@ -41,6 +70,7 @@ export const AuthProvider = ({ children }) => {
       const res = await login(user);
       setUser(res.data);
       setIsAuthenticated(true);
+      window.localStorage.setItem("token", res.data.token);
     } catch (error) {
       if (error.response.data.detail != undefined) {
         setErrors(["Usuario o contraseña invalidos"]);
@@ -50,9 +80,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    window.localStorage.removeItem("token");
+  };
+
   return (
     <AuthContext.Provider
-      value={{ singUp, singIn, user, isAuthenticated, errors }}
+      value={{ singUp, singIn, logout, user, isAuthenticated, errors }}
     >
       {children}
     </AuthContext.Provider>

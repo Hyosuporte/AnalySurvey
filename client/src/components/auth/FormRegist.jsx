@@ -1,5 +1,9 @@
 import { useForm } from "react-hook-form";
 import { TextField, Box, Button, Grid } from "@mui/material";
+import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 export function FormRegist() {
   const {
@@ -8,7 +12,16 @@ export function FormRegist() {
     formState: { errors },
     watch,
   } = useForm();
-  const onSubmit = (data) => console.log(data, errors);
+  const navigate = useNavigate();
+  const { singUp, isAuthenticated, errors: singUpError } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/profile");
+    }
+  }, [isAuthenticated, navigate]);
+
+  const onSubmit = (data) => singUp(data);
 
   return (
     <Box
@@ -50,8 +63,8 @@ export function FormRegist() {
             required
             fullWidth
             helperText={errors.email?.message || "Ingresar un correo valido"}
+            /* FIXME: Mirar si dejar el auto completdo autoComplete="off" */
             error={Boolean(errors.email)}
-            autoComplete="off"
             {...register("email", {
               required: { value: true, message: "El correo es obligatorio*" },
             })}
@@ -103,6 +116,12 @@ export function FormRegist() {
       <Button variant="contained" size="large" className="button" type="submit">
         Enviar
       </Button>
+      {/* FIXME:Mejorar styles alert */}
+      {singUpError.map((e, i) => (
+        <Alert key={i} severity="error">
+          {e}
+        </Alert>
+      ))}
     </Box>
   );
 }
