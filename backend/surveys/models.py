@@ -31,7 +31,7 @@ class OpcionCampoFormulario(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=255, null=True)
     valor = models.CharField(max_length=255, null=False)
-    z = models.ForeignKey(
+    campoFormulario = models.ForeignKey(
         CampoFormulario, on_delete=models.SET_NULL, null=True, related_name='opciones')
 
 

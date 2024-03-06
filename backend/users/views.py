@@ -68,12 +68,13 @@ def verify(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def listForm(request, pk):
-    user = User.objects.get(pk=pk)
+def listForm(request):
+    user = get_object_or_404(User, pk=request.user.id)
     try:
-        form = Formulario.objects.filter(creador_id=user)
+        forms = Formulario.objects.filter(creador_id=user)
+        #forms_res = forms.prefetch_related('campos__respuestas')
     except Formulario.DoesNotExist:
-        form = []
+        forms = []
 
-    serializer = FormSerializer(form, many=True)
+    serializer = FormSerializer(forms, many=True)
     return Response(serializer.data)

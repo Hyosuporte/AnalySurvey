@@ -6,77 +6,95 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 export function ListView({ data }) {
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+
   return (
     <Box component="section" className="ListView">
-      <Stack
-        id="stack"
-        spacing={2}
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="baseline"
-      >
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+      {data.length === 0 ? (
+        /*FIXME: Mejorar el style del mensaje de no found forms */
+        <p>No hay encuestas aun</p>
+      ) : (
+        <Stack
+          id="stack"
+          spacing={2}
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="baseline"
         >
-          <Grid item>
-            <Typography variant="h5" color="black">
-
-            </Typography>
-            <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
-              
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Grid container spacing={2}>
-            
-              <Grid item> Preguntas </Grid>
-              <Grid item> Respuestas </Grid>
-              <Grid item> Actualizacion  </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-
-        {data.map((item) => (
           <Grid
             container
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            key={item.id}
-            id="stack-list"
           >
             <Grid item>
-              <Typography variant="h5" color="black">
-                {" "}
-                {item.title}{" "}
-              </Typography>
-              <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
-                creacion : {item.created}
-              </Typography>
+              <Typography variant="h5" color="black"></Typography>
+              <Typography
+                sx={{ fontSize: ".8rem" }}
+                color="text.secondary"
+              ></Typography>
             </Grid>
             <Grid item>
-              <Grid container spacing={10}>
-                <Grid item>
-                  <Button variant="outlined" color="secondary">
-                    Editar
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="secondary">
-                    Compartir
-                  </Button>
-                </Grid>
-                <Grid item> {item.questions} </Grid>
-                <Grid item> {item.response} </Grid>
-                <Grid item> {item.updated} </Grid>
+              <Grid container spacing={2}>
+                <Grid item> Preguntas </Grid>
+                <Grid item> Respuestas </Grid>
+                <Grid item> Actualizacion </Grid>
               </Grid>
             </Grid>
           </Grid>
-        ))}
-      </Stack>
+
+          {data.map((item) => (
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              key={item.id}
+              id="stack-list"
+            >
+              <Grid item>
+                <Typography variant="h5" color="black">
+                  {" "}
+                  {item.titulo}{" "}
+                </Typography>
+                <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
+                  creacion : {formatDate(item.creado_en)}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Grid container spacing={12} alignItems="center">
+                  <Grid item>
+                    <Button variant="outlined" color="secondary">
+                      Editar
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button variant="outlined" color="secondary">
+                      Compartir
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    {item.campos && item.campos[0] ? item.campos.length : 0}
+                  </Grid>
+                  <Grid item>
+                    {" "}
+                    {item.campos && item.campos[0] && item.campos[0].respuestas
+                      ? item.campos[0].respuestas.length
+                      : 0}{" "}
+                  </Grid>
+                  <Grid item> {formatDate(item.actualizado_en)} </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          ))}
+        </Stack>
+      )}
     </Box>
   );
 }
