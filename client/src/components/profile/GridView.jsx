@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import { LogMenu } from "./LogMenu";
 
-export function GridView({ data }) {
+export function GridView({ data, alert }) {
   return (
     <Grid container spacing={2} className="GridView">
       {data.length === 0 ? (
@@ -35,8 +35,7 @@ export function GridView({ data }) {
               </CardActionArea>
               <CardActions disableSpacing>
                 <p>
-                  {" "}
-                  Respuestas:
+                  Respuestas:{" "}
                   {item &&
                   item.campos &&
                   item.campos[0] &&
@@ -44,7 +43,7 @@ export function GridView({ data }) {
                     ? item.campos[0].respuestas.length
                     : 0}
                 </p>
-                <LogMenu />
+                <LogMenu id={item.id} title={item.titulo} alert={alert} />
               </CardActions>
             </Card>
           </Grid>

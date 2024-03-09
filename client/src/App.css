@@ -1,56 +1,9 @@
-ul {
-  display: flex;
-  padding: 1.5rem;
-  flex-grow: 1;
-  align-items: center;
-}
-
-li {
-  font-size: 1.2rem;
-  margin: 1.5rem;
-}
-
-p,
-input {
-  text-align: justify;
-  line-height: 1.5;
-  font-size: 1rem;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #ffa3fd;
-}
-
-span {
-  color: #ffa3fd;
-}
-
 .icon-white {
   color: white;
 }
 
 .icon-black {
   color: black;
-}
-
-.button {
-  color: white;
-  background-color: #865dff !important;
-  &:hover {
-    background-color: #6340d1 !important;
-  }
-}
-
-.button-black {
-  color: black !important;
-  &:hover {
-    background-color: #9c80fa !important;
-  }
 }
 
 .link {
@@ -61,16 +14,6 @@ span {
 .link-black {
   color: black !important;
   text-decoration: none !important;
-}
-
-.button-view {
-  background-color: #e384ff !important;
-  color: white !important;
-  margin-left: 0.2rem !important;
-}
-
-.button-view.Mui-selected {
-  background-color: #865dff !important;
 }
 
 .textCard {
@@ -216,4 +159,27 @@ span {
     padding-left: 0.7rem;
     padding-right: 0.7rem;
   }
+}
+
+.alert-clipboard {
+  width: 20%;
+  position: fixed;
+  bottom: 1rem;
+  left: 40vw;
+}
+
+.form-title {
+  /* position: absolute as absolute; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 23vw;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.crear-form {
 }

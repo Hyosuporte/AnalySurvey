@@ -1,23 +1,53 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useForms } from "../../context/FormsContext";
 import IconButton from "@mui/material/IconButton";
+import { useNavigate } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
+import { UpdateTitle } from "../UpdateTitle";
 import Menu from "@mui/material/Menu";
 import { useState } from "react";
 
-const options = ["Abrir", "Share", "Renombrar", "Duplicar", "Elimiar"];
+const options = ["Abrir", "Share", "Renombrar", "Duplicar", "Eliminar"];
 
-export function LogMenu() {
+export function LogMenu({ id, title, alert }) {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const { deleteForm, duplicateForm } = useForms();
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (option) => {
+    switch (option) {
+      case "Abrir":
+        navigate(`/profile/${id}/create-form`);
+        break;
+      case "Share":
+        navigator.clipboard
+          .writeText(`http://localhost:5173/forms/${id}`)
+          .then(() => {
+            alert(true);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Renombrar":
+        setModalOpen(true);
+        break;
+      case "Duplicar":
+        duplicateForm(id);
+        break;
+      case "Eliminar":
+        deleteForm(id);
+        break;
+    }
     setAnchorEl(null);
   };
   return (
-    <div className="div-more" >
+    <div className="div-more">
       <IconButton
         aria-label="more"
         id="long-button"
@@ -38,11 +68,17 @@ export function LogMenu() {
         onClose={handleClose}
       >
         {options.map((option) => (
-          <MenuItem key={option} onClick={handleClose}>
+          <MenuItem key={option} onClick={() => handleClose(option)}>
             {option}
           </MenuItem>
         ))}
       </Menu>
+      <UpdateTitle
+        id={id}
+        open={modalOpen}
+        title={title}
+        setOpen={setModalOpen}
+      />
     </div>
   );
 }

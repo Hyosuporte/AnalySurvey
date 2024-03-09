@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Formulario
 from .models import RespuestaFormulario
 from .models import CampoFormulario
+from .models import OpcionCampoFormulario
 
 # FIXME: Mirar si hay datos que sobren
 class RespuestaFormularioSerializer(serializers.ModelSerializer):

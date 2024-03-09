@@ -1,5 +1,7 @@
-import { AuthProvider } from "./context/AuthContext";
+import { CreateForm } from "./pages/CreateForm";
+import { FormsResponder } from "./pages/FormsResponder";
 import { FormProvider } from "./context/FormsContext";
+import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Routes, Route } from "react-router-dom";
@@ -20,8 +22,8 @@ function App() {
 
           <Route element={<ProtectedRoutes />}>
             <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/:id/createform" element={<Profile />} />
-            <Route path="/profile/create" element={<Home />} />
+            <Route path="/profile/:id/create-form" element={<CreateForm />} />
+            <Route path="/forms/:id" element={<FormsResponder />} />
           </Route>
         </Routes>
       </FormProvider>

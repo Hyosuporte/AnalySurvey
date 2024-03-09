@@ -1,16 +1,17 @@
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import GridViewIcon from "@mui/icons-material/GridView";
+import { useForms } from "../../context/FormsContext";
 import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export function OptionViews({ setAligment }) {
   const [inputValue, setInputValue] = useState("Grid");
+  const { createForm } = useForms();
 
   const handleChange = (event, newAlignment) => {
     setInputValue(newAlignment);
@@ -36,10 +37,9 @@ export function OptionViews({ setAligment }) {
           <Button
             className="button"
             startIcon={<AddIcon className="icon-white" />}
+            onClick={() => createForm()}
           >
-            <Link className="link" to="/profile/:id/createform">
-              Crear Encuesta
-            </Link>
+            Crear Encuesta
           </Button>
         </Grid>
         <Grid item>

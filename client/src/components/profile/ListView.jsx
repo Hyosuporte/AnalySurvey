@@ -5,13 +5,24 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-export function ListView({ data }) {
+export function ListView({ data, alert }) {
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("es-ES", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
     });
+  };
+
+  const CopyUrl = (id) => {
+    navigator.clipboard
+      .writeText(`http://localhost:5173/forms/${id}`)
+      .then(() => {
+        alert(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -60,8 +71,7 @@ export function ListView({ data }) {
             >
               <Grid item>
                 <Typography variant="h5" color="black">
-                  {" "}
-                  {item.titulo}{" "}
+                  {item.titulo}
                 </Typography>
                 <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
                   creacion : {formatDate(item.creado_en)}
@@ -75,7 +85,11 @@ export function ListView({ data }) {
                     </Button>
                   </Grid>
                   <Grid item>
-                    <Button variant="outlined" color="secondary">
+                    <Button
+                      variant="outlined"
+                      onClick={() => CopyUrl(item.id)}
+                      color="secondary"
+                    >
                       Compartir
                     </Button>
                   </Grid>
@@ -83,10 +97,9 @@ export function ListView({ data }) {
                     {item.campos && item.campos[0] ? item.campos.length : 0}
                   </Grid>
                   <Grid item>
-                    {" "}
                     {item.campos && item.campos[0] && item.campos[0].respuestas
                       ? item.campos[0].respuestas.length
-                      : 0}{" "}
+                      : 0}
                   </Grid>
                   <Grid item> {formatDate(item.actualizado_en)} </Grid>
                 </Grid>

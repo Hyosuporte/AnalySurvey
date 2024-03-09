@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -39,13 +40,16 @@ export const AuthProvider = ({ children }) => {
         const res = await verify(token);
         if (!res.data) {
           setIsAuthenticated(false);
+          setLoading(false);
           setUser(null);
           return;
         }
         setIsAuthenticated(true);
+        setLoading(false);
         setUser(res.data);
       } catch (error) {
         setIsAuthenticated(false);
+        setLoading(false);
         console.log(error);
       }
     };
@@ -87,7 +91,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ singUp, singIn, logout, user, isAuthenticated, errors }}
+      value={{ singUp, singIn, logout, user, isAuthenticated, errors, loading }}
     >
       {children}
     </AuthContext.Provider>
