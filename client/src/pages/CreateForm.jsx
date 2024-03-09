@@ -2,6 +2,7 @@
 import { useForms } from "../context/FormsContext";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { NavbarForm } from "../components/form/NavbarForm";
 
 export function CreateForm() {
   const { id } = useParams();
@@ -12,7 +13,8 @@ export function CreateForm() {
   }, []);
 
   return (
-    <main className="crear-form" >
+    <main id="crear-form" >
+      <NavbarForm />
       <h3>{JSON.stringify(form)}</h3>
     </main>
   );

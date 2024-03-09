@@ -260,6 +260,10 @@ footer p {
   margin-bottom: 4rem;
 }
 
+.container-nav {
+  max-width: 93.2% !important;
+}
+
 .text-center {
   text-align: center;
 }
@@ -292,4 +296,18 @@ footer p {
 
 .button-view.Mui-selected {
   background-color: #865dff !important;
+}
+
+.link {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.link:focus {
+  color: white !important;
+}
+
+.link-black {
+  color: black !important;
+  text-decoration: none !important;
 }

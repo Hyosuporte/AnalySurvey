@@ -6,16 +6,6 @@
   color: black;
 }
 
-.link {
-  color: white !important;
-  text-decoration: none !important;
-}
-
-.link-black {
-  color: black !important;
-  text-decoration: none !important;
-}
-
 .textCard {
   width: 50%;
   margin: auto;
@@ -97,9 +87,6 @@
   vertical-align: middle;
 }
 
-/* Footer */
-
-/* CSS view Profile */
 #mainProfile {
   background-color: #cccccc;
   min-height: 100vh;
@@ -169,7 +156,6 @@
 }
 
 .form-title {
-  /* position: absolute as absolute; */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -181,5 +167,9 @@
   padding: 1rem;
 }
 
-.crear-form {
+#crear-form {
+  background-color: #cccccc;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
 }
