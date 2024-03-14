@@ -14,8 +14,8 @@ export function UpdateTitle({ id, title, open, setOpen }) {
     formState: { errors },
   } = useForm();
   const handleClose = () => setOpen(false);
-  const { updateForm } = useForms()
-  const onSubmit = (data) => updateForm(id,data);
+  const { updateForm } = useForms();
+  const onSubmit = (data) => updateForm(id, data);
 
   return (
     <div>

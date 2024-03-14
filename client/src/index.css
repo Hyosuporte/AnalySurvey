@@ -138,7 +138,7 @@ body {
 }
 
 * {
-  font-family: "Poppins", sans-serif !important;
+  font-family: Poppins, sans-serif !important;
 }
 
 h1,
@@ -310,4 +310,18 @@ footer p {
 .link-black {
   color: black !important;
   text-decoration: none !important;
+}
+
+.icon-white {
+  color: white;
+}
+
+.icon-black {
+  color: black;
+}
+
+.icon-red {
+  &:hover {
+    color: #ff00009c;
+  }
 }

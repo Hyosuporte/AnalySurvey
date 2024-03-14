@@ -5,19 +5,28 @@ from .models import CampoFormulario
 from .models import OpcionCampoFormulario
 
 # FIXME: Mirar si hay datos que sobren
+
+
 class RespuestaFormularioSerializer(serializers.ModelSerializer):
     class Meta:
         model = RespuestaFormulario
         fields = ['valor', 'campoFormulario_id', 'usuario_id']
 
 
+class OpcionCampoFormularioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OpcionCampoFormulario
+        fields = '__all__'
+
+
 class CampoFormularioSerializer(serializers.ModelSerializer):
     respuestas = RespuestaFormularioSerializer(many=True, read_only=True)
+    opciones = OpcionCampoFormularioSerializer(many=True, read_only=True)
 
     class Meta:
         model = CampoFormulario
-        fields = ['titulo', 'requerido',
-                  'deshabilitado', 'orden', 'formulario_id', 'tipoPregunta_id', 'respuestas']
+        fields = ['id', 'titulo', 'requerido',
+                  'deshabilitado', 'orden', 'formulario_id', 'tipoPregunta_id', 'opciones', 'respuestas']
 
 
 class FormSerializer(serializers.ModelSerializer):

@@ -6,6 +6,10 @@ import {
   duplicateFormReq,
   updateFormReq,
   createFormReq,
+  createOptionReq,
+  deleteOptionReq,
+  updateOpcionReq,
+  updateCampoReq,
 } from "../api/forms";
 
 import { useNavigate } from "react-router-dom";
@@ -23,7 +27,7 @@ export const useForms = () => {
 
 export function FormProvider({ children }) {
   const [forms, setForms] = useState([]);
-  const [form, setForm] = useState([]);
+  const [form, setForm] = useState(null);
   const navigate = useNavigate();
 
   const token = window.localStorage.getItem("token");
@@ -91,6 +95,39 @@ export function FormProvider({ children }) {
     }
   };
 
+  const updateCampo = async (id, data) => {
+    const res = await updateCampoReq(id, token, data);
+    res.status == 200 ? true : false
+  };
+
+  const createOption = async (id, data) => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const res = await createOptionReq(token, id, data);
+      return res.status == 201 ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteOption = async (id) => {
+    try {
+      const res = await deleteOptionReq(id, token);
+      return res.status == 204 ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateOpcion = async (data) => {
+    try {
+      const res = await updateOpcionReq(token, data);
+      return res.status == 200 ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -102,6 +139,10 @@ export function FormProvider({ children }) {
         duplicateForm,
         updateForm,
         createForm,
+        updateCampo,
+        createOption,
+        deleteOption,
+        updateOpcion,
       }}
     >
       {children}

@@ -1,11 +1,3 @@
-.icon-white {
-  color: white;
-}
-
-.icon-black {
-  color: black;
-}
-
 .textCard {
   width: 50%;
   margin: auto;
@@ -172,4 +164,54 @@
   min-height: 100vh;
   height: 100%;
   width: 100%;
+}
+
+.ul-horizon {
+  height: 99%;
+  background: white;
+  flex-direction: column;
+  padding-bottom: 0 !important;
+  width: 95%;
+}
+
+.ul-horizon #content-title {
+  margin: 1rem 1rem;
+}
+
+.ul-horizon li {
+  padding-bottom: 0;
+  padding-top: 0;
+  margin: 0 1rem;
+}
+
+.ul-horizon button {
+  padding: 0;
+}
+
+.ul-horizon div:hover {
+  background-color: transparent;
+}
+
+.ul-horizon span {
+  color: black !important;
+}
+
+.css-1rki8sg-MuiListItem-root.Mui-selected {
+  background-color: #9678ef63 !important;
+}
+
+.orden-p {
+  max-height: 25px;
+  font-size: 1rem !important;
+}
+
+.form-Edit {
+  background-color: rgb(243, 243, 243);
+  width: 80%;
+  margin: auto;
+  margin-top: 3rem;
+  border-radius: 15px;
+  padding: 2px;
+  text-align: center;
+  color: #191825;
 }
