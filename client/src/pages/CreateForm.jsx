@@ -35,7 +35,7 @@ export function CreateForm() {
         </Grid>
         <Grid item sx={{ width: "100%" }}>
           <FormEdit data={form.campos} />
-        </Grid>
+        </Grid> 
       </Grid>
     </main>
   );

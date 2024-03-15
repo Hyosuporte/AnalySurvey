@@ -16,7 +16,7 @@ export function TextOption({ question }) {
   };
 
   return (
-    <div>
+    <div id={question.id}>
       <h5 htmlFor="question-text">Pregunta:</h5>
       <TextField
         type="text"
@@ -27,7 +27,12 @@ export function TextOption({ question }) {
         onChange={(e) => handleChangeQuestion(e.target.value)}
         onBlur={() => handleBlurTitle(question.id)}
       />
-      <TextField disabled type="text" placeholder="Texto de la respuesta" fullWidth />
+      <TextField
+        disabled
+        type="text"
+        placeholder="Texto de la respuesta"
+        fullWidth
+      />
     </div>
   );
 }

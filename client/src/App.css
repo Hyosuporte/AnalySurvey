@@ -215,3 +215,12 @@
   text-align: center;
   color: #191825;
 }
+
+.form-response {
+  border: 2px solid black;
+  flex-direction: column;
+  padding: 2rem;
+  display: flex;
+  margin: 3rem auto;
+  width: 50%;
+}

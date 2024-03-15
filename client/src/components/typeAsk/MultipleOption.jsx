@@ -7,7 +7,7 @@ export function MultipleOption({ question }) {
   const [title, setTitle] = useState(question.titulo);
   const { updateCampo, createOption, deleteOption, updateOpcion } = useForms();
 
-useEffect(() => console.log("recarga") ,[options])
+  useEffect(() => console.log("recarga"), [options]);
 
   const handleAddOption = () => {
     const data = {
@@ -50,7 +50,7 @@ useEffect(() => console.log("recarga") ,[options])
   };
 
   return (
-    <div>
+    <div id={question.id}>
       <h5 htmlFor="question-text">Pregunta:</h5>
       <TextField
         type="text"

@@ -48,7 +48,7 @@ export function CheckOption({ question }) {
   };
 
   return (
-    <div>
+    <div id={question.id}>
       <h5 htmlFor="question-text">Pregunta:</h5>
       <TextField
         type="text"

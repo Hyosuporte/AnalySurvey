@@ -3,7 +3,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import { useNavigate } from "react-router-dom";
 import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
 import List from "@mui/material/List";
@@ -24,11 +23,12 @@ const Colors = (idColor) => {
 
 export function ListP({ data }) {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const navigate = useNavigate();
 
   const handleListItemClick = (id, index) => {
-    console.log(id);
-    navigate(`#${id}`);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
     setSelectedIndex(index);
   };
 
