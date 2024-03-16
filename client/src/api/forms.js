@@ -54,3 +54,8 @@ export const updateOpcionReq = (token, data) =>
   axios.patch(`/forms/${data.id}/update/option/`, data, {
     headers: { Authorization: `Token ${token}` },
   });
+
+export const saveAskReq = (token, data) =>
+  axios.post(`/forms/ask/`, data, {
+    headers: { Authorization: `Token ${token}` },
+  });

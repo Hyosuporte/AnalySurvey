@@ -10,6 +10,7 @@ import {
   deleteOptionReq,
   updateOpcionReq,
   updateCampoReq,
+  saveAskReq,
 } from "../api/forms";
 
 import { useNavigate } from "react-router-dom";
@@ -97,7 +98,7 @@ export function FormProvider({ children }) {
 
   const updateCampo = async (id, data) => {
     const res = await updateCampoReq(id, token, data);
-    res.status == 200 ? true : false
+    res.status == 200 ? true : false;
   };
 
   const createOption = async (id, data) => {
@@ -128,6 +129,15 @@ export function FormProvider({ children }) {
     }
   };
 
+  const saveAsk = async (data) => {
+    try {
+      const res = await saveAskReq(token, data);
+      return res.status == 201 ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -143,6 +153,7 @@ export function FormProvider({ children }) {
         createOption,
         deleteOption,
         updateOpcion,
+        saveAsk,
       }}
     >
       {children}

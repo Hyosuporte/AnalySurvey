@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/v1/forms/delete/option/<int:pk>/', views.delete_option),
     path('api/v1/forms/<int:pk>/update/option/', views.update_option),
     path('api/v1/forms/<int:pk>/update/campo/', views.update_campo),
+    path('api/v1/forms/ask/', views.save_ask),
 ]

@@ -1,12 +1,36 @@
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
+import { useState } from "react";
 
-export function RatinAsnw({ question }) {
+export function RatinAsnw({ question, setRespuestas }) {
+  const maxRating = parseInt(question.opciones[0].valor);
+  const [ratingValue, setRatingValue] = useState(0);
+
+  const handleRatingChange = (event, newValue) => {
+    setRatingValue(newValue);
+    const respuesta = {
+      campoFormulario: question.id,
+      valor: newValue,
+    };
+    setRespuestas((prevRespuestas) => {
+      // Filtrar respuestas anteriores de esta pregunta
+      const filteredRespuestas = prevRespuestas.filter(
+        (respuesta) => respuesta.campoFormulario !== question.id
+      );
+      // Agregar la nueva respuesta
+      return [...filteredRespuestas, respuesta];
+    });
+  };
+
   return (
     <Box component="div">
       <Typography variant="p"> {question.titulo} </Typography>
-      <Rating max={parseInt(question.opciones[0].valor)} />
+      <Rating
+        max={maxRating}
+        value={ratingValue}
+        onChange={handleRatingChange}
+      />
     </Box>
   );
 }

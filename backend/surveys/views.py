@@ -7,9 +7,11 @@ from rest_framework import status
 from .models import Formulario
 from .models import CampoFormulario
 from .models import OpcionCampoFormulario
+from .models import RespuestaFormulario
 from .serializers import FormSerializer
 from .serializers import CampoFormularioSerializer
 from .serializers import OpcionCampoFormularioSerializer
+from .serializers import RespuestaFormularioSerializer
 
 
 @api_view(['GET', 'DELETE'])
@@ -225,3 +227,17 @@ def update_option(request, pk):
         return Response({"message": "Opcion Actualizada"}, status=status.HTTP_200_OK)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def save_ask(request):
+    data = request.data.get("respuestas", [])
+    for ask in data:
+        ask.usuario_id = request.user.id
+        new_ask = RespuestaFormularioSerializer(data=ask)
+        if new_ask.is_valid():
+            print(new_ask)
+
+    return Response({"message": "Llego"}, status=status.HTTP_201_CREATED)

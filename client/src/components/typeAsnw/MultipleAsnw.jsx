@@ -6,13 +6,30 @@ import Radio from "@mui/material/Radio";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 
-export function MultipleAsnw({ question }) {
+export function MultipleAsnw({ question, setRespuestas }) {
   const [opciones] = useState(question.opciones);
+
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleOptionChange = (event) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+    setRespuestas((prevRespuestas) => [
+      ...prevRespuestas.filter(
+        (respuesta) => respuesta.campoFormulario !== question.id
+      ),
+      {
+        campoFormulario: question.id,
+        valor: value,
+      },
+    ]);
+  };
+
   return (
     <Box component="div">
       <Typography variant="p"> {question.titulo} </Typography>
-      <FormControl>
-        <RadioGroup name="radio-buttons-group">
+      <FormControl component="fieldset">
+        <RadioGroup value={selectedOption} onChange={handleOptionChange}>
           {opciones.map((option, index) => (
             <FormControlLabel
               key={index}
