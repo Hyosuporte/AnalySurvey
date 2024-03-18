@@ -8,7 +8,7 @@ export function FormEdit({ data }) {
   return (
     <Box className="form-Edit" component="form">
       {data.map((item, i) => {
-        switch (item.tipoPregunta_id) {
+        switch (item.tipoPregunta) {
           case 1:
             return <MultipleOption key={i} question={item} />;
           case 2:

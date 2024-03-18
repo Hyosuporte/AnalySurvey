@@ -10,6 +10,7 @@ import {
   deleteOptionReq,
   updateOpcionReq,
   updateCampoReq,
+  createCampoReq,
   saveAskReq,
 } from "../api/forms";
 
@@ -96,6 +97,19 @@ export function FormProvider({ children }) {
     }
   };
 
+  const createCampo = async (tipo, formId, orden) => {
+    const data = {
+      titulo: "Nueva Pregunta",
+      requerido: 1,
+      deshabilitado: 0,
+      orden: orden + 1,
+      tipoPregunta: tipo,
+    };
+    const res = await createCampoReq(formId, token, data);
+    res.status == 201 ? true : false;
+    
+  };
+
   const updateCampo = async (id, data) => {
     const res = await updateCampoReq(id, token, data);
     res.status == 200 ? true : false;
@@ -149,6 +163,7 @@ export function FormProvider({ children }) {
         duplicateForm,
         updateForm,
         createForm,
+        createCampo,
         updateCampo,
         createOption,
         deleteOption,

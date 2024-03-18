@@ -7,7 +7,9 @@ import { useState } from "react";
 
 export function RatinOptino({ question }) {
   const [title, setTitle] = useState(question.titulo);
-  const [valueOption, setValueOption] = useState(question.opciones[0].valor);
+  const [valueOption, setValueOption] = useState(
+    question.opciones[0] == undefined ? 0 : question.opciones[0].valor
+  );
   const { updateCampo, updateOpcion } = useForms();
 
   const handleChangeQuestion = (value) => {

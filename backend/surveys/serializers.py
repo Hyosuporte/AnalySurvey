@@ -25,8 +25,7 @@ class CampoFormularioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CampoFormulario
-        fields = ['id', 'titulo', 'requerido',
-                  'deshabilitado', 'orden', 'formulario_id', 'tipoPregunta_id', 'opciones', 'respuestas']
+        fields = '__all__'
 
 
 class FormSerializer(serializers.ModelSerializer):

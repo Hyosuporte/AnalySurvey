@@ -1,13 +1,11 @@
 import TextField from "@mui/material/TextField";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForms } from "../../context/FormsContext";
 
 export function MultipleOption({ question }) {
   const [options, setOptions] = useState(question.opciones);
   const [title, setTitle] = useState(question.titulo);
   const { updateCampo, createOption, deleteOption, updateOpcion } = useForms();
-
-  useEffect(() => console.log("recarga"), [options]);
 
   const handleAddOption = () => {
     const data = {
@@ -16,7 +14,7 @@ export function MultipleOption({ question }) {
     };
     if (createOption(question.id, data)) {
       setOptions([...options, data]);
-      //location.reload();
+      location.reload();
     }
   };
 

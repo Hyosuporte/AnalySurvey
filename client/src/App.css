@@ -171,7 +171,7 @@
   background: white;
   flex-direction: column;
   padding-bottom: 0 !important;
-  width: 95%;
+  width: 90%;
 }
 
 .ul-horizon #content-title {
@@ -214,6 +214,7 @@
   padding: 2px;
   text-align: center;
   color: #191825;
+  height: -webkit-fill-available;
 }
 
 .form-response {

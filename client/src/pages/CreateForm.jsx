@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { NavbarForm } from "../components/form/NavbarForm";
-import { FormEdit } from "../components/form/formEdit";
+import { FormEdit } from "../components/form/FormEdit";
 import { ListP } from "../components/form/ListCampo";
 import { useForms } from "../context/FormsContext";
 import { Loading } from "../components/Loading";
@@ -29,13 +29,15 @@ export function CreateForm() {
         direction="row"
         justifyContent="flex-start"
         flexWrap={"nowrap"}
+        height="100vh"
       >
         <Grid item>
-          <ListP data={form.campos} />
+          <ListP data={form.campos} formId={form.id} />
         </Grid>
-        <Grid item sx={{ width: "100%" }}>
+        {/* FIXME: arreglar los styles del form editar */}
+        <Grid item style={{ flex: 1, overflow: 'auto' }}>
           <FormEdit data={form.campos} />
-        </Grid> 
+        </Grid>
       </Grid>
     </main>
   );

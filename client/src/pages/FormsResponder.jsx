@@ -45,7 +45,7 @@ export function FormsResponder() {
         onSubmit={handleSubmit(onSubmit)}
       >
         {form.campos.map((item, i) => {
-          switch (item.tipoPregunta_id) {
+          switch (item.tipoPregunta) {
             case 1:
               return (
                 <MultipleAsnw

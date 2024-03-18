@@ -34,6 +34,11 @@ export const createFormReq = (token, data) =>
     headers: { Authorization: `Token ${token}` },
   });
 
+export const createCampoReq = (id, token, data) =>
+  axios.post(`/forms/create_campo/${id}/`, data, {
+    headers: { Authorization: `Token ${token}` },
+  });
+
 export const updateCampoReq = (id, token, data) =>
   axios.patch(`/forms/${id}/update/campo/`, data, {
     headers: { Authorization: `Token ${token}` },

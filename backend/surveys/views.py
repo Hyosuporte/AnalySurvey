@@ -168,6 +168,25 @@ def actualizar_formulario(request, pk):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
+def create_campo(request, pk):
+    form = get_object_or_404(Formulario, pk=pk)
+    if form.creador != request.user:
+        return Response({"message": "No authorizado para crear la opcion"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    datos_campo = request.data
+    datos_campo["formulario"] = form.id
+
+    serializer = CampoFormularioSerializer(data=datos_campo)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response({"message": "Error al crear la pregunta"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def create_option(request, pk):
     campo = get_object_or_404(CampoFormulario, pk=pk)
     if campo.formulario.creador != request.user:
@@ -235,9 +254,11 @@ def update_option(request, pk):
 def save_ask(request):
     data = request.data.get("respuestas", [])
     for ask in data:
-        ask.usuario_id = request.user.id
-        new_ask = RespuestaFormularioSerializer(data=ask)
-        if new_ask.is_valid():
-            print(new_ask)
+        ask['usuario_id'] = request.user.id
+        serializer = RespuestaFormularioSerializer(data=ask)
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return Response({"message": "Error al guardar la respuesta"}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({"message": "Llego"}, status=status.HTTP_201_CREATED)
+    return Response({"message": "Se guardo la respuesta"}, status=status.HTTP_400_BAD_REQUEST)
