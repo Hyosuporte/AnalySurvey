@@ -10,7 +10,7 @@ from .models import OpcionCampoFormulario
 class RespuestaFormularioSerializer(serializers.ModelSerializer):
     class Meta:
         model = RespuestaFormulario
-        fields = ['valor', 'campoFormulario_id', 'usuario_id']
+        fields = ['valor', 'campoFormulario', 'usuario']
 
 
 class OpcionCampoFormularioSerializer(serializers.ModelSerializer):

@@ -254,11 +254,11 @@ def update_option(request, pk):
 def save_ask(request):
     data = request.data.get("respuestas", [])
     for ask in data:
-        ask['usuario_id'] = request.user.id
+        ask['usuario'] = request.user.id
         serializer = RespuestaFormularioSerializer(data=ask)
         if serializer.is_valid():
             serializer.save()
         else:
             return Response({"message": "Error al guardar la respuesta"}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({"message": "Se guardo la respuesta"}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"message": "Se guardo la respuesta"}, status=status.HTTP_201_CREATED)
