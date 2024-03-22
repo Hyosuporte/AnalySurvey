@@ -171,7 +171,7 @@
   background: white;
   flex-direction: column;
   padding-bottom: 0 !important;
-  width: 90%;
+  width: 80%;
 }
 
 .ul-horizon #content-title {
@@ -224,4 +224,19 @@
   display: flex;
   margin: 3rem auto;
   width: 50%;
+}
+
+.response-form {
+  background-color: #cccccc;
+  min-height: 100vh;
+  height: auto;
+}
+
+.list-analitys {
+  background-color: white;
+  width: 80%;
+  margin: auto;
+  margin-top: 5rem;
+  height: auto;
+  border-radius: 15px;
 }

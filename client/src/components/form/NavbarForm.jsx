@@ -4,10 +4,12 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import { MenuUser } from "../MenuUser";
-
+import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 
-export function NavbarForm({ title }) {
+export function NavbarForm({ title, formId }) {
+  const urlEdit = `http://localhost:5173/profile/${formId}/create-form`;
+  const urlRes = `http://localhost:5173/profile/${formId}/response-form`;
   return (
     <AppBar position="static" sx={{ background: "#191825" }}>
       <Container className="container-nav">
@@ -37,6 +39,13 @@ export function NavbarForm({ title }) {
             }}
             defaultValue={title}
           />
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
+          <Link className="link-navEdi" href={urlEdit}>
+            Preguntas
+          </Link>
+          <Link className="link-navEdi" href={urlRes}>
+            Respuestas
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <MenuUser />
         </Toolbar>

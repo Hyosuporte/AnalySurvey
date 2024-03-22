@@ -312,6 +312,12 @@ footer p {
   text-decoration: none !important;
 }
 
+.link-navEdi {
+  color: #9c80fa !important;
+  text-decoration: none !important;
+  margin-right: 2.5rem !important;
+}
+
 .icon-white {
   color: white;
 }

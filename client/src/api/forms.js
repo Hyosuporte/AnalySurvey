@@ -64,3 +64,8 @@ export const saveAskReq = (token, data) =>
   axios.post(`/forms/ask/`, data, {
     headers: { Authorization: `Token ${token}` },
   });
+
+export const chartsAnalitys = (token, id) =>
+  axios.get(`/forms/${id}/charts/`, {
+    headers: { Authorization: `Token ${token}` },
+  });

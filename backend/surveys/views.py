@@ -8,6 +8,7 @@ from .models import Formulario
 from .models import CampoFormulario
 from .models import OpcionCampoFormulario
 from .models import RespuestaFormulario
+from django.db.models import Count
 from .serializers import FormSerializer
 from .serializers import CampoFormularioSerializer
 from .serializers import OpcionCampoFormularioSerializer
@@ -262,3 +263,53 @@ def save_ask(request):
             return Response({"message": "Error al guardar la respuesta"}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({"message": "Se guardo la respuesta"}, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def chart_analitys(request, pk):
+    form = get_object_or_404(Formulario, pk=pk)
+    if form.creador != request.user:
+        return Response({"message": "No authorizado para elminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
+    data = {
+        "preguntas": []
+    }
+    for campos in form.campos.all():
+        preguntas = {
+            "id": campos.id,
+            "titulo": campos.titulo,
+            "respuestas": []
+        }
+        if campos.tipoPregunta.id == 1:
+            resul_multi(preguntas, campos)
+        elif campos.tipoPregunta.id == 2:
+            continue
+        elif campos.tipoPregunta.id == 3:
+            resul_check(preguntas, campos)
+        elif campos.tipoPregunta.id == 4:
+            continue
+
+        data["preguntas"].append(preguntas)
+    return Response(data, status=status.HTTP_200_OK)
+
+
+def resul_multi(preguntas, campos):
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor=opciones.valor).aggregate(count=Count('valor'))
+        preguntas["respuestas"].append({
+            "titulo": opciones.titulo,
+            "total": res["count"]
+        })
+
+
+def resul_check(preguntas, campos):
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor__contains=opciones.valor).count()
+
+        preguntas["respuestas"].append({
+            "titulo": opciones.titulo,
+            "total": res
+        })

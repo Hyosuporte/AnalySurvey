@@ -12,6 +12,7 @@ import {
   updateCampoReq,
   createCampoReq,
   saveAskReq,
+  chartsAnalitys,
 } from "../api/forms";
 
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,7 @@ export const useForms = () => {
 
 export function FormProvider({ children }) {
   const [forms, setForms] = useState([]);
+  const [analitys, setAnalitys] = useState();
   const [form, setForm] = useState(null);
   const navigate = useNavigate();
 
@@ -107,7 +109,6 @@ export function FormProvider({ children }) {
     };
     const res = await createCampoReq(formId, token, data);
     res.status == 201 ? true : false;
-    
   };
 
   const updateCampo = async (id, data) => {
@@ -152,6 +153,11 @@ export function FormProvider({ children }) {
     }
   };
 
+  const charts = async (id) => {
+    const res = await chartsAnalitys(token, id);
+    setAnalitys(res.data);
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -169,6 +175,8 @@ export function FormProvider({ children }) {
         deleteOption,
         updateOpcion,
         saveAsk,
+        charts,
+        analitys,
       }}
     >
       {children}
