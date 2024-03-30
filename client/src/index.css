@@ -90,6 +90,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -104,18 +105,22 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
   color: white;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -123,6 +128,7 @@ q:after {
   content: "";
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -271,6 +277,8 @@ footer p {
 .button {
   color: white !important;
   background-color: #865dff !important;
+  padding: .5rem !important;
+
   &:hover {
     background-color: #6340d1 !important;
   }
@@ -278,6 +286,7 @@ footer p {
 
 .button-black {
   color: black !important;
+
   &:hover {
     background-color: #9c80fa !important;
   }
@@ -329,5 +338,29 @@ footer p {
 .icon-red {
   &:hover {
     color: #ff00009c;
+  }
+}
+
+@media (max-width: 1020px) {
+
+  h2,
+  h4 {
+    font-size: 1.5rem !important;
+  }
+
+  h3 {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media (max-width: 620px) {
+
+  h2,
+  h4 {
+    font-size: 1.2rem !important;
+  }
+
+  h3 {
+    font-size: 2rem !important;
   }
 }

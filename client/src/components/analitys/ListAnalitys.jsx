@@ -1,9 +1,11 @@
 import { useForms } from "../../context/FormsContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { BarCharts } from "./BarCharts";
 import { PieCharts } from "./PieCharts";
-import Box from "@mui/material/Box";
 import { Loading } from "../Loading";
+import Box from "@mui/material/Box";
+import RadarCharts from "./RadarCharts";
 
 export function ListAnalitys() {
   const { charts, analitys } = useForms();
@@ -22,10 +24,14 @@ export function ListAnalitys() {
   return (
     <Box classtitulo="list-analitys">
       <h2>Resultados</h2>
-      {analitys.preguntas.map((item) => (
-        <div>
+      {analitys.preguntas.map((item, i) => (
+        <div key={i}>
           <h5> {item.titulo} </h5>
-          <PieCharts analitys={item} />
+          <PieCharts key={`pie-${i}`} analitys={item} />
+          <BarCharts key={`bar-${i}`} analitys={item} />
+          {item.tipoPregunta == 4 ? (
+            <RadarCharts analitys={item} key={`radar-${i}`} />
+          ) : null}
         </div>
       ))}
     </Box>

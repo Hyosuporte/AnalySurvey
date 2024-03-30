@@ -64,7 +64,7 @@ export function Home() {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        id="home"
+        className="containerCard"
       >
         <div className="textCard">
           <Typography variant="h5">
@@ -76,7 +76,7 @@ export function Home() {
             archivos de texto. Lorem Ipsum
           </p>
         </div>
-        <img src={img1} alt="" width="40%" />
+        <img src={img1} alt="" width="45%" />
       </Grid>
       <CardList data={cardData} />
       <CaruselTemplate />

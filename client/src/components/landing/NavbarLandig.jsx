@@ -33,15 +33,12 @@ export function NavbarLandig() {
       <Container className="container-nav">
         <Toolbar disableGutters>
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
-            component="a"
-            href="/"
             sx={{
               mr: 4,
               display: { xs: "none", md: "flex" },
               fontWeight: 600,
-              letterSpacing: ".2rem",
               color: "#865DFF",
             }}
           >
@@ -52,16 +49,14 @@ export function NavbarLandig() {
             <MenuNav pages={pages} />
           </Box>
           <Typography
-            variant="h5"
+          className="title-home"
+            variant="h4"
             noWrap
-            component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontWeight: 500,
-              letterSpacing: ".3rem",
               color: "#865DFF",
             }}
           >

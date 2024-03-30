@@ -10,9 +10,6 @@ export function NavButtonLogin() {
           sx={{
             mr: 3,
             border: "1px solid var(--Color-2, #865DFF)",
-            "&: hover": {
-              background: "#865DFF",
-            },
           }}
         >
           <Link className="link" href="/login">

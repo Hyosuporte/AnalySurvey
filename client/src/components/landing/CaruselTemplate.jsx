@@ -16,21 +16,13 @@ let settings = {
   fade: true,
   cssEase: "linear",
 };
+//FIXME: Add the correct path to the images and the correct text
 
 export function CaruselTemplate() {
   return (
     <section className="carusel-template" id="CaruselTemplate">
       <Typography variant="h6">Plantillas</Typography>
-
-      <Typography
-        variant="h2"
-        sx={{
-          fontWeight: "900",
-        }}
-      >
-        Nuestras plantillas recomendadas
-      </Typography>
-
+      <Typography variant="h2">Nuestras plantillas recomendadas</Typography>
       <Slider {...settings} className="item-carusel">
         <div>
           <div className="text-carusel">
@@ -42,25 +34,9 @@ export function CaruselTemplate() {
               nisl, eu maximus orci tristique id. Suspendisse pellentesque risus
               nec mollis blandit.
             </p>
-            <Link to="/templates">
-              <Button
-                variant="contained"
-                size="large"
-                sx={{
-                  backgroundColor: "#865DFF",
-                  color: "white",
-                  padding: "1rem",
-                  "&:hover": {
-                    backgroundColor: "#6340D1",
-                  },
-                  "&:active": {
-                    backgroundColor: "#4A29A6",
-                  },
-                }}
-              >
-                Comenzar ahora
-              </Button>
-            </Link>
+            <Button variant="contained" size="medium" className="button">
+              <Link to="/templates">Comenzar ahora</Link>
+            </Button>
           </div>
           <img src={img1} />
         </div>
@@ -71,21 +47,7 @@ export function CaruselTemplate() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce .
             </p>
 
-            <Button
-              variant="contained"
-              size="large"
-              sx={{
-                backgroundColor: "#865DFF",
-                color: "white",
-                padding: "1rem",
-                "&:hover": {
-                  backgroundColor: "#6340D1",
-                },
-                "&:active": {
-                  backgroundColor: "#4A29A6",
-                },
-              }}
-            >
+            <Button variant="contained" size="medium" className="button">
               <Link to="/templates">Comenzar ahora</Link>
             </Button>
           </div>

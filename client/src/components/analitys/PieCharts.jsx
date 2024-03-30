@@ -3,11 +3,10 @@ import { ResponsiveContainer, Pie, PieChart, Cell, Tooltip } from "recharts";
 export function PieCharts({ analitys }) {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   const data = [];
-  console.log(analitys);
   analitys.respuestas.map((item, i) => {
     data.push({
       name: analitys.respuestas[i].titulo,
-      total: analitys.respuestas[i].total,
+      total: 100 * (analitys.respuestas[i].total / analitys.total),
     });
   });
 

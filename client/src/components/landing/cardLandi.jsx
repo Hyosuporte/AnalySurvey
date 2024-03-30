@@ -10,17 +10,11 @@ function Card({ title, content, img, row, maxImg, maxText, clasN }) {
       justifyContent="center"
       alignItems="center"
       marginTop={15}
+      className="card-container"
     >
       <Grid item xs={maxText}>
         <div className={clasN}>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "#865DFF",
-            }}
-          >
-            {title}
-          </Typography>
+          <Typography variant="h4">{title}</Typography>
           <p>{content}</p>
         </div>
       </Grid>

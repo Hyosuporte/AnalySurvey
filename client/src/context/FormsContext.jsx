@@ -30,7 +30,7 @@ export const useForms = () => {
 
 export function FormProvider({ children }) {
   const [forms, setForms] = useState([]);
-  const [analitys, setAnalitys] = useState();
+  const [analitys, setAnalitys] = useState([]);
   const [form, setForm] = useState(null);
   const navigate = useNavigate();
 
@@ -154,8 +154,12 @@ export function FormProvider({ children }) {
   };
 
   const charts = async (id) => {
-    const res = await chartsAnalitys(token, id);
-    setAnalitys(res.data);
+    try {
+      const res = await chartsAnalitys(token, id); 
+      setAnalitys(res.data)
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

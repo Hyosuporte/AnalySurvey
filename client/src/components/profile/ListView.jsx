@@ -81,6 +81,7 @@ export function ListView({ data, alert }) {
                 <Grid container spacing={12} alignItems="center">
                   <Grid item>
                     <Button variant="outlined" color="secondary">
+                      { /* Darle funcionalidad a los buttons */ }
                       Editar
                     </Button>
                   </Grid>
