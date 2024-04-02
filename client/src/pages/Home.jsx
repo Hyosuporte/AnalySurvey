@@ -64,9 +64,9 @@ export function Home() {
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        className="containerCard"
+        className="container-card"
       >
-        <div className="textCard">
+        <div className="text-card">
           <Typography variant="h5">
             Lorem Ipsum es simplemente el texto de relleno de las imprentas y
             archivos de texto

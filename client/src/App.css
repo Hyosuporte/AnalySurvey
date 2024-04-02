@@ -12,7 +12,24 @@
   width: 100%;
 }
 
-.textCard {
+.login-container-forms {
+  width: 35vw;
+  border-radius: 15px 15px 15px 15px;
+  background-color: #cccccc;
+}
+
+.not-found-page {
+  background: linear-gradient(180deg, #9678ef 38%, #cccccc 100%);
+  height: 100vh;
+}
+
+.crear-form {
+  background-color: #cccccc;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.text-card {
   width: 50%;
   margin: auto;
 }
@@ -27,11 +44,6 @@
 
 #CardList {
   margin-top: 10rem;
-}
-
-.not-found-page {
-  background: linear-gradient(180deg, #9678ef 38%, #cccccc 100%);
-  height: 100vh;
 }
 
 /* Carousel Templates */
@@ -104,6 +116,10 @@
   width: 90vw !important;
   margin-top: 1px !important;
   margin: auto !important;
+
+  & div {
+    max-width: 100% !important;
+  }
 }
 
 #long-menu {
@@ -157,29 +173,25 @@
   padding: 1rem;
 }
 
-#crear-form {
-  background-color: #cccccc;
-  min-height: 100vh;
-  height: 100%;
-  width: 100%;
-}
+
 
 .ul-horizon {
-  height: 99%;
   background: white;
   flex-direction: column;
-  padding-bottom: 0 !important;
+  padding: 0 !important;
   width: 80%;
+  overflow: auto;
+
 }
 
 .ul-horizon #content-title {
-  margin: 1rem 1rem;
+  margin: .5rem 0rem;
 }
 
 .ul-horizon li {
   padding-bottom: 0;
   padding-top: 0;
-  margin: 0 1rem;
+  margin: 0;
 }
 
 .ul-horizon button {
@@ -204,15 +216,9 @@
 }
 
 .form-Edit {
-  background-color: rgb(243, 243, 243);
   width: 80%;
   margin: auto;
   margin-top: 3rem;
-  border-radius: 15px;
-  padding: 2px;
-  text-align: center;
-  color: #191825;
-  height: -webkit-fill-available;
 }
 
 .form-response {
@@ -239,12 +245,42 @@
   border-radius: 15px;
 }
 
+.form-login {
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+
+.form-regist {
+  width: 75%;
+  margin: auto;
+  text-align: center;
+}
+
 #menu-appbar ul {
   background-color: #191825;
   color: white;
 }
 
-@media (max-width: 1020px) {
+#h6-small {
+  font-size: 1rem;
+}
+
+.logMenu-fecha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.container-campo {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1024px) {
   .card {
     width: 90%;
   }
@@ -283,6 +319,12 @@
 
 }
 
+@media (max-width: 899px) {
+  .GridView {
+    justify-content: center;
+  }
+}
+
 @media (max-width: 840px) {
   .text-carusel {
     margin-right: 25px;
@@ -298,9 +340,13 @@
     padding-left: 0 !important;
   }
 
+  .login-container-forms {
+    width: 80vw;
+  }
+
 }
 
-@media (max-width: 620px) {
+@media (max-width: 720px) {
 
   .title-home {
     font-size: 1.6rem !important;
@@ -314,17 +360,17 @@
     font-size: .7rem;
   }
 
-  .containerCard img {
+  .container-card img {
     display: none;
   }
 
-  .textCard {
+  .text-card {
     margin-top: 2rem;
     width: 85%;
     text-align: center;
   }
 
-  .textCard p {
+  .text-card p {
     width: 80%;
     margin: auto;
     margin-top: 2rem;
@@ -364,9 +410,10 @@
   #footerLandi p {
     font-size: 0.8rem;
   }
+
 }
 
-@media (max-width: 475px) {
+@media (max-width: 480px) {
 
   .title-home {
     font-size: 1.4rem !important;
@@ -401,4 +448,27 @@
     font-size: .85rem !important;
   }
 
+  .form-login {
+    width: 80%;
+  }
+
+  .form-regist {
+    width: 100%;
+
+    & div:first-child {
+      flex-direction: column;
+      align-items: center;
+
+      & div {
+        max-width: 100%;
+      }
+    }
+  }
+
+}
+
+@media (max-width: 375px) {
+  .work-space .button {
+    margin-bottom: .5rem;
+  }
 }

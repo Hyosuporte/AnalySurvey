@@ -29,12 +29,7 @@ export function FormRegist() {
   return (
     <Box
       component="form"
-      sx={{
-        width: 500,
-        height: 250,
-        margin: "auto",
-        textAlign: "center",
-      }}
+      className="form-regist"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Grid container rowSpacing={4} spacing={2}>

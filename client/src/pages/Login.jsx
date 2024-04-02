@@ -20,7 +20,6 @@ function Navbar({ onOptionClick }) {
           sx={{
             marginRight: "2rem",
             marginLeft: "2rem",
-            fontFamily: "Poppins",
           }}
         >
           Iniciar Sesión
@@ -31,7 +30,6 @@ function Navbar({ onOptionClick }) {
           sx={{
             marginRight: "2rem",
             marginLeft: "2rem",
-            fontFamily: "Poppins",
           }}
         >
           Registrarse
@@ -55,18 +53,10 @@ export function Login() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "calc(100vh - 64px)",
+          height: "calc(100vh - 10%)",
         }}
       >
-        <Box
-          sx={{
-            width: "35%",
-            minHeight: "35vh",
-            backgroundColor: "#cccccc",
-            border: "3px solid #865dff",
-            borderRadius: "15px 15px 15px 15px",
-          }}
-        >
+        <Box className="login-container-forms">
           <Navbar onOptionClick={handleOptionClick} />
           {ShowComponent === "FormLogin" && <FormLogin />}
           {ShowComponent === "FormRegist" && <FormRegist />}

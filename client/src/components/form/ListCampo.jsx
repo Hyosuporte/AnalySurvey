@@ -20,7 +20,7 @@ const Colors = (idColor) => {
     case 2:
       return "#191825 !important";
     case 3:
-      return "#E384FF !important";
+      return "#E384Fc !important";
   }
 };
 
@@ -43,7 +43,7 @@ export function ListP({ data, formId }) {
 
   const handleCloseMenu = (value) => {
     if (createCampo(value, formId, data.length)) {
-      location.reload();
+      //location.reload();
     }
     setAnchorEl(null);
   };

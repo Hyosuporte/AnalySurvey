@@ -13,6 +13,7 @@ from .serializers import FormSerializer
 from .serializers import CampoFormularioSerializer
 from .serializers import OpcionCampoFormularioSerializer
 from .serializers import RespuestaFormularioSerializer
+from scipy.stats import pearsonr
 
 
 @api_view(['GET', 'DELETE'])
@@ -279,7 +280,9 @@ def chart_analitys(request, pk):
         preguntas = {
             "id": campos.id,
             "titulo": campos.titulo,
-            "respuestas": []
+            "respuestas": [],
+            "total": total_res(campos),
+            "tipoPregunta": campos.tipoPregunta.id
         }
         if campos.tipoPregunta.id == 1:
             resul_multi(preguntas, campos)
@@ -288,7 +291,7 @@ def chart_analitys(request, pk):
         elif campos.tipoPregunta.id == 3:
             resul_check(preguntas, campos)
         elif campos.tipoPregunta.id == 4:
-            continue
+            result_ratin(preguntas, campos)
 
         data["preguntas"].append(preguntas)
     return Response(data, status=status.HTTP_200_OK)
@@ -313,3 +316,27 @@ def resul_check(preguntas, campos):
             "titulo": opciones.titulo,
             "total": res
         })
+
+
+def result_ratin(preguntas, campos):
+    for opciones in campos.opciones.all():
+        for option_ratin in range(1, int(opciones.valor)+1):
+            res = RespuestaFormulario.objects.filter(
+                campoFormulario_id=4, valor=option_ratin).aggregate(count=Count('valor'))
+            preguntas["respuestas"].append({
+                "titulo": "Calificacion de " + str(option_ratin),
+                "total": res["count"]
+            })
+
+
+def total_res(campos):
+    res = RespuestaFormulario.objects.filter(
+        campoFormulario_id=campos.id).count()
+    return res
+
+
+def resul_cova(preguntas, campos):
+    res_int = [float(res.valor) for res in campos.respuestas.all()]
+    correlacion, valor_p = pearsonr(res_int, res_int)
+    print("coeficiente de correlacion: ", correlacion)
+    print("valor p: ", valor_p)

@@ -23,7 +23,6 @@ export function Profile() {
     <main id="mainProfile">
       <NavbarProfile />
       <OptionViews setAligment={setAligment} />
-      {/* TODO: Terminar componente Grid */}
       {alignment == "Grid" ? (
         <GridView data={forms} alert={setOpen} />
       ) : (

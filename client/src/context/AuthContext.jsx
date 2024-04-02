@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }) => {
       const res = await register(user);
       setUser(res.data);
       setIsAuthenticated(true);
+      setLoading(false);
       window.localStorage.setItem("token", res.data.token);
     } catch (error) {
       setErrors(error.response.data);
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }) => {
       const res = await login(user);
       setUser(res.data);
       setIsAuthenticated(true);
+      setLoading(false);
       window.localStorage.setItem("token", res.data.token);
     } catch (error) {
       if (error.response.data.detail != undefined) {

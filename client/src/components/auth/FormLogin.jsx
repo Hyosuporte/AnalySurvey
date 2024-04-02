@@ -20,19 +20,14 @@ export function FormLogin() {
     if (isAuthenticated) {
       navigate("/profile");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated]);
 
   const onSubmit = (data) => singIn(data);
 
   return (
     <Box
       component="form"
-      sx={{
-        width: 350,
-        height: 250,
-        margin: "auto",
-        textAlign: "center",
-      }}
+      className="form-login"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Box sx={{ marginBottom: "2rem" }}>

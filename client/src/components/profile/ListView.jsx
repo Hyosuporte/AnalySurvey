@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { LogMenu } from "./LogMenu";
 
 export function ListView({ data, alert }) {
   const formatDate = (date) => {
@@ -44,13 +45,7 @@ export function ListView({ data, alert }) {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Grid item>
-              <Typography variant="h5" color="black"></Typography>
-              <Typography
-                sx={{ fontSize: ".8rem" }}
-                color="text.secondary"
-              ></Typography>
-            </Grid>
+            <Grid item></Grid>
             <Grid item>
               <Grid container spacing={2}>
                 <Grid item> Preguntas </Grid>
@@ -70,7 +65,7 @@ export function ListView({ data, alert }) {
               id="stack-list"
             >
               <Grid item>
-                <Typography variant="h5" color="black">
+                <Typography variant="h6" id="h6-small" color="black">
                   {item.titulo}
                 </Typography>
                 <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
@@ -80,21 +75,6 @@ export function ListView({ data, alert }) {
               <Grid item>
                 <Grid container spacing={12} alignItems="center">
                   <Grid item>
-                    <Button variant="outlined" color="secondary">
-                      { /* Darle funcionalidad a los buttons */ }
-                      Editar
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="outlined"
-                      onClick={() => CopyUrl(item.id)}
-                      color="secondary"
-                    >
-                      Compartir
-                    </Button>
-                  </Grid>
-                  <Grid item>
                     {item.campos && item.campos[0] ? item.campos.length : 0}
                   </Grid>
                   <Grid item>
@@ -102,7 +82,12 @@ export function ListView({ data, alert }) {
                       ? item.campos[0].respuestas.length
                       : 0}
                   </Grid>
-                  <Grid item> {formatDate(item.actualizado_en)} </Grid>
+                  <Grid item>
+                    <div className="logMenu-fecha" >
+                      {formatDate(item.actualizado_en)}{" "}
+                      <LogMenu id={item.id} title={item.titulo} alert={alert} />{" "}
+                    </div>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

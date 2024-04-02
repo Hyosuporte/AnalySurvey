@@ -1,6 +1,7 @@
-import TextField from "@mui/material/TextField";
-import { useState } from "react";
 import { useForms } from "../../context/FormsContext";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { useState } from "react";
 
 export function TextOption({ question }) {
   const [title, setTitle] = useState(question.titulo);
@@ -16,7 +17,7 @@ export function TextOption({ question }) {
   };
 
   return (
-    <div id={question.id}>
+    <Box className="container-campo" id={question.id}>
       <h5 htmlFor="question-text">Pregunta:</h5>
       <TextField
         type="text"
@@ -33,6 +34,6 @@ export function TextOption({ question }) {
         placeholder="Texto de la respuesta"
         fullWidth
       />
-    </div>
+    </Box>
   );
 }

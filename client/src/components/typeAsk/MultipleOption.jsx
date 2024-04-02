@@ -1,6 +1,7 @@
-import TextField from "@mui/material/TextField";
-import { useState } from "react";
 import { useForms } from "../../context/FormsContext";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { useState } from "react";
 
 export function MultipleOption({ question }) {
   const [options, setOptions] = useState(question.opciones);
@@ -48,7 +49,7 @@ export function MultipleOption({ question }) {
   };
 
   return (
-    <div id={question.id}>
+    <Box className="container-campo"  id={question.id}>
       <h5 htmlFor="question-text">Pregunta:</h5>
       <TextField
         type="text"
@@ -75,6 +76,6 @@ export function MultipleOption({ question }) {
         ))}
       </ul>
       <button onClick={handleAddOption}>Agregar opción</button>
-    </div>
+    </Box>
   );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { NavbarForm } from "../components/form/NavbarForm"; 
+import { NavbarForm } from "../components/form/NavbarForm";
 import { FormEdit } from "../components/form/FormEdit";
 import { ListP } from "../components/form/ListCampo";
 import { useForms } from "../context/FormsContext";
@@ -20,22 +20,24 @@ export function CreateForm() {
   }, []);
 
   if (loading) return <Loading />;
-
+  {
+    /* FIXME: Poner una alerta a la hora de eliminar una opcion de una pregunta o cambiar su titulo */
+  }
   return (
-    <main id="crear-form">
+    <main className="crear-form">
       <NavbarForm title={form.titulo} formId={form.id} />
       <Grid
         container
         direction="row"
         justifyContent="flex-start"
-        flexWrap={"nowrap"}
-        height="100vh"
+        flexWrap={"wrap"}
+        height="auto"
       >
-        <Grid item>
+        <Grid item xs={12} md={3}>
           <ListP data={form.campos} formId={form.id} />
         </Grid>
         {/* FIXME: arreglar los styles del form editar */}
-        <Grid item style={{ flex: 1, overflow: "auto" }}>
+        <Grid item style={{ flex: 1 }}>
           <FormEdit data={form.campos} />
         </Grid>
       </Grid>

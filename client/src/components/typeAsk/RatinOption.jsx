@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import { useState } from "react";
 
 export function RatinOptino({ question }) {
@@ -30,7 +31,7 @@ export function RatinOptino({ question }) {
   };
 
   return (
-    <div id={question.id}>
+    <Box className="container-campo" id={question.id}>
       <h5 htmlFor="question-text">Pregunta:</h5>
       <TextField
         type="text"
@@ -55,6 +56,6 @@ export function RatinOptino({ question }) {
           </Select>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }
