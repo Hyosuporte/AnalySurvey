@@ -1,5 +1,9 @@
+import ChecklistIcon from "@mui/icons-material/Checklist";
 import { useForms } from "../../context/FormsContext";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 
@@ -50,32 +54,53 @@ export function CheckOption({ question }) {
 
   return (
     <Box className="container-campo" id={question.id}>
-      <h5 htmlFor="question-text">Pregunta:</h5>
-      <TextField
-        type="text"
-        defaultValue={question.titulo}
-        fullWidth
-        color="secondary"
-        autoComplete="off"
-        onChange={(e) => handleChangeQuestion(e.target.value)}
-        onBlur={() => handleBlurTitle(question.id)}
-      />
-      <ul>
-        {options.map((option, index) => (
-          <li key={index}>
-            <input
-              type="text"
-              value={option.titulo}
-              onChange={(e) => handleChangeOption(index, e.target.value)}
-              onBlur={() => handleBlurOption(index)}
-            />
-            <button onClick={() => handleRemoveOption(index, option.id)}>
-              Eliminar
-            </button>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleAddOption}>Agregar opción</button>
+      <div className="container-titulo-quest">
+        <h4 htmlFor="question-text">
+          <ChecklistIcon sx={{ color: "#865dff" }} fontSize="medium" />{" "}
+          {question.orden}
+        </h4>
+
+        <TextField
+          type="text"
+          defaultValue={question.titulo}
+          label="Pregunta de opcion Multiple"
+          variant="standard"
+          color="secondary"
+          autoComplete="off"
+          className="question-input"
+          onChange={(e) => handleChangeQuestion(e.target.value)}
+          onBlur={() => handleBlurTitle(question.id)}
+        />
+      </div>
+      <div className="container-options-quest">
+        <ul className="ul-horizon">
+          {options.map((option, index) => (
+            <li key={index}>
+              <input
+                type="check"
+                value={option.titulo}
+                className="option-input"
+                onChange={(e) => handleChangeOption(index, e.target.value)}
+                onBlur={() => handleBlurOption(index)}
+              />
+              <IconButton
+                className="button-option-d"
+                onClick={() => handleRemoveOption(index, option.id)}
+              >
+                <ClearIcon sx={{ color: "#ff00009c" }} />
+              </IconButton>
+            </li>
+          ))}
+        </ul>
+        <Button
+          variant="outlined"
+          color="secondary"
+          className="button-option-a"
+          onClick={handleAddOption}
+        >
+          Agregar opción
+        </Button>
+      </div>
     </Box>
   );
 }

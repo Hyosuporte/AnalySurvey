@@ -1,3 +1,4 @@
+import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 import { useForms } from "../../context/FormsContext";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -18,22 +19,34 @@ export function TextOption({ question }) {
 
   return (
     <Box className="container-campo" id={question.id}>
-      <h5 htmlFor="question-text">Pregunta:</h5>
-      <TextField
-        type="text"
-        defaultValue={question.titulo}
-        fullWidth
-        color="secondary"
-        autoComplete="off"
-        onChange={(e) => handleChangeQuestion(e.target.value)}
-        onBlur={() => handleBlurTitle(question.id)}
-      />
-      <TextField
-        disabled
-        type="text"
-        placeholder="Texto de la respuesta"
-        fullWidth
-      />
+      <div className="container-titulo-quest">
+        <h4 htmlFor="question-text">
+          {" "}
+          <ViewHeadlineIcon sx={{ color: "#865dff" }} fontSize="medium" />{" "}
+          {question.orden}
+        </h4>
+        <TextField
+          type="text"
+          defaultValue={question.titulo}
+          label="Texto de la pregunta"
+          variant="standard"
+          color="secondary"
+          autoComplete="off"
+          className="question-input"
+          onChange={(e) => handleChangeQuestion(e.target.value)}
+          onBlur={() => handleBlurTitle(question.id)}
+        />
+      </div>
+      <div className="container-options-quest">
+        <TextField
+          disabled
+          type="text"
+          variant="standard"
+          color="secondary"
+          placeholder="Texto de la respuesta"
+          className="option-disable"
+        />
+      </div>
     </Box>
   );
 }

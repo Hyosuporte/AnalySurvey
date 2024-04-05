@@ -49,7 +49,7 @@ export function ListP({ data, formId }) {
   };
 
   return (
-    <List className="ul-horizon">
+    <List className="list-Campos">
       <ListItem
         id="content-title"
         secondaryAction={

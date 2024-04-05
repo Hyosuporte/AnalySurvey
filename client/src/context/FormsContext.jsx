@@ -108,7 +108,7 @@ export function FormProvider({ children }) {
       tipoPregunta: tipo,
     };
     const res = await createCampoReq(formId, token, data);
-    res.status == 201 ? setForm(...fo) : false;
+//    res.status == 201 ? setForm(...fo) : false;
   };
 
   const updateCampo = async (id, data) => {

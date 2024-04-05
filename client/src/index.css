@@ -219,7 +219,8 @@ h6 {
 p {
   font-size: 1rem;
 }
-/*  Fin del reset */
+
+/* #region Fin reset css */
 
 ul {
   display: flex;
@@ -339,6 +340,78 @@ footer p {
   &:hover {
     color: #ff00009c;
   }
+}
+
+.option-input {
+  border: 2px solid #8644A2;
+  border-radius: 5px;
+  padding: .4rem;
+  font-size: 1rem;
+}
+
+.option-disable {
+  margin-top: 1rem !important;
+  margin-left: 7rem !important;
+  width: 83%;
+  padding: .4rem;
+  font-size: 1rem;
+}
+
+.option-input[type="check"] {
+  border: 2px dashed #8644A2;
+  border-radius: 5px;
+  padding: .4rem;
+  font-size: 1rem;
+}
+
+.option-input:focus {
+  background-color: #e9e9e9;
+  border: 2px solid #865dff;
+}
+
+.option-input:hover {
+  background-color: #dededea7;
+}
+
+.ul-horizon {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.container-titulo-quest {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+
+  & h4 {
+    margin-top: 1rem;
+    margin-right: 1rem;
+  }
+
+  & .question-input {
+    width: 75%;
+  }
+
+}
+
+.container-options-quest {
+  width: 90%;
+  margin: auto;
+
+  & .button-option-d {
+    position: relative;
+    left: -2.2rem;
+  }
+
+  & .button-option-a {
+    margin-left: 3rem;
+  }
+}
+
+.question-input input {
+  border-bottom: 3.5px solid;
+  font-size: 1.4rem;
 }
 
 @media (max-width: 1020px) {

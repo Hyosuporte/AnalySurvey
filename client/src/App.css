@@ -175,34 +175,33 @@
 
 
 
-.ul-horizon {
+.list-Campos {
   background: white;
   flex-direction: column;
   padding: 0 !important;
   width: 80%;
-  overflow: auto;
-
+  overflow: hidden;
 }
 
-.ul-horizon #content-title {
+.list-Campos #content-title {
   margin: .5rem 0rem;
 }
 
-.ul-horizon li {
+.list-Campos li {
   padding-bottom: 0;
   padding-top: 0;
   margin: 0;
 }
 
-.ul-horizon button {
+.list-Campos button {
   padding: 0;
 }
 
-.ul-horizon div:hover {
+.list-Campos div:hover {
   background-color: transparent;
 }
 
-.ul-horizon span {
+.list-Campos span {
   color: black !important;
 }
 
