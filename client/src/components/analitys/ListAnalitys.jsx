@@ -26,13 +26,19 @@ export function ListAnalitys() {
       <h2>Resultados</h2>
       {/* /* FIXME:Poner la validacion de que no liste las barras ni los pies cuando son de tipo 4 las preguntas /*  */}
       {analitys.preguntas.map((item, i) => (
-        <div key={i}>
+        <div className="container-campo-resul" key={i}>
           <h5> {item.titulo} </h5>
-          <PieCharts key={`pie-${i}`} analitys={item} />
-          <BarCharts key={`bar-${i}`} analitys={item} />
-          {item.tipoPregunta == 4 ? (
-            <RadarCharts analitys={item} key={`radar-${i}`} />
-          ) : null}
+          <div className="container-charts" >
+            {item.tipoPregunta != 4 ? (
+              <>
+                <PieCharts key={`pie-${i}`} analitys={item} />
+                <BarCharts key={`bar-${i}`} analitys={item} />
+              </>
+            ) : null}
+            {item.tipoPregunta == 4 ? (
+              <RadarCharts analitys={item} key={`radar-${i}`} />
+            ) : null}
+          </div>
         </div>
       ))}
     </Box>

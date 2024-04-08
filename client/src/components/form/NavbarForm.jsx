@@ -27,18 +27,6 @@ export function NavbarForm({ title, formId }) {
           >
             Analy Survey
           </Typography>
-          /
-          <TextField
-            type="text"
-            size="small"
-            variant="filled"
-            color="secondary"
-            sx={{
-              marginBottom: ".9rem",
-              background: "red",
-            }}
-            defaultValue={title}
-          />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
           <Link className="link-navEdi" href={urlEdit}>
             Preguntas

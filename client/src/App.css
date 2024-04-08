@@ -173,8 +173,6 @@
   padding: 1rem;
 }
 
-
-
 .list-Campos {
   background: white;
   flex-direction: column;
@@ -277,6 +275,20 @@
   border-radius: 15px;
   padding: 1rem;
   margin-bottom: 2rem;
+}
+
+.container-campo-resul {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin: auto;
+  margin-bottom: 2rem;
+  width: 80%;
+}
+
+.container-charts {
+  display: flex;
+  align-items: center;
 }
 
 @media (max-width: 1024px) {
