@@ -181,9 +181,15 @@ def create_campo(request, pk):
     serializer = CampoFormularioSerializer(data=datos_campo)
     if serializer.is_valid():
         serializer.save()
+        if datos_campo["tipoPregunta"] == 4:
+            OpcionCampoFormulario.objects.create(
+                titulo=3,
+                valor=3,
+                campoFormulario=serializer.instance
+            )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        return Response({"message": "Error al crear la pregunta"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])

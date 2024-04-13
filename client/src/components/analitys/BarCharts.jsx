@@ -1,7 +1,6 @@
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Legend,
   ResponsiveContainer,
   Tooltip,
@@ -18,9 +17,17 @@ export function BarCharts({ analitys }) {
     });
   });
   return (
-    <ResponsiveContainer width="50%" aspect={2} >
-      <BarChart data={data} width={500} heigth={300}>
-        <CartesianGrid strokeDasharray="4 1 2" />
+    <ResponsiveContainer className="bar-chart" width="50%" aspect={1.9}>
+      <BarChart
+        data={data}
+        width="40%"
+        heigth="80%"
+        margin={{
+          top: 5,
+          right: 30,
+          bottom: 5,
+        }}
+      >
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />

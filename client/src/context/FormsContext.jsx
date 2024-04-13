@@ -108,7 +108,7 @@ export function FormProvider({ children }) {
       tipoPregunta: tipo,
     };
     const res = await createCampoReq(formId, token, data);
-//    res.status == 201 ? setForm(...fo) : false;
+    res.status == 201 ? true : false;
   };
 
   const updateCampo = async (id, data) => {
@@ -155,10 +155,10 @@ export function FormProvider({ children }) {
 
   const charts = async (id) => {
     try {
-      const res = await chartsAnalitys(token, id); 
-      setAnalitys(res.data)
+      const res = await chartsAnalitys(token, id);
+      setAnalitys(res.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 

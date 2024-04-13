@@ -1,3 +1,4 @@
+import AdsClickIcon from "@mui/icons-material/AdsClick";
 import { useForms } from "../../context/FormsContext";
 import ClearIcon from "@mui/icons-material/Clear";
 import IconButton from "@mui/material/IconButton";
@@ -51,13 +52,13 @@ export function MultipleOption({ question }) {
     updateCampo(id, question);
   };
 
-
   return (
     <Box className="container-campo" id={question.id}>
       {/* FIXME: Buscar un icon para el titulo de la pregunta para indicar al suario que tipo de pregunta es */}
       <div className="container-titulo-quest">
         <h4 htmlFor="question-text">
-          {question.orden} {" -> "}
+          <AdsClickIcon sx={{ color: "#865dff" }} fontSize="medium" />{" "}
+          {question.orden}
         </h4>
         <TextField
           type="text"

@@ -20,7 +20,7 @@ export function ResponseForm() {
   if (loading) return <Loading />;
 
   return (
-    <main className="response-form">
+    <main className="container-analytis">
       <NavbarForm title={form.titulo} formId={form.id} />
       <ListAnalitys />
     </main>

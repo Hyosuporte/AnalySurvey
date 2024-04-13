@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 
 export function NavbarForm({ title, formId }) {
   const urlEdit = `http://localhost:5173/profile/${formId}/create-form`;
-  const urlRes = `http://localhost:5173/profile/${formId}/response-form`;
+  const urlRes = `http://localhost:5173/profile/${formId}/analysis-form`;
   return (
     <AppBar position="static" sx={{ background: "#191825" }}>
       <Container className="container-nav">

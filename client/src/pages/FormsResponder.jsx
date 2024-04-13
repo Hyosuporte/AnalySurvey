@@ -38,7 +38,8 @@ export function FormsResponder() {
 
   //FIXME: Poner el FormControl a cada pregunta y mejorar los styles
   return (
-    <main>
+    <main className="form-responder" >
+      <h3> { form.titulo } </h3>
       <Box
         className="form-response"
         component="form"

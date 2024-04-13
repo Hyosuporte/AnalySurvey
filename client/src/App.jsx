@@ -25,7 +25,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:id/create-form" element={<CreateForm />} />
             <Route
-              path="/profile/:id/response-form"
+              path="/profile/:id/analysis-form"
               element={<ResponseForm />}
             />
             <Route path="/forms/:id" element={<FormsResponder />} />

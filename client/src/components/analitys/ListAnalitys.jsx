@@ -24,11 +24,10 @@ export function ListAnalitys() {
   return (
     <Box classtitulo="list-analitys">
       <h2>Resultados</h2>
-      {/* /* FIXME:Poner la validacion de que no liste las barras ni los pies cuando son de tipo 4 las preguntas /*  */}
       {analitys.preguntas.map((item, i) => (
         <div className="container-campo-resul" key={i}>
           <h5> {item.titulo} </h5>
-          <div className="container-charts" >
+          <div className="container-charts">
             {item.tipoPregunta != 4 ? (
               <>
                 <PieCharts key={`pie-${i}`} analitys={item} />
