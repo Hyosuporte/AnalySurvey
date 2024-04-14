@@ -1,14 +1,14 @@
-import { FormsResponder } from "./pages/FormsResponder";
+import { SurveyAnalysis } from "./pages/SurveyAnalysis";
+import { FormAnswering } from "./pages/FormAnswering";
 import { FormProvider } from "./context/FormsContext";
 import { AuthProvider } from "./context/AuthContext";
-import { ResponseForm } from "./pages/ResponseForm";
 import { ProtectedRoutes } from "./ProtectedRoutes";
-import { NotFoundPage } from "./pages/NotFoundPage";
+import { PageNotFound } from "./pages/PageNotFound";
+import { SurveyGenerator } from "./pages/SurveyGenerator";
 import { Routes, Route } from "react-router-dom";
-import { CreateForm } from "./pages/CreateForm";
-import { Profile } from "./pages/Profile";
-import { Login } from "./pages/Login";
-import { Home } from "./pages/Home";
+import { Overiew } from "./pages/Overiew";
+import { SingIn } from "./pages/SingIn";
+import { HomePage } from "./pages/HomePage";
 import "./App.css";
 
 function App() {
@@ -16,19 +16,16 @@ function App() {
     <AuthProvider>
       <FormProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/templates" element={<Profile />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<SingIn />} />
+          <Route path="/templates" element={<Overiew />} />
+          <Route path="*" element={<PageNotFound />} />
 
           <Route element={<ProtectedRoutes />}>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/:id/create-form" element={<CreateForm />} />
-            <Route
-              path="/profile/:id/analysis-form"
-              element={<ResponseForm />}
-            />
-            <Route path="/forms/:id" element={<FormsResponder />} />
+            <Route path="/dashboard" element={<Overiew />} />
+            <Route path="/survey/create/:id" element={<SurveyGenerator />} />
+            <Route path="/survey/analysis/:id" element={<SurveyAnalysis />} />
+            <Route path="/forms/:id" element={<FormAnswering />} />
           </Route>
         </Routes>
       </FormProvider>

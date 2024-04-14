@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/AuthContext";
-import { NavButtonLogin } from "./NavButtonLogin";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { ButtonsLogin } from "./ButtonsLogin";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import AppBar from "@mui/material/AppBar";
@@ -9,6 +9,7 @@ import { MenuUser } from "../MenuUser";
 import { Link } from "@mui/material";
 import Box from "@mui/material/Box";
 import { MenuNav } from "./MenuNav";
+import { Loading } from "../Loading";
 
 const pages = [
   {
@@ -20,8 +21,10 @@ const pages = [
   { title: "Inicio", href: "#home" },
 ];
 
-export function NavbarLandig() {
-  const { isAuthenticated } = useAuth();
+export function NavbarHome() {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) return <Loading />;
 
   return (
     <AppBar
@@ -49,7 +52,7 @@ export function NavbarLandig() {
             <MenuNav pages={pages} />
           </Box>
           <Typography
-          className="title-home"
+            className="title-home"
             variant="h4"
             noWrap
             sx={{
@@ -73,7 +76,7 @@ export function NavbarLandig() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {isAuthenticated == true ? <MenuUser /> : <NavButtonLogin />}
+            {isAuthenticated == true ? <MenuUser /> : <ButtonsLogin />}
           </Box>
         </Toolbar>
       </Container>

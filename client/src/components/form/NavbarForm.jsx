@@ -1,5 +1,4 @@
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
@@ -7,9 +6,9 @@ import { MenuUser } from "../MenuUser";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 
-export function NavbarForm({ title, formId }) {
+export function NavbarForm({ formId }) {
   const urlEdit = `http://localhost:5173/profile/${formId}/create-form`;
-  const urlRes = `http://localhost:5173/profile/${formId}/analysis-form`;
+  const urlRes = `/survey/analysis/${formId}`;
   return (
     <AppBar position="static" sx={{ background: "#191825" }}>
       <Container className="container-nav">

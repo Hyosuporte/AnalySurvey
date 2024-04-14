@@ -13,18 +13,19 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let timer;
     if (errors.length > 0) {
-      const timer = setTimeout(() => {
+      timer = setTimeout(() => {
         setErrors([]);
       }, 4000);
-      return () => clearTimeout(timer);
     }
+    return () => clearTimeout(timer);
   }, [errors]);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       const token = window.localStorage.getItem("token");
       if (!token) {
         setIsAuthenticated(false);
+        setLoading(false);
         setUser(null);
         return;
       }
@@ -50,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         setIsAuthenticated(false);
         setLoading(false);
-        console.log(error);
+        setErrors((prevErrors) => [...prevErrors, error]);
       }
     };
 
@@ -93,7 +95,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ singUp, singIn, logout, user, isAuthenticated, errors, loading }}
+      value={{
+        singUp,
+        singIn,
+        logout,
+        user,
+        isAuthenticated,
+        errors,
+        isLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

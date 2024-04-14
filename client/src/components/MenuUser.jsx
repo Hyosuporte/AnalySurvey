@@ -26,7 +26,7 @@ export function MenuUser() {
         console.log(event);
         break;
       case "Dashboard":
-        navigate("/profile");
+        navigate("/dashboard");
         break;
       case "Salir":
         logout();

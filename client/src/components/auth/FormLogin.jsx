@@ -18,7 +18,7 @@ export function FormLogin() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/profile");
+      navigate("/dashboard");
     }
   }, [isAuthenticated]);
 

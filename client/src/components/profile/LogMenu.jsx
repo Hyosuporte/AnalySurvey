@@ -22,7 +22,7 @@ export function LogMenu({ id, title, alert }) {
   const handleClose = (option) => {
     switch (option) {
       case "Abrir":
-        navigate(`/profile/${id}/create-form`);
+        navigate(`/survey/create/${id}`);
         break;
       case "Share":
         navigator.clipboard

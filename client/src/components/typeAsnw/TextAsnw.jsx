@@ -21,8 +21,8 @@ export function TextAsnw({ question, setRespuestas }) {
   };
 
   return (
-    <Box component="div">
-      <Typography variant="p"> {question.titulo} </Typography>
+    <Box component="div" className="container-asnwer">
+      <Typography variant="h6"> {question.titulo} </Typography>
       <TextField
         type="text"
         fullWidth

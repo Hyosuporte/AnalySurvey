@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-export function FormsResponder() {
+export function FormAnswering() {
   const { handleSubmit } = useForm();
   const [loading, setLoading] = useState(true);
   const [respuestas, setRespuestas] = useState([]);
@@ -18,9 +18,13 @@ export function FormsResponder() {
   const { id } = useParams();
 
   useEffect(() => {
-    getForm(id).then(() => {
-      setLoading(false);
-    });
+    getForm(id)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching form:", error);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -38,8 +42,8 @@ export function FormsResponder() {
 
   //FIXME: Poner el FormControl a cada pregunta y mejorar los styles
   return (
-    <main className="form-responder" >
-      <h3> { form.titulo } </h3>
+    <main className="form-answering">
+      <h3> {form.titulo} </h3>
       <Box
         className="form-response"
         component="form"
@@ -80,6 +84,8 @@ export function FormsResponder() {
                   setRespuestas={setRespuestas}
                 />
               );
+            default:
+              return null;
           }
         })}
         <Button type="submit"> Enviar </Button>

@@ -43,9 +43,9 @@ export function CheckAsnw({ question, setRespuestas }) {
   }, [selectedOptions]);
 
   return (
-    <Box component="div">
+    <Box component="div" className="container-asnwer">
       <FormGroup>
-        <Typography variant="p"> {question.titulo} </Typography>
+        <Typography variant="h6"> {question.titulo} </Typography>
         {opciones.map((item, index) => (
           <FormControlLabel
             key={index}

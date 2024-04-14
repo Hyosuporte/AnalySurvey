@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
 import CloseIcon from "@mui/icons-material/Close";
 
-export function Profile() {
+export function Overiew() {
   const { forms, getForms } = useForms();
   const [alignment, setAligment] = useState("Grid");
   const [open, setOpen] = useState(false);

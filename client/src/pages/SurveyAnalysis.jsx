@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ListAnalitys } from "../components/analitys/ListAnalitys";
 
-export function ResponseForm() {
+export function SurveyAnalysis() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const { form, getForm } = useForms();
@@ -21,7 +21,7 @@ export function ResponseForm() {
 
   return (
     <main className="container-analytis">
-      <NavbarForm title={form.titulo} formId={form.id} />
+      <NavbarForm formId={form.id} />
       <ListAnalitys />
     </main>
   );

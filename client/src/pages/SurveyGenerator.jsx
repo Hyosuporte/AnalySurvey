@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 
-export function CreateForm() {
+export function SurveyGenerator() {
   const { id } = useParams();
   const { form, getForm } = useForms();
   const [loading, setLoading] = useState(true);
