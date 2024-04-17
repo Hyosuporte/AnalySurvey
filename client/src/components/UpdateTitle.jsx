@@ -1,11 +1,11 @@
+import { useForms } from "../context/FormsContext";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 import { useForm } from "react-hook-form";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useForms } from "../context/FormsContext";
+import Modal from "@mui/material/Modal";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 export function UpdateTitle({ id, title, open, setOpen }) {
   const {
@@ -15,7 +15,7 @@ export function UpdateTitle({ id, title, open, setOpen }) {
   } = useForm();
   const handleClose = () => setOpen(false);
   const { updateForm } = useForms();
-  const onSubmit = (data) => updateForm(id, data);
+  const onSubmit = (data) => updateForm(id, data).then(() => setOpen(false));
 
   return (
     <div>

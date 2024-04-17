@@ -287,9 +287,22 @@
   margin-bottom: 2rem;
 }
 
+.form-answering h6 {
+  margin-bottom: 1rem;
+}
+
 .form-answering h6,
-span {
+label span:last-child {
   color: black !important;
+}
+
+.form-answering span {
+  color: #9678ef !important;
+}
+
+.form-answering span.MuiRating-icon {
+  color: #faaf00 !important;
+
 }
 
 .container-campo {

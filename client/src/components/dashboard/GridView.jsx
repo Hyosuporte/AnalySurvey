@@ -11,7 +11,7 @@ import { LogMenu } from "./LogMenu";
 export function GridView({ data, alert }) {
   return (
     <Grid container spacing={2} className="GridView">
-      {data.length === 0 ? (
+      {!data || data.length === 0 ? (
         /*FIXME: Mejorar el style del mensaje de no found forms */
         <p>No hay encuestas aun</p>
       ) : (
@@ -26,7 +26,7 @@ export function GridView({ data, alert }) {
             >
               <CardActionArea>
                 <CardContent>
-                  <Link to="create">
+                  <Link to={`/survey/create/${item.id}`}>
                     <Typography variant="h5" className="text-center">
                       {item.titulo}
                     </Typography>

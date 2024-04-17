@@ -1,14 +1,14 @@
-import { NavbarProfile } from "../components/profile/NavbarProfile";
-import { GridView } from "../components/profile/GridView";
-import { ListView } from "../components/profile/ListView";
-import { useEffect, useState } from "react";
+import { NavbarProfile } from "../components/dashboard/NavbarProfile";
+import { OptionViews } from "../components/dashboard/OptionViews";
+import { GridView } from "../components/dashboard/GridView";
+import { ListView } from "../components/dashboard/ListView";
 import { useForms } from "../context/FormsContext";
-import { OptionViews } from "../components/profile/OptionViews";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import CloseIcon from "@mui/icons-material/Close";
 
 export function Overiew() {
   const { forms, getForms } = useForms();

@@ -88,7 +88,7 @@ export function FormAnswering() {
               return null;
           }
         })}
-        <Button type="submit"> Enviar </Button>
+        <Button type="submit" className="button" > Enviar </Button>
       </Box>
     </main>
   );

@@ -1,4 +1,4 @@
-import { ResponsiveContainer, Pie, PieChart, Cell, Tooltip } from "recharts";
+import { Pie, PieChart, Cell, Tooltip } from "recharts";
 
 export function PieCharts({ analitys }) {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -11,8 +11,8 @@ export function PieCharts({ analitys }) {
   });
 
   return (
-    <ResponsiveContainer width="30%" aspect={1}>
-      <PieChart>
+    <div>
+      <PieChart width={200} height={200}>
         <Pie
           dataKey="total"
           data={data}
@@ -20,8 +20,7 @@ export function PieCharts({ analitys }) {
           cy="40%"
           innerRadius={40}
           outerRadius={60}
-          fill="#8884d8"
-          label
+          paddingAngle={5}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -29,6 +28,7 @@ export function PieCharts({ analitys }) {
         </Pie>
         <Tooltip />
       </PieChart>
-    </ResponsiveContainer>
+      <div style={{ textAlign: "center", color: "black" }}>Frecuencia Relativa</div>
+    </div>
   );
 }

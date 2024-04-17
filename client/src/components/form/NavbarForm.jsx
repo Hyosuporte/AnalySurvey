@@ -7,7 +7,7 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 
 export function NavbarForm({ formId }) {
-  const urlEdit = `http://localhost:5173/profile/${formId}/create-form`;
+  const urlEdit = `/survey/create/${formId}`;
   const urlRes = `/survey/analysis/${formId}`;
   return (
     <AppBar position="static" sx={{ background: "#191825" }}>

@@ -22,7 +22,7 @@ export default function RadarCharts({ analitys }) {
         <PolarAngleAxis dataKey="name" />
         <PolarRadiusAxis />
         <Radar
-          name="Mike"
+          name="name"
           dataKey="total"
           stroke="#8884d8"
           fill="#8884d8"

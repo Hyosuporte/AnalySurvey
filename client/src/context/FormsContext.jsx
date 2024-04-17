@@ -57,8 +57,9 @@ export function FormProvider({ children }) {
   const deleteForm = async (id) => {
     try {
       const res = await deleteFormReq(id, token);
-      if (res.status == 204) setForms(forms.filter(() => forms.id != id));
-      location.reload();
+      if (res.status === 204) {
+        setForms(forms.filter((form) => form.id !== id));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -66,11 +67,10 @@ export function FormProvider({ children }) {
 
   const duplicateForm = async (id) => {
     try {
-      // eslint-disable-next-line no-unused-vars
-      const res = await duplicateFormReq(id, token).then((response) => {
-        console.log(response.data);
-        location.reload();
-      });
+      const res = await duplicateFormReq(id, token);
+      if (res.status === 201) {
+        setForms([...forms, res.data]);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -78,11 +78,11 @@ export function FormProvider({ children }) {
 
   const updateForm = async (id, title) => {
     try {
-      // eslint-disable-next-line no-unused-vars
-      const res = await updateFormReq(id, token, title).then((response) => {
-        console.log(response.data);
+      const res = await updateFormReq(id, token, title);
+      if (res.status === 200) {
         location.reload();
-      });
+        return true;
+      }
     } catch (error) {
       console.log(error);
     }

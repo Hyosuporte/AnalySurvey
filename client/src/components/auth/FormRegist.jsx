@@ -20,7 +20,7 @@ export function FormRegist() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/profile");
+      navigate("/dashboard");
     }
   }, [isAuthenticated, navigate]);
 

@@ -26,6 +26,8 @@ export function TextAsnw({ question, setRespuestas }) {
       <TextField
         type="text"
         fullWidth
+        variant="standard"
+        placeholder="Escribe tu respuesta"
         color="secondary"
         autoComplete="off"
         onChange={handleChange}
