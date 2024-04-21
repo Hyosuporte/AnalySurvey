@@ -7,18 +7,16 @@ import { RatinOptino } from "../typeAsk/RatinOption";
 export function FormEdit({ data }) {
   return (
     <Box className="form-Edit" component="form">
-      {data.map((item, i) => {
+      {data.map((item) => {
         switch (item.tipoPregunta) {
           case 1:
-            return <MultipleOption key={i} question={item} />;
+            return <MultipleOption key={item.id} question={item} />;
           case 2:
-            return <TextOption key={i} question={item} />;
+            return <TextOption key={item.id} question={item} />;
           case 3:
-            return <CheckOption key={i} question={item} />;
+            return <CheckOption key={item.id} question={item} />;
           case 4:
-            return <RatinOptino key={i} question={item} />;
-          case 5:
-            return <h1>Tipo 5</h1>;
+            return <RatinOptino key={item.id} question={item} />;
         }
       })}
     </Box>

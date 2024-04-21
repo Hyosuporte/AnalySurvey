@@ -19,7 +19,6 @@ export function CheckOption({ question }) {
     };
     if (createOption(question.id, data)) {
       setOptions([...options, data]);
-      location.reload();
     }
   };
 

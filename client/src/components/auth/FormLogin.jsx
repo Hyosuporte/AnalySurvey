@@ -62,9 +62,8 @@ export function FormLogin() {
               value: true,
               message: "Contraseña es obligatoria*",
             },
-            /*  TODO:Recordar que la contraseña esta con 2 caracteres en vez de 8 */
             minLength: {
-              value: 2,
+              value: 8,
               message: "Debe tener minimo 8 caracteres*",
             },
             maxLength: {

@@ -19,7 +19,6 @@ export function MultipleOption({ question }) {
     };
     if (createOption(question.id, data)) {
       setOptions([...options, data]);
-      location.reload();
     }
   };
 
@@ -54,7 +53,6 @@ export function MultipleOption({ question }) {
 
   return (
     <Box className="container-campo" id={question.id}>
-      {/* FIXME: Buscar un icon para el titulo de la pregunta para indicar al suario que tipo de pregunta es */}
       <div className="container-titulo-quest">
         <h4 htmlFor="question-text">
           <AdsClickIcon sx={{ color: "#865dff" }} fontSize="medium" />{" "}

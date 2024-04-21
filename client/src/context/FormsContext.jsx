@@ -29,9 +29,12 @@ export const useForms = () => {
 };
 
 export function FormProvider({ children }) {
-  const [forms, setForms] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
   const [analitys, setAnalitys] = useState([]);
+  const [campos, setCampos] = useState([]);
+  const [forms, setForms] = useState([]);
   const [form, setForm] = useState(null);
+
   const navigate = useNavigate();
 
   const token = window.localStorage.getItem("token");
@@ -49,6 +52,8 @@ export function FormProvider({ children }) {
     try {
       const res = await getFormResponder(id, token);
       setForm(res.data);
+      setCampos(res.data.campos);
+      setIsloading(false);
     } catch (error) {
       console.log(error);
     }
@@ -92,7 +97,7 @@ export function FormProvider({ children }) {
     try {
       // eslint-disable-next-line no-unused-vars
       const res = await createFormReq(token).then((response) => {
-        navigate(`/profile/${response.data.id}/create-form`);
+        navigate(`/survey/create/${response.data.id}`);
       });
     } catch (error) {
       console.log(error);
@@ -108,12 +113,17 @@ export function FormProvider({ children }) {
       tipoPregunta: tipo,
     };
     const res = await createCampoReq(formId, token, data);
-    res.status == 201 ? true : false;
+    return res.data
   };
 
   const updateCampo = async (id, data) => {
     const res = await updateCampoReq(id, token, data);
     res.status == 200 ? true : false;
+  };
+
+  const updateCampos = (newCampos) => {
+    setCampos([...campos, newCampos]);
+    console.log(campos)
   };
 
   const createOption = async (id, data) => {
@@ -165,7 +175,9 @@ export function FormProvider({ children }) {
   return (
     <FormContext.Provider
       value={{
+        isLoading,
         forms,
+        campos,
         getForms,
         form,
         getForm,
@@ -175,6 +187,7 @@ export function FormProvider({ children }) {
         createForm,
         createCampo,
         updateCampo,
+        updateCampos,
         createOption,
         deleteOption,
         updateOpcion,
