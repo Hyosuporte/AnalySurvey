@@ -69,3 +69,8 @@ export const chartsAnalitys = (token, id) =>
   axios.get(`/forms/${id}/charts/`, {
     headers: { Authorization: `Token ${token}` },
   });
+
+export const createExcelReq = (token, id) =>
+  axios.get(`/forms/${id}/excel/`, {
+    headers: { Authorization: `Token ${token}` },
+  });
