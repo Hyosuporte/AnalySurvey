@@ -11,4 +11,8 @@ python manage.py collectstatic --no-input
 # Apply any outstanding database migrations
 python manage.py migrate
 
-python manage.py createsuperuser --username admin2 --email admin@example.com --noinput --password admin
+# Crear superusuario y capturar la contraseña generada automáticamente
+PASSWORD=$(python manage.py shell -c 'from django.contrib.auth.models import User; User.objects.create_superuser("admin", "admin@example.com", "admin"); print("admin")')
+
+# Mostrar la contraseña generada automáticamente en la consola
+echo "La contraseña generada automáticamente es: $PASSWORD"
