@@ -13,6 +13,7 @@ import {
   createCampoReq,
   saveAskReq,
   chartsAnalitys,
+  createExcelReq,
 } from "../api/forms";
 
 import { useNavigate } from "react-router-dom";
@@ -113,7 +114,7 @@ export function FormProvider({ children }) {
       tipoPregunta: tipo,
     };
     const res = await createCampoReq(formId, token, data);
-    return res.data
+    return res.data;
   };
 
   const updateCampo = async (id, data) => {
@@ -123,14 +124,14 @@ export function FormProvider({ children }) {
 
   const updateCampos = (newCampos) => {
     setCampos([...campos, newCampos]);
-    console.log(campos)
+    console.log(campos);
   };
 
   const createOption = async (id, data) => {
     try {
       // eslint-disable-next-line no-unused-vars
       const res = await createOptionReq(token, id, data);
-      return res.status == 201 ? true : false;
+      return res.data;
     } catch (error) {
       console.log(error);
     }
@@ -172,6 +173,30 @@ export function FormProvider({ children }) {
     }
   };
 
+  const createExcel = async (id) => {
+    try {
+      const res = await createExcelReq(token, id);
+      if (res.status === 200 && res.data) {
+        const blob = new Blob([res.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        console.log(res.data);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `respuestas_formulario.xlsx`);
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+      } else {
+        console.log("Error al descargar el archivo");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -194,6 +219,7 @@ export function FormProvider({ children }) {
         saveAsk,
         charts,
         analitys,
+        createExcel,
       }}
     >
       {children}

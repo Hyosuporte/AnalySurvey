@@ -12,13 +12,14 @@ export function MultipleOption({ question }) {
   const [title, setTitle] = useState(question.titulo);
   const { updateCampo, createOption, deleteOption, updateOpcion } = useForms();
 
-  const handleAddOption = () => {
+  const handleAddOption = async () => {
     const data = {
       titulo: "nueva opcion",
       valor: "nueva opcion",
     };
-    if (createOption(question.id, data)) {
-      setOptions([...options, data]);
+    const newOption = await createOption(question.id, data);
+    if (newOption !== undefined) {
+      setOptions([...options, newOption]);
     }
   };
 

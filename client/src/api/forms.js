@@ -44,11 +44,10 @@ export const updateCampoReq = (id, token, data) =>
     headers: { Authorization: `Token ${token}` },
   });
 
-export const createOptionReq = (token, id, data) => {
+export const createOptionReq = (token, id, data) =>
   axios.post(`/forms/create_option/${id}/`, data, {
     headers: { Authorization: `Token ${token}` },
   });
-};
 
 export const deleteOptionReq = (id, token) =>
   axios.delete(`forms/delete/option/${id}/`, {
@@ -73,4 +72,5 @@ export const chartsAnalitys = (token, id) =>
 export const createExcelReq = (token, id) =>
   axios.get(`/forms/${id}/excel/`, {
     headers: { Authorization: `Token ${token}` },
+    responseType: "blob",
   });
