@@ -1,0 +1,536 @@
+.home-page {
+  background: linear-gradient(180deg, #191825 39.91%, #7e53fff8 100%);
+  height: 100%;
+}
+
+.login-body {
+  background: url("assets/image/fondoLogin.svg");
+  background-size: cover;
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.login-container-forms {
+  width: 35vw;
+  border-radius: 15px 15px 15px 15px;
+  background-color: #cccccc;
+}
+
+.not-found-page {
+  background: linear-gradient(180deg, #9678ef 38%, #cccccc 100%);
+  height: 100vh;
+}
+
+.crear-form {
+  background-color: #cccccc;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.form-answering {
+  background-color: #f0ebf8;
+  min-height: 100vh;
+  height: auto;
+}
+
+.text-card {
+  width: 50%;
+  margin: auto;
+}
+
+.card {
+  width: 70%;
+}
+
+.card-reverse {
+  width: 89%;
+}
+
+#CardList {
+  margin-top: 10rem;
+}
+
+/* Carousel Templates */
+.carusel-template {
+  width: 85%;
+  margin: auto;
+  margin-top: 10rem;
+}
+
+.carusel-template h2 {
+  color: white;
+  font-size: 2rem;
+  font-Weight: 700;
+}
+
+.item-carusel {
+  background-color: #191825;
+}
+
+.text-carusel {
+  margin-right: 5rem;
+  margin-top: 3.5rem;
+  width: 45%;
+  float: right;
+}
+
+.text-carusel h4 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.text-carusel p {
+  margin-bottom: 1.5rem;
+}
+
+.carusel-template img {
+  width: 45%;
+  height: auto;
+  vertical-align: middle;
+}
+
+#mainProfile {
+  background-color: #cccccc;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+
+.work-space {
+  border-bottom: 2px solid #865dff;
+  width: 90vw;
+  margin: auto;
+
+  & h6 {
+    padding: 1rem;
+  }
+
+  & .list-changeView {
+    padding: 0 1rem 1rem 1rem;
+  }
+}
+
+.img {
+  display: block;
+  margin: auto;
+  width: 39%;
+}
+
+.GridView {
+  width: 90vw !important;
+  margin-top: 1px !important;
+  margin: auto !important;
+
+  & div {
+    max-width: 100% !important;
+  }
+}
+
+#long-menu {
+  & ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.div-more {
+  margin-left: auto;
+}
+
+.ListView {
+  width: 90vw !important;
+  margin-top: 11rem !important;
+  margin: auto !important;
+
+  & #stack {
+    margin-top: 1.5rem;
+  }
+}
+
+#stack {
+  color: black;
+
+  & #stack-list {
+    background-color: white;
+    border-radius: 5px;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
+}
+
+.alert-clipboard {
+  width: 20%;
+  position: fixed;
+  bottom: 1rem;
+  left: 40vw;
+}
+
+.form-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 23vw;
+  height: auto;
+  border-radius: 15px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.list-Campos {
+  background: white;
+  flex-direction: column;
+  padding: 0 !important;
+  width: 80%;
+  overflow: hidden;
+}
+
+.list-Campos #content-title {
+  margin: .5rem 0rem;
+}
+
+.list-Campos li {
+  padding-bottom: 0;
+  padding-top: 0;
+  margin: 0;
+}
+
+.list-Campos button {
+  padding: 0;
+}
+
+.list-Campos div:hover {
+  background-color: transparent;
+}
+
+.list-Campos span {
+  color: black !important;
+}
+
+.css-1rki8sg-MuiListItem-root.Mui-selected {
+  background-color: #9678ef63 !important;
+}
+
+.orden-p {
+  max-height: 25px;
+  font-size: 1rem !important;
+}
+
+.form-Edit {
+  width: 80%;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.form-response {
+  flex-direction: column;
+  display: flex;
+  margin: 1rem auto;
+  width: 50%;
+}
+
+.container-asnwer {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+
+}
+
+.container-analytis {
+  background-color: #cccccc;
+  min-height: 100vh;
+  height: auto;
+}
+
+.list-analitys {
+  background-color: white;
+  width: 80%;
+  margin: auto;
+  margin-top: 5rem;
+  height: auto;
+  border-radius: 15px;
+}
+
+.form-login {
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+
+.form-regist {
+  width: 75%;
+  margin: auto;
+  text-align: center;
+}
+
+#menu-appbar ul {
+  background-color: #191825;
+  color: white;
+}
+
+#h6-small {
+  font-size: 1rem;
+}
+
+.logMenu-fecha {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.form-answering h3 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-answering h6 {
+  margin-bottom: 1rem;
+}
+
+.form-answering h6,
+label span:last-child {
+  color: black !important;
+}
+
+.form-answering span {
+  color: #9678ef !important;
+}
+
+.form-answering span.MuiRating-icon {
+  color: #faaf00 !important;
+
+}
+
+.container-campo {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.container-campo-resul {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem;
+  margin: auto;
+  margin-bottom: 2rem;
+  width: 80%;
+  text-align: center;
+}
+
+.container-charts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .card {
+    width: 90%;
+  }
+
+  .card-reverse {
+    width: 100%;
+  }
+
+  .card p,
+  .card-reverse p {
+    font-size: 1rem;
+  }
+
+  #CardList {
+    margin-top: 5rem;
+  }
+
+  .text-carusel {
+    margin-right: 25px;
+    margin-top: 2rem;
+  }
+
+  .carusel-template img {
+    width: 50%;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  #footerLandi h3 {
+    margin-bottom: 1rem;
+  }
+
+  #footerLandi p {
+    font-size: 1rem;
+  }
+
+  .container-charts {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .container-charts svg {
+    width: 80% !important;
+    font-size: .9rem !important;
+  }
+
+  .bar-chart {
+    width: 60% !important;
+  }
+
+}
+
+@media (max-width: 899px) {
+  .GridView {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 840px) {
+  .text-carusel {
+    margin-right: 25px;
+    margin-top: 0rem;
+  }
+
+  .text-carusel p {
+    font-size: .8rem;
+  }
+
+  .container-nav {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .login-container-forms {
+    width: 80vw;
+  }
+
+}
+
+@media (max-width: 720px) {
+
+  .title-home {
+    font-size: 1.6rem !important;
+  }
+
+  .container-nav .button {
+    display: none;
+  }
+
+  .container-nav button {
+    font-size: .7rem;
+  }
+
+  .container-card img {
+    display: none;
+  }
+
+  .text-card {
+    margin-top: 2rem;
+    width: 85%;
+    text-align: center;
+  }
+
+  .text-card p {
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+  }
+
+  .card h4,
+  .card-reverse h4 {
+    font-size: 1rem;
+  }
+
+  .card p,
+  .card-reverse p {
+    font-size: .7rem;
+  }
+
+  .text-carusel {
+    margin-top: 1rem;
+    width: 85%;
+    float: none;
+    margin: auto;
+  }
+
+  .text-carusel h4 {
+    margin-top: 1rem;
+  }
+
+  .carusel-template img {
+    width: 85%;
+    margin: auto;
+    margin-top: 1rem;
+  }
+
+  #footerLandi h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  #footerLandi p {
+    font-size: 0.8rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .title-home {
+    font-size: 1.4rem !important;
+  }
+
+  .container-nav button {
+    font-size: .599rem;
+  }
+
+  .card-container {
+    flex-direction: column !important;
+  }
+
+  .card-container div {
+    min-width: 70% !important;
+  }
+
+  .card-reverse {
+    width: 90%;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    margin-bottom: 2rem;
+  }
+
+  #menu-appbar ul {
+    padding: 0;
+  }
+
+  #menu-appbar li p {
+    font-size: .85rem !important;
+  }
+
+  .form-login {
+    width: 80%;
+  }
+
+  .form-regist {
+    width: 100%;
+
+    & div:first-child {
+      flex-direction: column;
+      align-items: center;
+
+      & div {
+        max-width: 100%;
+      }
+    }
+  }
+
+}
+
+@media (max-width: 375px) {
+  .work-space .button {
+    margin-bottom: .5rem;
+  }
+}

@@ -2,6 +2,7 @@
 *.pyc
 __pycache__/
 *.py[cod]
+db.sqlite3
 
 # Ignorar archivos generados por Node.js y npm
 node_modules/
