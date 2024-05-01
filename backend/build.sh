@@ -11,4 +11,4 @@ python manage.py collectstatic --no-input
 # Apply any outstanding database migrations
 python manage.py migrate
 
-python manage.py createsuperuser --username admin --email admin@example.com --noinput
+python manage.py createsuperuser --username admin2 --email admin@example.com --noinput
