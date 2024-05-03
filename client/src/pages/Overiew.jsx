@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 
-export function Overiew() {
+export default function Overiew() {
   const { forms, getForms } = useForms();
   const [alignment, setAligment] = useState("Grid");
   const [open, setOpen] = useState(false);

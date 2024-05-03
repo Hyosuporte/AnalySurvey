@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ListAnalitys } from "../components/analitys/ListAnalitys";
 
-export function SurveyAnalysis() {
+export default function SurveyAnalysis() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const { form, getForm } = useForms();

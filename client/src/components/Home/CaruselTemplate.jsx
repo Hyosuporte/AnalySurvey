@@ -1,11 +1,13 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
-import Button from "@mui/material/Button";
+import { useForms } from "../../context/FormsContext";
+import { useAuth } from "../../context/AuthContext";
 import Typography from "@mui/material/Typography";
-import Slider from "react-slick";
 import img1 from "../../assets/image/img4.jpg";
 import img2 from "../../assets/image/img5.jpg";
+import { useNavigate } from "react-router-dom";
+import "slick-carousel/slick/slick-theme.css";
+import Button from "@mui/material/Button";
+import "slick-carousel/slick/slick.css";
+import Slider from "react-slick";
 
 let settings = {
   dots: true,
@@ -19,6 +21,22 @@ let settings = {
 //FIXME: Add the correct path to the images and the correct text
 
 export function CaruselTemplate() {
+  const { isAuthenticated, setPendiente } = useAuth();
+  const { duplicateForm } = useForms();
+  const navigate = useNavigate();
+
+  const handleDuplicate = (id) => {
+    if (isAuthenticated) {
+      console.log(id);
+      duplicateForm(id).then((res) => {
+        if (res) navigate("/dashboard");
+      });
+    } else {
+      setPendiente(() => () => duplicateForm(id));
+      navigate("/login");
+    }
+  };
+
   return (
     <section className="carusel-template" id="CaruselTemplate">
       <Typography variant="h6">Plantillas</Typography>
@@ -26,7 +44,7 @@ export function CaruselTemplate() {
       <Slider {...settings} className="item-carusel">
         <div>
           <div className="text-carusel">
-            <Typography variant="h4">Valoracion</Typography>
+            <h4>Valoracion</h4>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
               porta nisi at metus iaculis, ac congue ex fringilla. Fusce id orci
@@ -34,8 +52,14 @@ export function CaruselTemplate() {
               nisl, eu maximus orci tristique id. Suspendisse pellentesque risus
               nec mollis blandit.
             </p>
-            <Button variant="contained" size="medium" className="button">
-              <Link to="/templates">Comenzar ahora</Link>
+            {/* FIXME: Corregir la ubicacion donde toma el mouse */}
+            <Button
+              variant="contained"
+              onClick={() => handleDuplicate(2)}
+              size="medium"
+              className="button"
+            >
+              Comenzar ahora
             </Button>
           </div>
           <img src={img1} />
@@ -47,8 +71,13 @@ export function CaruselTemplate() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce .
             </p>
 
-            <Button variant="contained" size="medium" className="button">
-              <Link to="/templates">Comenzar ahora</Link>
+            <Button
+              variant="contained"
+              onClick={() => handleDuplicate(2)}
+              size="medium"
+              className="button"
+            >
+              Comenzar ahora 2
             </Button>
           </div>
           <img src={img2} />

@@ -15,6 +15,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [pendiente, setPendiente] = useState(null);
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
 
@@ -76,8 +77,12 @@ export const AuthProvider = ({ children }) => {
       const res = await login(user);
       setUser(res.data);
       setIsAuthenticated(true);
-      setLoading(false);
       window.localStorage.setItem("token", res.data.token);
+      setLoading(false);
+      if (pendiente) {
+        pendiente();
+        setPendiente(null);
+      }
     } catch (error) {
       if (error.response.data.detail != undefined) {
         setErrors(["Usuario o contraseña invalidos"]);
@@ -103,6 +108,8 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         errors,
         isLoading,
+        pendiente,
+        setPendiente,
       }}
     >
       {children}

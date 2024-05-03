@@ -1,14 +1,15 @@
 import { useForms } from "../../context/FormsContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
 import { BarCharts } from "./BarCharts";
 import { PieCharts } from "./PieCharts";
+import RadarCharts from "./RadarCharts";
 import { Loading } from "../Loading";
 import Box from "@mui/material/Box";
-import RadarCharts from "./RadarCharts";
 
 export function ListAnalitys() {
-  const { charts, analitys } = useForms();
+  const { charts, analitys, createExcel } = useForms();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   useEffect(() => {
@@ -24,6 +25,7 @@ export function ListAnalitys() {
   return (
     <Box classtitulo="list-analitys">
       <h2>Resultados</h2>
+      <Button onClick={() => createExcel(id)}> Generar excel </Button>
       {analitys.preguntas.map((item, i) => (
         <div className="container-campo-resul" key={i}>
           <h5> {item.titulo} </h5>

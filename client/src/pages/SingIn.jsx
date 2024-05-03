@@ -39,7 +39,7 @@ function Navbar({ onOptionClick }) {
   );
 }
 
-export function SingIn() {
+export default function SingIn() {
   const [ShowComponent, setShowComponent] = useState("FormLogin");
 
   const handleOptionClick = (component) => {

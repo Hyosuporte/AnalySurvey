@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import { useEffect } from "react";
+import { Loading } from "../Loading";
 
 export function FormLogin() {
   const {
@@ -14,15 +15,18 @@ export function FormLogin() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-  const { singIn, isAuthenticated, errors: singInError } = useAuth();
+  const { singIn, isAuthenticated, errors: singInError, isLoading } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
   const onSubmit = (data) => singIn(data);
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box

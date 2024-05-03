@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
@@ -62,6 +63,10 @@ def verify(request):
     user = request.user
     serializer = UserSerializer(instance=user)
 
+    token = Token.objects.get(user=user)
+    if not token.user.is_active:
+        raise AuthenticationFailed('Token no válido')
+
     return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 
 
@@ -72,7 +77,7 @@ def listForm(request):
     user = get_object_or_404(User, pk=request.user.id)
     try:
         forms = Formulario.objects.filter(creador_id=user)
-        #forms_res = forms.prefetch_related('campos__respuestas')
+        # forms_res = forms.prefetch_related('campos__respuestas')
     except Formulario.DoesNotExist:
         forms = []
 

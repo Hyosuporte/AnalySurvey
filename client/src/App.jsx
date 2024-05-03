@@ -1,33 +1,39 @@
-import { SurveyAnalysis } from "./pages/SurveyAnalysis";
-import { FormAnswering } from "./pages/FormAnswering";
-import { FormProvider } from "./context/FormsContext";
-import { AuthProvider } from "./context/AuthContext";
-import { ProtectedRoutes } from "./ProtectedRoutes";
-import { PageNotFound } from "./pages/PageNotFound";
-import { SurveyGenerator } from "./pages/SurveyGenerator";
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Overiew } from "./pages/Overiew";
-import { SingIn } from "./pages/SingIn";
-import { HomePage } from "./pages/HomePage";
+import { AuthProvider } from "./context/AuthContext";
+import { FormProvider } from "./context/FormsContext";
+import { ProtectedRoutes } from "./ProtectedRoutes";
 import "./App.css";
+
+// Importa componentes diferidos
+const SurveyAnalysis = lazy(() => import("./pages/SurveyAnalysis"));
+const FormAnswering = lazy(() => import("./pages/FormAnswering"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound"));
+const SurveyGenerator = lazy(() => import("./pages/SurveyGenerator"));
+const Overview = lazy(() => import("./pages/Overiew"));
+const SignIn = lazy(() => import("./pages/SingIn"));
+const HomePage = lazy(() => import("./pages/HomePage"));
 
 function App() {
   return (
     <AuthProvider>
       <FormProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<SingIn />} />
-          <Route path="/templates" element={<Overiew />} />
-          <Route path="*" element={<PageNotFound />} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/templates" element={<Overview />} />
+            <Route path="*" element={<PageNotFound />} />
 
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/dashboard" element={<Overiew />} />
-            <Route path="/survey/create/:id" element={<SurveyGenerator />} />
-            <Route path="/survey/analysis/:id" element={<SurveyAnalysis />} />
-            <Route path="/forms/:id" element={<FormAnswering />} />
-          </Route>
-        </Routes>
+            {/* Rutas protegidas */}
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/dashboard" element={<Overview />} />
+              <Route path="/survey/create/:id" element={<SurveyGenerator />} />
+              <Route path="/survey/analysis/:id" element={<SurveyAnalysis />} />
+              <Route path="/forms/:id" element={<FormAnswering />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </FormProvider>
     </AuthProvider>
   );
