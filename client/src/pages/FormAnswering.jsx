@@ -12,23 +12,29 @@ import Box from "@mui/material/Box";
 
 export default function FormAnswering() {
   const { handleSubmit } = useForm();
-  const [loading, setLoading] = useState(true);
   const [respuestas, setRespuestas] = useState([]);
-  const { form, getForm, saveAsk } = useForms();
+  const [answer, setAnswer] = useState(true);
+  const { form, getForm, isLoading, saveAsk, verifyAnswerReq } = useForms();
   const { id } = useParams();
 
   useEffect(() => {
-    getForm(id)
-      .then(() => {
-        setLoading(false);
+    verifyAnswerReq(id)
+      .then((res) => {
+        if (res) {
+          getForm(id);
+        } else {
+          setAnswer(false);
+        }
       })
       .catch((error) => {
         console.error("Error fetching form:", error);
       });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) return <Loading />;
+  if (isLoading && answer) return <Loading />;
+  if (!answer) return <Box sx={{ background: "red" }} >Ya respondio la encuesta</Box>;
 
   const onSubmit = () => {
     const jsonData = {
@@ -88,7 +94,10 @@ export default function FormAnswering() {
               return null;
           }
         })}
-        <Button type="submit" className="button" > Enviar </Button>
+        <Button type="submit" className="button">
+          {/*  FIXME: Deshabilitar el button cuando mande la peticion y poner el mensaje correspondiente */}
+          Enviar{" "}
+        </Button>
       </Box>
     </main>
   );

@@ -6,7 +6,9 @@ export function PieCharts({ analitys }) {
   analitys.respuestas.map((item, i) => {
     data.push({
       name: analitys.respuestas[i].titulo,
-      total: 100 * (analitys.respuestas[i].total / analitys.total),
+      total: parseFloat(
+        (100 * (analitys.respuestas[i].total / analitys.total)).toFixed(1)
+      ),
     });
   });
 
@@ -28,7 +30,9 @@ export function PieCharts({ analitys }) {
         </Pie>
         <Tooltip />
       </PieChart>
-      <div style={{ textAlign: "center", color: "black" }}>Frecuencia Relativa</div>
+      <div style={{ textAlign: "center", color: "black" }}>
+        Frecuencia Relativa
+      </div>
     </div>
   );
 }

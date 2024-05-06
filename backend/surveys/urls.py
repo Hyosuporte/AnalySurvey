@@ -15,4 +15,5 @@ urlpatterns = [
     path('api/v1/forms/ask/', views.save_ask),
     path('api/v1/forms/<int:pk>/charts/', views.chart_analitys),
     path('api/v1/forms/<int:pk>/excel/', views.create_excel),
+    path('api/v1/forms/<int:pk>/answered/', views.ready_Answered),
 ]

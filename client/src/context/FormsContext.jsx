@@ -14,6 +14,7 @@ import {
   saveAskReq,
   chartsAnalitys,
   createExcelReq,
+  verifyAnswer,
 } from "../api/forms";
 
 import { useNavigate } from "react-router-dom";
@@ -179,7 +180,7 @@ export function FormProvider({ children }) {
     try {
       const token = window.localStorage.getItem("token");
       const res = await chartsAnalitys(token, id);
-      setAnalitys(res.data);
+      res.status == 200 && setAnalitys(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -210,6 +211,16 @@ export function FormProvider({ children }) {
     }
   };
 
+  const verifyAnswerReq = async (id) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      const res = await verifyAnswer(token, id);
+      return res.status == 200 ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <FormContext.Provider
       value={{
@@ -233,6 +244,7 @@ export function FormProvider({ children }) {
         charts,
         analitys,
         createExcel,
+        verifyAnswerReq,
       }}
     >
       {children}

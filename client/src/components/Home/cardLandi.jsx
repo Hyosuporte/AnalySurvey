@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import LazyImage from "../LazyImage";
 
-function Card({ title, content, img, row, maxImg, maxText, clasN }) {
+export function Card({ title, content, img, row, maxImg, maxText, clasN }) {
   return (
     <Grid
       container
@@ -19,27 +20,8 @@ function Card({ title, content, img, row, maxImg, maxText, clasN }) {
         </div>
       </Grid>
       <Grid item xs={maxImg}>
-        <img src={img} alt="" width="90%" />
+        <LazyImage src={img} alt={title} />
       </Grid>
     </Grid>
-  );
-}
-
-export function CardList({ data }) {
-  return (
-    <section id="CardList">
-      {data.map((item) => (
-        <Card
-          key={item.id}
-          title={item.title}
-          content={item.content}
-          img={item.img}
-          row={item.row}
-          maxImg={item.maxImg}
-          maxText={item.maxText}
-          clasN={item.clasN}
-        />
-      ))}
-    </section>
   );
 }

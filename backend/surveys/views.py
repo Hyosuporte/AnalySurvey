@@ -20,6 +20,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
+import numpy as np
+from scipy.stats import linregress
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
@@ -151,7 +153,7 @@ def actualizar_formulario(request, pk):
                 for datos_opcion in opciones_campo:
 
                     opcion_id = datos_opcion.get('id')
-                    print(opcion_id, campo.id)
+
                     opcion = get_object_or_404(
                         OpcionCampoFormulario, id=opcion_id, campoFormulario=campo)
 
@@ -226,7 +228,6 @@ def update_campo(request, pk):
     if campo.formulario.creador != request.user:
         return Response({"message": "No authorizado para actualizar el campo"}, status=status.HTTP_401_UNAUTHORIZED)
     serializer = CampoFormularioSerializer(campo, data=request.data)
-    print(serializer.is_valid())
     if serializer.is_valid():
         serializer.save()
         return Response({"message": "Campo Actualizado"}, status=status.HTTP_200_OK)
@@ -286,6 +287,13 @@ def chart_analitys(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
     if form.creador != request.user:
         return Response({"message": "No authorizado para elminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    has_responses = RespuestaFormulario.objects.filter(
+        campoFormulario__formulario=form).exists()
+
+    if not has_responses:
+        return Response({"message": "No hay respuestas para el formulario"}, status=status.HTTP_204_NO_CONTENT)
+
     data = {
         "preguntas": []
     }
@@ -295,7 +303,7 @@ def chart_analitys(request, pk):
             "titulo": campos.titulo,
             "respuestas": [],
             "total": total_res(campos),
-            "tipoPregunta": campos.tipoPregunta.id
+            "tipoPregunta": campos.tipoPregunta.id,
         }
         if campos.tipoPregunta.id == 1:
             resul_multi(preguntas, campos)
@@ -418,6 +426,19 @@ def create_excel(request, pk):
     return response
 
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def ready_Answered(request, pk):
+    form = get_object_or_404(Formulario, pk=pk)
+    user = request.user
+
+    if RespuestaFormulario.objects.filter(campoFormulario__formulario=form, usuario=user).exists():
+        return Response({"message": "Ya has respondido este formulario"}, status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response({"message": "Puede responder el formulario"}, status=status.HTTP_200_OK)
+
+
 def resul_multi(preguntas, campos):
     for opciones in campos.opciones.all():
         res = RespuestaFormulario.objects.filter(
@@ -441,7 +462,7 @@ def resul_check(preguntas, campos):
 
 def result_ratin(preguntas, campos):
     for opciones in campos.opciones.all():
-        print(opciones)
+
         for option_ratin in range(1, int(opciones.valor)+1):
             res = RespuestaFormulario.objects.filter(
                 campoFormulario_id=campos.id, valor=option_ratin).aggregate(count=Count('valor'))
@@ -449,6 +470,17 @@ def result_ratin(preguntas, campos):
                 "titulo": "Calificacion de " + str(option_ratin),
                 "total": res["count"]
             })
+    regresion_lineal(preguntas)
+
+
+def regresion_lineal(preguntas):
+    x = np.array(range(len(preguntas["respuestas"])))
+    y = np.array([item['total'] for item in preguntas["respuestas"]])
+    slope, intercept, _, _, _ = linregress(x, y)
+    print(x, y, slope, intercept)
+    regression_line = slope * x + intercept
+    for i in range(len(preguntas["respuestas"])):
+        preguntas["respuestas"][i]["regression"] = regression_line[i]
 
 
 def total_res(campos):
@@ -460,21 +492,11 @@ def total_res(campos):
 def resul_cova(preguntas, campos):
     res_int = [float(res.valor) for res in campos.respuestas.all()]
     correlacion, valor_p = pearsonr(res_int, res_int)
-    print("coeficiente de correlacion: ", correlacion)
-    print("valor p: ", valor_p)
-
-
-def total_res(campos):
-    res = RespuestaFormulario.objects.filter(
-        campoFormulario_id=campos.id).count()
-    return res
 
 
 def resul_cova(preguntas, campos):
     res_int = [float(res.valor) for res in campos.respuestas.all()]
     correlacion, valor_p = pearsonr(res_int, res_int)
-    print("coeficiente de correlacion: ", correlacion)
-    print("valor p: ", valor_p)
 
 
 def total_multi(campos):

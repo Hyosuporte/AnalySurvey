@@ -1,16 +1,18 @@
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
-export function BarCharts({ analitys }) {
+export function LineCharts({ analitys }) {
   const data = [];
+  let totalAcu = 0;
   analitys.respuestas.map((item, i) => {
+    totalAcu += analitys.respuestas[i].total;
     data.push({
       name: analitys.respuestas[i].titulo,
-      total: analitys.respuestas[i].total,
+      total: totalAcu,
     });
   });
   return (
     <div>
-      <BarChart
+      <LineChart
         data={data}
         width={460}
         height={250}
@@ -23,10 +25,12 @@ export function BarCharts({ analitys }) {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        
-        <Bar dataKey="total" fill="#6b48ff" />
-      </BarChart>
-      <div style={{ textAlign: "center", color: "black" }}>Frecuencia Absoluta</div>
+
+        <Line type="monotone" dataKey="total" fill="#8884d8" />
+      </LineChart>
+      <div style={{ textAlign: "center", color: "black" }}>
+        Frecuencia Acumulada
+      </div>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { LogMenu } from "./LogMenu";
 
 export function ListView({ data, alert }) {
@@ -13,17 +12,6 @@ export function ListView({ data, alert }) {
       month: "2-digit",
       day: "2-digit",
     });
-  };
-
-  const CopyUrl = (id) => {
-    navigator.clipboard
-      .writeText(`http://localhost:5173/forms/${id}`)
-      .then(() => {
-        alert(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   return (
@@ -83,7 +71,7 @@ export function ListView({ data, alert }) {
                       : 0}
                   </Grid>
                   <Grid item>
-                    <div className="logMenu-fecha" >
+                    <div className="logMenu-fecha">
                       {formatDate(item.actualizado_en)}{" "}
                       <LogMenu id={item.id} title={item.titulo} alert={alert} />{" "}
                     </div>
