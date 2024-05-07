@@ -19,7 +19,6 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
-from collections import defaultdict
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 import numpy as np
 from scipy.stats import linregress, pearsonr
@@ -321,6 +320,127 @@ def chart_analitys(request, pk):
     return Response(data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_excel(request, pk):
+    form = get_object_or_404(Formulario, pk=pk)
+    if form.creador != request.user:
+        return Response({"message": "No autorizado para crear el archivo Excel"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    preguntas = CampoFormulario.objects.filter(formulario_id=pk)
+    respuestas = RespuestaFormulario.objects.filter(
+        campoFormulario__formulario_id=pk)
+
+    respuestas_por_usuario = defaultdict(lambda: defaultdict(str))
+
+    for respuesta in respuestas:
+        usuario_id = respuesta.usuario.id
+        campo_id = respuesta.campoFormulario_id
+        respuestas_por_usuario[usuario_id][campo_id] = respuesta.valor
+
+    wb = Workbook()
+    ws = wb.active
+
+    encabezados = ["Usuario"] + [pregunta.titulo for pregunta in preguntas]
+
+    ws.append(encabezados)
+
+    for usuario_id, respuestas_usuario in respuestas_por_usuario.items():
+        row = [respuestas_usuario.get(pregunta.id, "")
+               for pregunta in preguntas]
+        usuario = User.objects.get(id=usuario_id).username
+        row.insert(0, usuario)
+        ws.append(row)
+
+    ws_graficos = wb.create_sheet(title="Gráficos")
+
+    for idx, pregunta in enumerate(preguntas, start=1):
+        if pregunta.tipoPregunta.id != 2 and pregunta.tipoPregunta.id != 4:
+
+            if pregunta.tipoPregunta.id == 1:
+                opciones = [
+                    opcion.titulo for opcion in pregunta.opciones.all()]
+                respuestas_totales = total_multi(pregunta)
+
+                plt.bar(opciones, respuestas_totales, color='skyblue')
+                plt.title(pregunta.titulo)
+                plt.xlabel('Opciones')
+                plt.ylabel('Valores')
+                buffer_bar = BytesIO()
+                plt.savefig(buffer_bar, format='png')
+                plt.close()
+
+                colores = plt.cm.tab10(range(len(respuestas_totales)))
+                plt.pie(respuestas_totales, labels=opciones, autopct='%1.1f%%',
+                        colors=colores)
+                plt.title(pregunta.titulo)
+                plt.xlabel('Opciones')
+                plt.ylabel('Valores')
+                buffer_pie = BytesIO()
+                plt.savefig(buffer_pie, format='png')
+                plt.close()
+
+                buffer_bar.seek(0)
+                img_bar = Image(buffer_bar)
+                ws_graficos.add_image(img_bar, f"A{idx*2}")
+
+                buffer_pie.seek(0)
+                img_pie = Image(buffer_pie)
+                ws_graficos.add_image(img_pie, f"L{idx*2}")
+
+            elif pregunta.tipoPregunta.id == 3:
+                opciones = [
+                    opcion.titulo for opcion in pregunta.opciones.all()]
+                respuestas_totales = total_check(pregunta)
+
+                plt.bar(opciones, respuestas_totales, color='skyblue')
+                plt.title(pregunta.titulo)
+                plt.xlabel('Opciones')
+                plt.ylabel('Valores')
+                buffer_bar = BytesIO()
+                plt.savefig(buffer_bar, format='png')
+                plt.close()
+
+                colores = plt.cm.tab10(range(len(respuestas_totales)))
+                plt.pie(respuestas_totales, labels=opciones, autopct='%1.1f%%',
+                        colors=colores)
+                plt.title(pregunta.titulo)
+                plt.xlabel('Opciones')
+                plt.ylabel('Valores')
+                buffer_pie = BytesIO()
+                plt.savefig(buffer_pie, format='png')
+                plt.close()
+
+                buffer_bar.seek(0)
+                img_bar = Image(buffer_bar)
+                ws_graficos.add_image(img_bar, f"A{idx*10}")
+
+                buffer_pie.seek(0)
+                img_pie = Image(buffer_pie)
+                ws_graficos.add_image(img_pie, f"L{idx*10}")
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=respuestas_formulario.xlsx'
+    wb.save(response)
+
+    return response
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def ready_Answered(request, pk):
+    form = get_object_or_404(Formulario, pk=pk)
+    user = request.user
+
+    if RespuestaFormulario.objects.filter(campoFormulario__formulario=form, usuario=user).exists():
+        return Response({"message": "Ya has respondido este formulario"}, status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response({"message": "Puede responder el formulario"}, status=status.HTTP_200_OK)
+
+
 def resul_multi(preguntas, campos):
     for opciones in campos.opciones.all():
         res = RespuestaFormulario.objects.filter(
@@ -381,5 +501,26 @@ def total_res(campos):
 def resul_cova(preguntas, campos):
     res_int = [float(res.valor) for res in campos.respuestas.all()]
     correlacion, valor_p = pearsonr(res_int, res_int)
-    print("coeficiente de correlacion: ", correlacion)
-    print("valor p: ", valor_p)
+
+
+def resul_cova(preguntas, campos):
+    res_int = [float(res.valor) for res in campos.respuestas.all()]
+    correlacion, valor_p = pearsonr(res_int, res_int)
+
+
+def total_multi(campos):
+    resultados = []
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor=opciones.valor).aggregate(count=Count('valor'))
+        resultados.append(res["count"])
+    return resultados
+
+
+def total_check(campos):
+    resultados = []
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor__contains=opciones.valor).count()
+        resultados.append(res)
+    return resultados
