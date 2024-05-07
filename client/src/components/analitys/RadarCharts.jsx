@@ -16,7 +16,7 @@ export default function RadarCharts({ analitys }) {
     });
   });
   return (
-    <ResponsiveContainer width="100%" aspect={2}>
+    <ResponsiveContainer width="50%" aspect={2}>
       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey="name" />

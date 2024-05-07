@@ -14,6 +14,7 @@ import {
   saveAskReq,
   chartsAnalitys,
   createExcelReq,
+  verifyAnswer,
 } from "../api/forms";
 
 import { useNavigate } from "react-router-dom";
@@ -38,10 +39,9 @@ export function FormProvider({ children }) {
 
   const navigate = useNavigate();
 
-  const token = window.localStorage.getItem("token");
-
   const getForms = async () => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await getFormsUser(token);
       setForms(res.data);
     } catch (error) {
@@ -51,6 +51,7 @@ export function FormProvider({ children }) {
 
   const getForm = async (id) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await getFormResponder(id, token);
       setForm(res.data);
       setCampos(res.data.campos);
@@ -62,6 +63,7 @@ export function FormProvider({ children }) {
 
   const deleteForm = async (id) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await deleteFormReq(id, token);
       if (res.status === 204) {
         setForms(forms.filter((form) => form.id !== id));
@@ -73,9 +75,11 @@ export function FormProvider({ children }) {
 
   const duplicateForm = async (id) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await duplicateFormReq(id, token);
       if (res.status === 201) {
         setForms([...forms, res.data]);
+        return true;
       }
     } catch (error) {
       console.log(error);
@@ -84,6 +88,7 @@ export function FormProvider({ children }) {
 
   const updateForm = async (id, title) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await updateFormReq(id, token, title);
       if (res.status === 200) {
         location.reload();
@@ -96,6 +101,7 @@ export function FormProvider({ children }) {
 
   const createForm = async () => {
     try {
+      const token = window.localStorage.getItem("token");
       // eslint-disable-next-line no-unused-vars
       const res = await createFormReq(token).then((response) => {
         navigate(`/survey/create/${response.data.id}`);
@@ -113,11 +119,13 @@ export function FormProvider({ children }) {
       orden: orden + 1,
       tipoPregunta: tipo,
     };
+    const token = window.localStorage.getItem("token");
     const res = await createCampoReq(formId, token, data);
     return res.data;
   };
 
   const updateCampo = async (id, data) => {
+    const token = window.localStorage.getItem("token");
     const res = await updateCampoReq(id, token, data);
     res.status == 200 ? true : false;
   };
@@ -129,6 +137,7 @@ export function FormProvider({ children }) {
 
   const createOption = async (id, data) => {
     try {
+      const token = window.localStorage.getItem("token");
       // eslint-disable-next-line no-unused-vars
       const res = await createOptionReq(token, id, data);
       return res.data;
@@ -139,6 +148,7 @@ export function FormProvider({ children }) {
 
   const deleteOption = async (id) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await deleteOptionReq(id, token);
       return res.status == 204 ? true : false;
     } catch (error) {
@@ -148,6 +158,7 @@ export function FormProvider({ children }) {
 
   const updateOpcion = async (data) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await updateOpcionReq(token, data);
       return res.status == 200 ? true : false;
     } catch (error) {
@@ -157,6 +168,7 @@ export function FormProvider({ children }) {
 
   const saveAsk = async (data) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await saveAskReq(token, data);
       return res.status == 201 ? true : false;
     } catch (error) {
@@ -166,8 +178,9 @@ export function FormProvider({ children }) {
 
   const charts = async (id) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await chartsAnalitys(token, id);
-      setAnalitys(res.data);
+      res.status == 200 && setAnalitys(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -175,6 +188,7 @@ export function FormProvider({ children }) {
 
   const createExcel = async (id) => {
     try {
+      const token = window.localStorage.getItem("token");
       const res = await createExcelReq(token, id);
       if (res.status === 200 && res.data) {
         const blob = new Blob([res.data], {
@@ -194,6 +208,16 @@ export function FormProvider({ children }) {
       }
     } catch (error) {
       console.log("Error:", error);
+    }
+  };
+
+  const verifyAnswerReq = async (id) => {
+    try {
+      const token = window.localStorage.getItem("token");
+      const res = await verifyAnswer(token, id);
+      return res.status == 200 ? true : false;
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -220,6 +244,7 @@ export function FormProvider({ children }) {
         charts,
         analitys,
         createExcel,
+        verifyAnswerReq,
       }}
     >
       {children}

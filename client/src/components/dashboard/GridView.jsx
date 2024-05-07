@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -12,11 +11,10 @@ export function GridView({ data, alert }) {
   return (
     <Grid container spacing={2} className="GridView">
       {!data || data.length === 0 ? (
-        /*FIXME: Mejorar el style del mensaje de no found forms */
         <p>No hay encuestas aun</p>
       ) : (
-        data.map((item) => (
-          <Grid item xs={10} md={2} key={item.id}>
+        data.map(({ id, titulo, campos }) => (
+          <Grid item xs={10} md={2} key={id}>
             <Card
               sx={{
                 "&: hover": {
@@ -26,24 +24,16 @@ export function GridView({ data, alert }) {
             >
               <CardActionArea>
                 <CardContent>
-                  <Link to={`/survey/create/${item.id}`}>
+                  <Link to={`/survey/create/${id}`}>
                     <Typography variant="h5" className="text-center">
-                      {item.titulo}
+                      {titulo}
                     </Typography>
                   </Link>
                 </CardContent>
               </CardActionArea>
               <CardActions disableSpacing>
-                <p>
-                  Respuestas:{" "}
-                  {item &&
-                  item.campos &&
-                  item.campos[0] &&
-                  item.campos[0].respuestas
-                    ? item.campos[0].respuestas.length
-                    : 0}
-                </p>
-                <LogMenu id={item.id} title={item.titulo} alert={alert} />
+                <p>Respuestas: {campos[0]?.respuestas?.length ?? 0}</p>
+                <LogMenu id={id} title={titulo} alert={alert} />
               </CardActions>
             </Card>
           </Grid>

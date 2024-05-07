@@ -12,7 +12,7 @@ export function BarCharts({ analitys }) {
     <div>
       <BarChart
         data={data}
-        width={500}
+        width={460}
         height={250}
         margin={{
           top: 5,
@@ -22,11 +22,12 @@ export function BarCharts({ analitys }) {
       >
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip />
-        
+        <Tooltip cursor={false} labelStyle={{ color: "black" }} itemStyle={{ margin: "0rem" }} />
         <Bar dataKey="total" fill="#6b48ff" />
       </BarChart>
-      <div style={{ textAlign: "center", color: "black" }}>Frecuencia Absoluta</div>
+      <div style={{ textAlign: "center", color: "black" }}>
+        Frecuencia Absoluta
+      </div>
     </div>
   );
 }

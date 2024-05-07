@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "https://analysurvey.onrender.com/api/v1";
+const API = import.meta.env.VITE_API_URL;
 
 const instance = axios.create({
   baseURL: API,

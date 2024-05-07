@@ -139,12 +139,44 @@ html {
   width: 100%;
 }
 
-body {
-  font-size: 16px;
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap
 }
 
 * {
-  font-family: Poppins, sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
+}
+
+body {
+  font-size: 16px;
 }
 
 h1,
@@ -153,7 +185,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Poppins", sans-serif;
   margin-bottom: 1rem;
   color: #865dff;
   margin-top: 0;
@@ -250,9 +281,7 @@ a:hover {
   color: #ffa3fd;
 }
 
-span {
-  color: #ffa3fd;
-}
+
 
 footer {
   text-align: center;
@@ -283,6 +312,10 @@ footer p {
   &:hover {
     background-color: #6340d1 !important;
   }
+}
+
+.button:disabled {
+  background-color: #8f75dcdd !important;
 }
 
 .button-black {
@@ -347,6 +380,7 @@ footer p {
   border-radius: 5px;
   padding: .4rem;
   font-size: 1rem;
+  width: 90%;
 }
 
 .option-disable {
@@ -401,11 +435,17 @@ footer p {
 
   & .button-option-d {
     position: relative;
-    left: -2.2rem;
+    top: -2.5rem;
+    left: 13.5rem;
+    opacity: .8;
   }
 
   & .button-option-a {
     margin-left: 3rem;
+  }
+
+  & .ul-horizon li {
+    margin: 0rem 0rem 0rem 1.5rem;
   }
 }
 

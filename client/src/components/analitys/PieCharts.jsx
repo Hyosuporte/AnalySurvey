@@ -6,7 +6,9 @@ export function PieCharts({ analitys }) {
   analitys.respuestas.map((item, i) => {
     data.push({
       name: analitys.respuestas[i].titulo,
-      total: 100 * (analitys.respuestas[i].total / analitys.total),
+      total: parseFloat(
+        (100 * (analitys.respuestas[i].total / analitys.total)).toFixed(1)
+      ),
     });
   });
 
@@ -26,9 +28,15 @@ export function PieCharts({ analitys }) {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip
+          cursor={false}
+          labelStyle={{ color: "black" }}
+          itemStyle={{ margin: "0rem" }}
+        />
       </PieChart>
-      <div style={{ textAlign: "center", color: "black" }}>Frecuencia Relativa</div>
+      <div style={{ textAlign: "center", color: "black" }}>
+        Frecuencia Relativa
+      </div>
     </div>
   );
 }

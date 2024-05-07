@@ -1,27 +1,31 @@
 from collections import defaultdict
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Formulario
-from .models import CampoFormulario
-from .models import OpcionCampoFormulario
-from .models import RespuestaFormulario
-from django.db.models import Count
-from .serializers import FormSerializer
-from .serializers import CampoFormularioSerializer
-from .serializers import OpcionCampoFormularioSerializer
-from .serializers import RespuestaFormularioSerializer
-from scipy.stats import pearsonr
-from openpyxl import Workbook
-from openpyxl.drawing.image import Image
-from io import BytesIO
-from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from io import BytesIO
+from openpyxl.drawing.image import Image
+from openpyxl import Workbook
+from scipy.stats import pearsonr
+from .serializers import RespuestaFormularioSerializer
+from .serializers import OpcionCampoFormularioSerializer
+from .serializers import CampoFormularioSerializer
+from .serializers import FormSerializer
+from django.db.models import Count
+from .models import RespuestaFormulario
+from .models import OpcionCampoFormulario
+from .models import CampoFormulario
+from .models import Formulario
+from rest_framework import status
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from collections import defaultdict
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+import numpy as np
+from scipy.stats import linregress, pearsonr
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 
 
 @api_view(['GET', 'DELETE'])
@@ -150,7 +154,7 @@ def actualizar_formulario(request, pk):
                 for datos_opcion in opciones_campo:
 
                     opcion_id = datos_opcion.get('id')
-                    print(opcion_id, campo.id)
+
                     opcion = get_object_or_404(
                         OpcionCampoFormulario, id=opcion_id, campoFormulario=campo)
 
@@ -225,7 +229,6 @@ def update_campo(request, pk):
     if campo.formulario.creador != request.user:
         return Response({"message": "No authorizado para actualizar el campo"}, status=status.HTTP_401_UNAUTHORIZED)
     serializer = CampoFormularioSerializer(campo, data=request.data)
-    print(serializer.is_valid())
     if serializer.is_valid():
         serializer.save()
         return Response({"message": "Campo Actualizado"}, status=status.HTTP_200_OK)
@@ -285,6 +288,13 @@ def chart_analitys(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
     if form.creador != request.user:
         return Response({"message": "No authorizado para elminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    has_responses = RespuestaFormulario.objects.filter(
+        campoFormulario__formulario=form).exists()
+
+    if not has_responses:
+        return Response({"message": "No hay respuestas para el formulario"}, status=status.HTTP_204_NO_CONTENT)
+
     data = {
         "preguntas": []
     }
@@ -294,7 +304,9 @@ def chart_analitys(request, pk):
             "titulo": campos.titulo,
             "respuestas": [],
             "total": total_res(campos),
-            "tipoPregunta": campos.tipoPregunta.id
+            "tipoPregunta": campos.tipoPregunta.id,
+            "correlacion": 0,
+            "desviacion": 0
         }
         if campos.tipoPregunta.id == 1:
             resul_multi(preguntas, campos)
@@ -309,88 +321,6 @@ def chart_analitys(request, pk):
     return Response(data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def create_excel(request, pk):
-    form = get_object_or_404(Formulario, pk=pk)
-    if form.creador != request.user:
-        return Response({"message": "No autorizado para crear el archivo Excel"}, status=status.HTTP_401_UNAUTHORIZED)
-
-    preguntas = CampoFormulario.objects.filter(formulario_id=pk)
-    respuestas = RespuestaFormulario.objects.filter(
-        campoFormulario__formulario_id=pk)
-
-    respuestas_por_usuario = defaultdict(lambda: defaultdict(str))
-
-    for respuesta in respuestas:
-        usuario_id = respuesta.usuario.id
-        campo_id = respuesta.campoFormulario_id
-        respuestas_por_usuario[usuario_id][campo_id] = respuesta.valor
-
-    wb = Workbook()
-    ws = wb.active
-
-    encabezados = ["Usuario"] + [pregunta.titulo for pregunta in preguntas]
-
-    ws.append(encabezados)
-
-    for usuario_id, respuestas_usuario in respuestas_por_usuario.items():
-        row = [respuestas_usuario.get(pregunta.id, "")
-               for pregunta in preguntas]
-        usuario = User.objects.get(id=usuario_id).username
-        row.insert(0, usuario)
-        ws.append(row)
-
-    ws_graficos = wb.create_sheet(title="Gráficos")
-
-    for idx, pregunta in enumerate(preguntas, start=1):
-        if pregunta.tipoPregunta.id != 2 and pregunta.tipoPregunta.id != 4:
-
-            if pregunta.tipoPregunta.id == 1:
-                opciones = [
-                    opcion.titulo for opcion in pregunta.opciones.all()]
-                respuestas_totales = total_multi(pregunta)
-
-                plt.figure(figsize=(6, 4))
-                plt.bar(opciones, respuestas_totales, color='skyblue')
-                plt.title(pregunta.titulo)
-                plt.xlabel('Opciones')
-                plt.ylabel('Valores')
-                buffer = BytesIO()
-                plt.savefig(buffer, format='png')
-                plt.close()
-
-                buffer.seek(0)
-                img = Image(buffer)
-                ws_graficos.add_image(img, f"A{idx*10}")
-
-            elif pregunta.tipoPregunta.id == 3:
-                opciones = [
-                    opcion.titulo for opcion in pregunta.opciones.all()]
-                respuestas_totales = total_check(pregunta)
-
-                plt.figure(figsize=(6, 4))
-                plt.bar(opciones, respuestas_totales, color='skyblue')
-                plt.title(pregunta.titulo)
-                plt.xlabel('Opciones')
-                plt.ylabel('Valores')
-                buffer = BytesIO()
-                plt.savefig(buffer, format='png')
-                plt.close()
-
-                buffer.seek(0)
-                img = Image(buffer)
-                ws_graficos.add_image(img, f"A{idx*10}")
-
-    response = HttpResponse(
-        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=respuestas_formulario.xlsx'
-    wb.save(response)
-
-    return response
-
-
 def resul_multi(preguntas, campos):
     for opciones in campos.opciones.all():
         res = RespuestaFormulario.objects.filter(
@@ -399,6 +329,7 @@ def resul_multi(preguntas, campos):
             "titulo": opciones.titulo,
             "total": res["count"]
         })
+    preguntas["desviacion"] = desviacion_estandar(preguntas)
 
 
 def resul_check(preguntas, campos):
@@ -410,17 +341,35 @@ def resul_check(preguntas, campos):
             "titulo": opciones.titulo,
             "total": res
         })
+    preguntas["desviacion"] = desviacion_estandar(preguntas)
 
 
 def result_ratin(preguntas, campos):
     for opciones in campos.opciones.all():
+
         for option_ratin in range(1, int(opciones.valor)+1):
             res = RespuestaFormulario.objects.filter(
-                campoFormulario_id=4, valor=option_ratin).aggregate(count=Count('valor'))
+                campoFormulario_id=campos.id, valor=option_ratin).aggregate(count=Count('valor'))
             preguntas["respuestas"].append({
                 "titulo": "Calificacion de " + str(option_ratin),
                 "total": res["count"]
             })
+    regresion_lineal(preguntas)
+    preguntas["desviacion"] = desviacion_estandar(preguntas)
+
+
+def regresion_lineal(preguntas):
+    x = np.array(range(1, len(preguntas["respuestas"])+1))
+    y = np.array([item['total'] for item in preguntas["respuestas"]])
+    slope, intercept, _, _, _ = linregress(x, y)
+    regression_line = slope * x + intercept
+    for i in range(len(preguntas["respuestas"])):
+        preguntas["respuestas"][i]["regression"] = regression_line[i]
+    preguntas["correlacion"], _ = pearsonr(x, y)
+
+
+def desviacion_estandar(preguntas):
+    return np.std([item['total'] for item in preguntas["respuestas"]])
 
 
 def total_res(campos):
@@ -434,21 +383,3 @@ def resul_cova(preguntas, campos):
     correlacion, valor_p = pearsonr(res_int, res_int)
     print("coeficiente de correlacion: ", correlacion)
     print("valor p: ", valor_p)
-
-
-def total_multi(campos):
-    resultados = []
-    for opciones in campos.opciones.all():
-        res = RespuestaFormulario.objects.filter(
-            campoFormulario_id=campos.id, valor=opciones.valor).aggregate(count=Count('valor'))
-        resultados.append(res["count"])
-    return resultados
-
-
-def total_check(campos):
-    resultados = []
-    for opciones in campos.opciones.all():
-        res = RespuestaFormulario.objects.filter(
-            campoFormulario_id=campos.id, valor__contains=opciones.valor).count()
-        resultados.append(res)
-    return resultados

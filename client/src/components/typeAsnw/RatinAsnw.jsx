@@ -1,11 +1,26 @@
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function RatinAsnw({ question, setRespuestas }) {
   const maxRating = parseInt(question.opciones[0].valor);
   const [ratingValue, setRatingValue] = useState(0);
+
+  useEffect(() => {
+    setRespuestas((prevRespuestas) => {
+      const filteredRespuestas = prevRespuestas.filter(
+        (respuesta) => respuesta.campoFormulario !== question.id
+      );
+      return [
+        ...filteredRespuestas,
+        {
+          campoFormulario: question.id,
+          valor: ratingValue,
+        },
+      ];
+    });
+  }, []);
 
   const handleRatingChange = (event, newValue) => {
     setRatingValue(newValue);

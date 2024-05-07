@@ -41,11 +41,17 @@
 }
 
 .card {
-  width: 70%;
+  width: 89%;
 }
 
 .card-reverse {
   width: 89%;
+}
+
+.card-container img {
+  max-width: 94%;
+  height: auto;
+  object-fit: contain;
 }
 
 #CardList {
@@ -62,7 +68,7 @@
 .carusel-template h2 {
   color: white;
   font-size: 2rem;
-  font-Weight: 700;
+  font-weight: 700;
 }
 
 .item-carusel {
@@ -326,6 +332,9 @@ label span:last-child {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
 }
 
 @media (max-width: 1024px) {
@@ -372,7 +381,7 @@ label span:last-child {
 
   .container-charts svg {
     width: 80% !important;
-    font-size: .9rem !important;
+
   }
 
   .bar-chart {
@@ -445,7 +454,7 @@ label span:last-child {
 
   .card p,
   .card-reverse p {
-    font-size: .7rem;
+    font-size: .8rem;
   }
 
   .text-carusel {

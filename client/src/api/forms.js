@@ -74,3 +74,8 @@ export const createExcelReq = (token, id) =>
     headers: { Authorization: `Token ${token}` },
     responseType: "blob",
   });
+
+export const verifyAnswer = (token, id) =>
+  axios.get(`/forms/${id}/answered/`, {
+    headers: { Authorization: `Token ${token}` },
+  });

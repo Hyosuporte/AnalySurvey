@@ -6,27 +6,37 @@ import { useForms } from "../context/FormsContext";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 
-export function Overiew() {
+const MemoizedGridView = React.memo(GridView);
+const MemoizedListView = React.memo(ListView);
+
+export default function Overiew() {
   const { forms, getForms } = useForms();
   const [alignment, setAligment] = useState("Grid");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    getForms();
+    getForms().catch((error) => {
+      console.error("Error al obtener los formularios:", error);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!forms) {
+    return <p>Cargando...</p>;
+  }
 
   return (
     <main id="mainProfile">
       <NavbarProfile />
       <OptionViews setAligment={setAligment} />
-      {alignment == "Grid" ? (
-        <GridView data={forms} alert={setOpen} />
+      {alignment === "Grid" ? (
+        <MemoizedGridView data={forms} alert={setOpen} />
       ) : (
-        <ListView data={forms} alert={setOpen} />
+        <MemoizedListView data={forms} alert={setOpen} />
       )}
       <Box className="alert-clipboard">
         <Collapse in={open}>

@@ -7,7 +7,7 @@ import { UpdateTitle } from "../UpdateTitle";
 import Menu from "@mui/material/Menu";
 import { useState } from "react";
 
-const options = ["Abrir", "Share", "Renombrar", "Duplicar", "Eliminar"];
+const options = ["Abrir", "Compartir", "Renombrar", "Duplicar", "Eliminar"];
 
 export function LogMenu({ id, title, alert }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,9 +24,9 @@ export function LogMenu({ id, title, alert }) {
       case "Abrir":
         navigate(`/survey/create/${id}`);
         break;
-      case "Share":
+      case "Compartir":
         navigator.clipboard
-          .writeText(`http://localhost:5173/forms/${id}`)
+          .writeText(`${import.meta.env.VITE_FRONT_URL}/forms/${id}`)
           .then(() => {
             alert(true);
           })
@@ -50,7 +50,6 @@ export function LogMenu({ id, title, alert }) {
     <div className="div-more">
       <IconButton
         aria-label="more"
-        id="long-button"
         aria-controls={open ? "long-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"

@@ -32,6 +32,7 @@ export function TextAsnw({ question, setRespuestas }) {
         autoComplete="off"
         onChange={handleChange}
         value={selectedOption}
+        required
       />
     </Box>
   );

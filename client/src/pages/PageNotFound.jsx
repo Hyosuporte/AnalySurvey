@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 
-export function PageNotFound() {
+export default function PageNotFound() {
   return (
     <main className="not-found-page">
       <Box position="fixed" width="fit-content" top="2.5rem" left="4rem">

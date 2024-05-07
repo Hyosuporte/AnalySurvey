@@ -13,6 +13,7 @@ export function ListView({ data, alert }) {
       day: "2-digit",
     });
   };
+
   return (
     <Box component="section" className="ListView">
       {data.length === 0 ? (
@@ -70,7 +71,7 @@ export function ListView({ data, alert }) {
                       : 0}
                   </Grid>
                   <Grid item>
-                    <div className="logMenu-fecha" >
+                    <div className="logMenu-fecha">
                       {formatDate(item.actualizado_en)}{" "}
                       <LogMenu id={item.id} title={item.titulo} alert={alert} />{" "}
                     </div>
