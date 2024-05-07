@@ -10,7 +10,11 @@ import { useState } from "react";
 export function MultipleOption({ question }) {
   const [options, setOptions] = useState(question.opciones);
   const [title, setTitle] = useState(question.titulo);
-  const { updateCampo, createOption, deleteOption, updateOpcion } = useForms();
+  const { updateCampo, createOption, deleteOption, updateOpcion } = useForms({
+    defaultValues: {
+      [question.id]: "",
+    },
+  });
 
   const handleAddOption = async () => {
     const data = {

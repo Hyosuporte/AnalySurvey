@@ -26,7 +26,7 @@ export function LogMenu({ id, title, alert }) {
         break;
       case "Compartir":
         navigator.clipboard
-          .writeText(`http://localhost:5173/forms/${id}`)
+          .writeText(`${import.meta.env.VITE_FRONT_URL}/forms/${id}`)
           .then(() => {
             alert(true);
           })

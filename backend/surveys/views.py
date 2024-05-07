@@ -21,7 +21,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 import numpy as np
-from scipy.stats import linregress
+from scipy.stats import linregress, pearsonr
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
@@ -304,6 +304,8 @@ def chart_analitys(request, pk):
             "respuestas": [],
             "total": total_res(campos),
             "tipoPregunta": campos.tipoPregunta.id,
+            "correlacion": 0,
+            "desviacion": 0
         }
         if campos.tipoPregunta.id == 1:
             resul_multi(preguntas, campos)
@@ -447,6 +449,7 @@ def resul_multi(preguntas, campos):
             "titulo": opciones.titulo,
             "total": res["count"]
         })
+    preguntas["desviacion"] = desviacion_estandar(preguntas)
 
 
 def resul_check(preguntas, campos):
@@ -458,6 +461,7 @@ def resul_check(preguntas, campos):
             "titulo": opciones.titulo,
             "total": res
         })
+    preguntas["desviacion"] = desviacion_estandar(preguntas)
 
 
 def result_ratin(preguntas, campos):
@@ -471,16 +475,21 @@ def result_ratin(preguntas, campos):
                 "total": res["count"]
             })
     regresion_lineal(preguntas)
+    preguntas["desviacion"] = desviacion_estandar(preguntas)
 
 
 def regresion_lineal(preguntas):
-    x = np.array(range(len(preguntas["respuestas"])))
+    x = np.array(range(1, len(preguntas["respuestas"])+1))
     y = np.array([item['total'] for item in preguntas["respuestas"]])
     slope, intercept, _, _, _ = linregress(x, y)
-    print(x, y, slope, intercept)
     regression_line = slope * x + intercept
     for i in range(len(preguntas["respuestas"])):
         preguntas["respuestas"][i]["regression"] = regression_line[i]
+    preguntas["correlacion"], _ = pearsonr(x, y)
+
+
+def desviacion_estandar(preguntas):
+    return np.std([item['total'] for item in preguntas["respuestas"]])
 
 
 def total_res(campos):

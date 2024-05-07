@@ -28,7 +28,11 @@ export function PieCharts({ analitys }) {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip
+          cursor={false}
+          labelStyle={{ color: "black" }}
+          itemStyle={{ margin: "0rem" }}
+        />
       </PieChart>
       <div style={{ textAlign: "center", color: "black" }}>
         Frecuencia Relativa

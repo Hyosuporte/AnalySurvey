@@ -1,17 +1,10 @@
-import {
-  ComposedChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Scatter,
-} from "recharts";
+import {ComposedChart, Line, XAxis, YAxis, CartesianGrid, Scatter, Tooltip} from 'recharts';
 
 export function RegCharts({ analitys }) {
   const data = [];
   analitys.respuestas.map((item, i) => {
     data.push({
-      name: analitys.respuestas[i].titulo,
+      name: i+1,
       total: analitys.respuestas[i].total,
       limit: parseFloat(analitys.respuestas[i].regression).toFixed(1),
     });

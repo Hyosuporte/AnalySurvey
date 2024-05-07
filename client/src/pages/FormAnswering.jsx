@@ -4,16 +4,18 @@ import { RatinAsnw } from "../components/typeAsnw/RatinAsnw";
 import { TextAsnw } from "../components/typeAsnw/TextAsnw";
 import { useForms } from "../context/FormsContext";
 import { Loading } from "../components/Loading";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
 export default function FormAnswering() {
-  const { handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const [respuestas, setRespuestas] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState(true);
+  const navigate = useNavigate();
   const { form, getForm, isLoading, saveAsk, verifyAnswerReq } = useForms();
   const { id } = useParams();
 
@@ -34,16 +36,35 @@ export default function FormAnswering() {
   }, []);
 
   if (isLoading && answer) return <Loading />;
-  if (!answer) return <Box sx={{ background: "red" }} >Ya respondio la encuesta</Box>;
+  if (!answer)
+    return <Box sx={{ background: "red" }}>Ya respondio la encuesta</Box>;
 
   const onSubmit = () => {
     const jsonData = {
-      respuestas: respuestas.map((respuesta) => ({
-        campoFormulario: respuesta.campoFormulario,
-        valor: respuesta.valor,
-      })),
+      respuestas: respuestas.map((respuesta) => {
+        if (!respuesta.valor) {
+          null;
+        }
+        return {
+          campoFormulario: respuesta.campoFormulario,
+          valor: respuesta.valor,
+        };
+      }),
     };
-    saveAsk(jsonData);
+
+    const allResponsesFilled = jsonData.respuestas.every(
+      (respuesta) => respuesta.valor
+    );
+
+    if (allResponsesFilled) {
+      setLoading(true);
+      saveAsk(jsonData).then(() => {
+        alert("Respuestas guardadas");
+        navigate("/");
+      });
+    } else {
+      alert("Por favor, llena todas las respuestas antes de enviar");
+    }
   };
 
   //FIXME: Poner el FormControl a cada pregunta y mejorar los styles
@@ -63,6 +84,7 @@ export default function FormAnswering() {
                   key={i}
                   question={item}
                   setRespuestas={setRespuestas}
+                  register={register}
                 />
               );
             case 2:
@@ -94,9 +116,8 @@ export default function FormAnswering() {
               return null;
           }
         })}
-        <Button type="submit" className="button">
-          {/*  FIXME: Deshabilitar el button cuando mande la peticion y poner el mensaje correspondiente */}
-          Enviar{" "}
+        <Button type="submit" className="button" disabled={loading}>
+          Enviar
         </Button>
       </Box>
     </main>

@@ -281,9 +281,7 @@ a:hover {
   color: #ffa3fd;
 }
 
-span {
-  color: #ffa3fd;
-}
+
 
 footer {
   text-align: center;
@@ -314,6 +312,10 @@ footer p {
   &:hover {
     background-color: #6340d1 !important;
   }
+}
+
+.button:disabled {
+  background-color: #8f75dcdd !important;
 }
 
 .button-black {

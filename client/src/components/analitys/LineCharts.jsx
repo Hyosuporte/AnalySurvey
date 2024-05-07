@@ -24,7 +24,11 @@ export function LineCharts({ analitys }) {
       >
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip />
+        <Tooltip
+          cursor={false}
+          labelStyle={{ color: "black" }}
+          itemStyle={{ margin: "0rem" }}
+        />
 
         <Line type="monotone" dataKey="total" fill="#8884d8" />
       </LineChart>

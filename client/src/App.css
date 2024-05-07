@@ -334,7 +334,7 @@ label span:last-child {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  align-items: flex-start;
+  align-items: center;
 }
 
 @media (max-width: 1024px) {
@@ -381,7 +381,7 @@ label span:last-child {
 
   .container-charts svg {
     width: 80% !important;
-    font-size: .9rem !important;
+
   }
 
   .bar-chart {

@@ -83,10 +83,25 @@ export function ListAnalitys() {
                   {showLineChart && (
                     <LineCharts key={`acumu-${i}`} analitys={item} />
                   )}
+                  <p style={{ color: "black" }}>
+                    {" Desviacion estandar : "}
+                    {parseFloat(item.desviacion).toFixed(2)}
+                  </p>
                 </>
               ) : null}
               {item.tipoPregunta == 4 ? (
-                <RegCharts key={`regre-${i}`} analitys={item} />
+                <>
+                  <RadarCharts key={`radar-${i}`} analitys={item} />
+                  {showRegreChart && (
+                    <RegCharts key={`regre-${i}`} analitys={item} />
+                  )}
+                  <p style={{ color: "black" }}>
+                    {" Correlacion : "}
+                    {parseFloat(item.correlacion).toFixed(2)} <br />
+                    {" Desviacion estandar : "}
+                    {parseFloat(item.desviacion).toFixed(2)}
+                  </p>
+                </>
               ) : null}
             </div>
           </div>
