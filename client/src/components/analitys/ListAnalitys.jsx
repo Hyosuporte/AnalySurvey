@@ -33,39 +33,40 @@ export function ListAnalitys() {
     <Box classtitulo="list-analitys">
       <div>
         <h3>Resultados</h3>
-        <Button onClick={() => createExcel(id)}> Generar excel </Button>
+        {analitys.length != 0 && (
+          <Box>
+            <Button onClick={() => createExcel(id)}> Generar excel </Button>{" "}
+            <input
+              type="checkbox"
+              value="Pie Chart"
+              name="PieChart"
+              onChange={() => setShowPieChart(!showPieChart)}
+            />
+            <label htmlFor="PieChart">Pie Chart</label>
+            <input
+              type="checkbox"
+              value="Bar Chart"
+              name="BarChart"
+              onChange={() => setShowBarChart(!showBarChart)}
+            />
+            <label htmlFor="BarChart">Bar Chart</label>
+            <input
+              type="checkbox"
+              value="Line Chart"
+              name="LineChart"
+              onChange={() => setShowLineChart(!showLineChart)}
+            />
+            <label htmlFor="BarChart">Line Chart</label>
+            <input
+              type="checkbox"
+              value="Regresion Chart"
+              name="regresionChart"
+              onChange={() => setShowRegreChart(!showRegreChart)}
+            />
+            <label htmlFor="regresionChart">Regresion lineal</label>
+          </Box>
+        )}
       </div>
-      <Box>
-        <Button onClick={() => createExcel(id)}> Generar excel </Button>{" "}
-        <input
-          type="checkbox"
-          value="Pie Chart"
-          name="PieChart"
-          onChange={() => setShowPieChart(!showPieChart)}
-        />
-        <label htmlFor="PieChart">Pie Chart</label>
-        <input
-          type="checkbox"
-          value="Bar Chart"
-          name="BarChart"
-          onChange={() => setShowBarChart(!showBarChart)}
-        />
-        <label htmlFor="BarChart">Bar Chart</label>
-        <input
-          type="checkbox"
-          value="Line Chart"
-          name="LineChart"
-          onChange={() => setShowLineChart(!showLineChart)}
-        />
-        <label htmlFor="BarChart">Line Chart</label>
-        <input
-          type="checkbox"
-          value="Regresion Chart"
-          name="regresionChart"
-          onChange={() => setShowRegreChart(!showRegreChart)}
-        />
-        <label htmlFor="regresionChart">Regresion lineal</label>
-      </Box>
       {analitys.length == 0 ? (
         <p>
           No hay datos suficientes para mostrar los resultados, por favor espere
