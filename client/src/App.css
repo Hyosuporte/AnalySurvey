@@ -65,7 +65,32 @@
   margin-top: 10rem;
 }
 
+.carusel-template-anali {
+  width: 85%;
+  margin: auto;
+  margin-top: 10rem;
+}
+
+.carusel-template-anali img {
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.text-carusel-anali {
+  margin-top: 1rem;
+  width: 85%;
+  float: none;
+  margin: auto;
+}
+
+
 .carusel-template h2 {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.carusel-template-anali h2 {
   color: white;
   font-size: 2rem;
   font-weight: 700;
@@ -246,13 +271,12 @@
 }
 
 .container-analytis {
-  background-color: #cccccc;
+  background-color: #e4d5fb;
   min-height: 100vh;
   height: auto;
 }
 
 .list-analitys {
-  background-color: white;
   width: 80%;
   margin: auto;
   margin-top: 5rem;
@@ -319,7 +343,7 @@ label span:last-child {
 }
 
 .container-campo-resul {
-  background-color: white;
+  background-color: #fffdfd;
   border-radius: 15px;
   padding: 1rem;
   margin: auto;

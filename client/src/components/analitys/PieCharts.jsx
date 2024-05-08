@@ -1,6 +1,6 @@
 import { Pie, PieChart, Cell, Tooltip } from "recharts";
 
-export function PieCharts({ analitys }) {
+export function PieCharts({ analitys, show }) {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
   const data = [];
   analitys.respuestas.map((item, i) => {
@@ -12,7 +12,7 @@ export function PieCharts({ analitys }) {
     });
   });
 
-  return (
+  return show ? (
     <div>
       <PieChart width={200} height={200}>
         <Pie
@@ -38,5 +38,5 @@ export function PieCharts({ analitys }) {
         Frecuencia Relativa
       </div>
     </div>
-  );
+  ) : null;
 }

@@ -17,7 +17,6 @@ const pages = [
     href: "#CardList",
   },
   { title: "Plantillas", href: "#CaruselTemplate" },
-  { title: "Acerca de", href: "#footerLandi" },
   { title: "Inicio", href: "#home" },
 ];
 

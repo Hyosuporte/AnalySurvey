@@ -1,4 +1,5 @@
 import { CaruselTemplate } from "../components/Home/CaruselTemplate";
+import { CaruselAnaly } from "../components/Home/CaruselAnaly";
 import { NavbarHome } from "../components/Home/NavbarHome";
 import { Card } from "../components/Home/cardLandi";
 import Typography from "@mui/material/Typography";
@@ -82,18 +83,9 @@ export default function HomePage() {
         ))}
       </section>
       <CaruselTemplate />
-      <footer id="footerLandi">
-        <Typography variant="h3" sx={{ color: "white" }}>
-          Lo que ofrecemos
-        </Typography>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta
-          nisi at metus iaculis, ac congue ex fringilla. Fusce id orci suscipit,
-          ultricies tellus id, consequat quam. Duis rutrum luctus nisl, eu
-          maximus orci tristique id. Suspendisse pellentesque risus nec mollis
-          blandit.
-        </p>
-      </footer>
+      <CaruselAnaly />
+
+      
     </main>
   );
 }

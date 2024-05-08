@@ -2,12 +2,16 @@ import { MultipleAsnw } from "../components/typeAsnw/MultipleAsnw";
 import { CheckAsnw } from "../components/typeAsnw/CheckAsnw";
 import { RatinAsnw } from "../components/typeAsnw/RatinAsnw";
 import { TextAsnw } from "../components/typeAsnw/TextAsnw";
-import { useForms } from "../context/FormsContext";
-import { Loading } from "../components/Loading";
 import { useParams, useNavigate } from "react-router-dom";
+import { useForms } from "../context/FormsContext";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Loading } from "../components/Loading";
+import Collapse from "@mui/material/Collapse";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 
 export default function FormAnswering() {
@@ -15,6 +19,7 @@ export default function FormAnswering() {
   const [respuestas, setRespuestas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState(true);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { form, getForm, isLoading, saveAsk, verifyAnswerReq } = useForms();
   const { id } = useParams();
@@ -37,7 +42,25 @@ export default function FormAnswering() {
 
   if (isLoading && answer) return <Loading />;
   if (!answer)
-    return <Box sx={{ background: "red" }}>Ya respondio la encuesta</Box>;
+    return (
+      <Box
+        sx={{
+          background: "#e4d5fb",
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h4 style={{ textAlign: "center", color: "black" }}>
+          Ya respondio la encuesta <br />
+          <a href="/">
+            <Button variant="contained" color="secondary" >Volver al inicio</Button>
+          </a>
+        </h4>
+      </Box>
+    );
 
   const onSubmit = () => {
     const jsonData = {
@@ -63,7 +86,7 @@ export default function FormAnswering() {
         navigate("/");
       });
     } else {
-      alert("Por favor, llena todas las respuestas antes de enviar");
+      setOpen(true);
     }
   };
 
@@ -116,9 +139,30 @@ export default function FormAnswering() {
               return null;
           }
         })}
+
         <Button type="submit" className="button" disabled={loading}>
           Enviar
         </Button>
+        <Box className="alert-clipboard">
+          <Collapse in={open}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              }
+            >
+              Por favor, llena todas las respuestas antes de enviar
+            </Alert>
+          </Collapse>
+        </Box>
       </Box>
     </main>
   );

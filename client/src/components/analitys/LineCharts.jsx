@@ -1,6 +1,6 @@
 import { Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
 
-export function LineCharts({ analitys }) {
+export function LineCharts({ analitys, show }) {
   const data = [];
   let totalAcu = 0;
   analitys.respuestas.map((item, i) => {
@@ -10,7 +10,7 @@ export function LineCharts({ analitys }) {
       total: totalAcu,
     });
   });
-  return (
+  return show ? (
     <div>
       <LineChart
         data={data}
@@ -36,5 +36,5 @@ export function LineCharts({ analitys }) {
         Frecuencia Acumulada
       </div>
     </div>
-  );
+  ) : null;
 }

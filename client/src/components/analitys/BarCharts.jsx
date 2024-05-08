@@ -1,6 +1,6 @@
 import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts";
 
-export function BarCharts({ analitys }) {
+export function BarCharts({ analitys, show }) {
   const data = [];
   analitys.respuestas.map((item, i) => {
     data.push({
@@ -8,7 +8,7 @@ export function BarCharts({ analitys }) {
       total: analitys.respuestas[i].total,
     });
   });
-  return (
+  return show ? (
     <div>
       <BarChart
         data={data}
@@ -22,12 +22,16 @@ export function BarCharts({ analitys }) {
       >
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip cursor={false} labelStyle={{ color: "black" }} itemStyle={{ margin: "0rem" }} />
+        <Tooltip
+          cursor={false}
+          labelStyle={{ color: "black" }}
+          itemStyle={{ margin: "0rem" }}
+        />
         <Bar dataKey="total" fill="#6b48ff" />
       </BarChart>
       <div style={{ textAlign: "center", color: "black" }}>
         Frecuencia Absoluta
       </div>
     </div>
-  );
+  ) : null;
 }
