@@ -176,6 +176,10 @@ html {
 }
 
 body {
+  height: 100%;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
   font-size: 16px;
 }
 
@@ -281,19 +285,10 @@ a:hover {
   color: #ffa3fd;
 }
 
-
-
 footer {
   text-align: center;
-  margin-top: 10rem;
+  margin-top: 1rem;
   padding-bottom: 5rem;
-}
-
-footer p {
-  width: 80%;
-  margin: auto;
-  font-size: 1.3rem;
-  margin-bottom: 4rem;
 }
 
 .container-nav {

@@ -1,11 +1,11 @@
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import { useEffect } from "react";
 import { Loading } from "../Loading";
 
 export function FormLogin() {
@@ -15,11 +15,13 @@ export function FormLogin() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
   const { singIn, isAuthenticated, errors: singInError, isLoading } = useAuth();
+  const [redirect] = useState(location.state?.from || "/dashboard");
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate(redirect);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);

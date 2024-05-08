@@ -85,7 +85,7 @@ export default function HomePage() {
       <CaruselTemplate />
       <CaruselAnaly />
 
-      
+      <footer></footer>
     </main>
   );
 }

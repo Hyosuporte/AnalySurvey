@@ -1,12 +1,12 @@
 import { useAuth } from "../../context/AuthContext";
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function FormRegist() {
   const {
@@ -16,13 +16,16 @@ export function FormRegist() {
     watch,
   } = useForm();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [redirect] = useState(location.state?.from || "/dashboard");
   const { singUp, isAuthenticated, errors: singUpError } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/dashboard");
+      navigate(redirect);
     }
-  }, [isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   const onSubmit = (data) => singUp(data);
 
@@ -89,8 +92,13 @@ export function FormRegist() {
                 message: "Debe tener minimo 8 caracteres*",
               },
               maxLength: {
-                value: 15,
+                value: 16,
                 message: "Debe tener maximo 15 caracteres*",
+              },
+              pattern: {
+                value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                message:
+                  "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial",
               },
             })}
           />
