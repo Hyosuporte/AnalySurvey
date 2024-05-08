@@ -77,7 +77,7 @@ export function CaruselTemplate() {
 
             <Button
               variant="contained"
-              onClick={() => handleDuplicate(3)}
+              onClick={() => handleDuplicate(23)}
               size="medium"
               className="button"
               disabled={isLoading}
@@ -89,15 +89,15 @@ export function CaruselTemplate() {
         </div>
         <div>
           <div className="text-carusel">
-            <h4>Encuesta de satisfaccion</h4>
+            <h4>Encuesta de recopilacion</h4>
             <p>
-              Esta encuesta esta pensada para cuando desees calificar una
-              aplicativo, trabajo, software, etc.
+              Esta encuesta esta pensada para cuando desees recopilar datos
+              acerca de un grupo.
             </p>
 
             <Button
               variant="contained"
-              onClick={() => handleDuplicate(4)}
+              onClick={() => handleDuplicate(24)}
               size="medium"
               className="button"
               disabled={isLoading}
