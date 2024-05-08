@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const settings = ["Perfil", "Dashboard", "Salir"];
+const settings = ["Dashboard", "Salir"];
 
 export function MenuUser() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -22,9 +22,6 @@ export function MenuUser() {
 
   const handleOptionMenu = (setting) => (event) => {
     switch (setting) {
-      case "Perfil":
-        console.log(event);
-        break;
       case "Dashboard":
         navigate("/dashboard");
         break;

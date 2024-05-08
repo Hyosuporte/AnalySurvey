@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function RadarCharts({ analitys }) {
+export default function RadarCharts({ analitys, show }) {
   const data = [];
   analitys.respuestas.map((item, i) => {
     data.push({
@@ -15,7 +15,7 @@ export default function RadarCharts({ analitys }) {
       total: analitys.respuestas[i].total,
     });
   });
-  return (
+  return show ? (
     <ResponsiveContainer width="50%" aspect={2}>
       <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
         <PolarGrid />
@@ -30,5 +30,5 @@ export default function RadarCharts({ analitys }) {
         />
       </RadarChart>
     </ResponsiveContainer>
-  );
+  ) : null;
 }

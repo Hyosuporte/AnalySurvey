@@ -30,7 +30,7 @@ function App() {
               <Route path="/dashboard" element={<Overview />} />
               <Route path="/survey/create/:id" element={<SurveyGenerator />} />
               <Route path="/survey/analysis/:id" element={<SurveyAnalysis />} />
-              <Route path="/forms/:id" element={<FormAnswering />} />
+              <Route path="/forms/aswering/:id" element={<FormAnswering />} />
             </Route>
           </Routes>
         </Suspense>

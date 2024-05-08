@@ -1,15 +1,22 @@
-import {ComposedChart, Line, XAxis, YAxis, CartesianGrid, Scatter, Tooltip} from 'recharts';
+import {
+  ComposedChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Scatter,
+} from "recharts";
 
-export function RegCharts({ analitys }) {
+export function RegCharts({ analitys, show }) {
   const data = [];
   analitys.respuestas.map((item, i) => {
     data.push({
-      name: i+1,
+      name: i + 1,
       total: analitys.respuestas[i].total,
       limit: parseFloat(analitys.respuestas[i].regression).toFixed(1),
     });
   });
-  return (
+  return show ? (
     <div>
       <ComposedChart
         width={460}
@@ -31,5 +38,5 @@ export function RegCharts({ analitys }) {
         Regresion Lineal
       </div>
     </div>
-  );
+  ) : null;
 }

@@ -349,12 +349,13 @@ def create_excel(request, pk):
     for usuario_id, respuestas_usuario in respuestas_por_usuario.items():
         row = [respuestas_usuario.get(pregunta.id, "")
                for pregunta in preguntas]
-        usuario = User.objects.get(id=usuario_id).username
+        usuario = User.objects.get(id=usuario_id).email
         row.insert(0, usuario)
         ws.append(row)
 
     ws_graficos = wb.create_sheet(title="Gráficos")
 
+    indece = 1
     for idx, pregunta in enumerate(preguntas, start=1):
         if pregunta.tipoPregunta.id != 2 and pregunta.tipoPregunta.id != 4:
 
@@ -383,11 +384,12 @@ def create_excel(request, pk):
 
                 buffer_bar.seek(0)
                 img_bar = Image(buffer_bar)
-                ws_graficos.add_image(img_bar, f"A{idx*2}")
+                ws_graficos.add_image(img_bar, f"A{indece*10}")
 
                 buffer_pie.seek(0)
                 img_pie = Image(buffer_pie)
-                ws_graficos.add_image(img_pie, f"L{idx*2}")
+                ws_graficos.add_image(img_pie, f"L{indece*10}")
+                indece += 3
 
             elif pregunta.tipoPregunta.id == 3:
                 opciones = [
@@ -414,11 +416,12 @@ def create_excel(request, pk):
 
                 buffer_bar.seek(0)
                 img_bar = Image(buffer_bar)
-                ws_graficos.add_image(img_bar, f"A{idx*10}")
+                ws_graficos.add_image(img_bar, f"A{indece*10}")
 
                 buffer_pie.seek(0)
                 img_pie = Image(buffer_pie)
-                ws_graficos.add_image(img_pie, f"L{idx*10}")
+                ws_graficos.add_image(img_pie, f"L{indece*10}")
+                indece += 3
 
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -489,6 +492,7 @@ def regresion_lineal(preguntas):
 
 
 def desviacion_estandar(preguntas):
+    print([item['total'] for item in preguntas["respuestas"]])
     return np.std([item['total'] for item in preguntas["respuestas"]])
 
 
@@ -498,14 +502,11 @@ def total_res(campos):
     return res
 
 
-def resul_cova(preguntas, campos):
-    res_int = [float(res.valor) for res in campos.respuestas.all()]
-    correlacion, valor_p = pearsonr(res_int, res_int)
-
-
-def resul_cova(preguntas, campos):
-    res_int = [float(res.valor) for res in campos.respuestas.all()]
-    correlacion, valor_p = pearsonr(res_int, res_int)
+def resul_cova(pregunta_1, pregunta_2,):
+    muestra_1 = np.array(range(1, len(pregunta_1["respuestas"])+1))
+    muestra_2 = np.array(range(1, len(pregunta_2["respuestas"])+1))
+    covariance = np.cov(pregunta_1, pregunta_2)
+    return covariance
 
 
 def total_multi(campos):

@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import img1 from "../../assets/image/img4.jpg";
 import img2 from "../../assets/image/img5.jpg";
+import img3 from "../../assets/image/img2.jpg";
 import "slick-carousel/slick/slick-theme.css";
 import Button from "@mui/material/Button";
 import "slick-carousel/slick/slick.css";
@@ -41,18 +42,18 @@ export function CaruselTemplate() {
 
   return (
     <section className="carusel-template" id="CaruselTemplate">
-      <Typography variant="h6">Plantillas</Typography>
-      <Typography variant="h2">Nuestras plantillas recomendadas</Typography>
+      <Typography variant="h2">Nuestras plantillas recomendadas</Typography>{" "}
+      <br />
       <Slider {...settings} className="item-carusel">
         <div>
           <div className="text-carusel">
-            <h4>Valoracion</h4>
+            <h4>Escala de licker</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-              porta nisi at metus iaculis, ac congue ex fringilla. Fusce id orci
-              suscipit, ultricies tellus id, consequat quam. Duis rutrum luctus
-              nisl, eu maximus orci tristique id. Suspendisse pellentesque risus
-              nec mollis blandit.
+              La Escala de Licker consiste en una serie de afirmaciones sobre el
+              tema de interés, a las cuales los participantes responden
+              indicando su grado de acuerdo o desacuerdo con cada afirmación.
+              Esta escala la puedes usar para medir aptitudes, opiniones,
+              evaluaciones y entre otras maneras cuantitativas.
             </p>
             <Button
               variant="contained"
@@ -67,9 +68,11 @@ export function CaruselTemplate() {
         </div>
         <div>
           <div className="text-carusel">
-            <h4>Valoracion</h4>
+            <h4>Encuesta de Si o No</h4>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce .
+              Esta encuesta esta creada con preguntas aleatorias pero con
+              respuestas de si o no. La puedes utilizar en dado caso que
+              necesites opiniones imparciales acerca de un tema en específico.
             </p>
 
             <Button
@@ -77,11 +80,32 @@ export function CaruselTemplate() {
               onClick={() => handleDuplicate(3)}
               size="medium"
               className="button"
+              disabled={isLoading}
             >
               {isLoading ? "Cargando..." : "Comenzar ahora"}
             </Button>
           </div>
           <LazyImage src={img2} alt="Plantilla 2" />
+        </div>
+        <div>
+          <div className="text-carusel">
+            <h4>Encuesta de satisfaccion</h4>
+            <p>
+              Esta encuesta esta pensada para cuando desees calificar una
+              aplicativo, trabajo, software, etc.
+            </p>
+
+            <Button
+              variant="contained"
+              onClick={() => handleDuplicate(4)}
+              size="medium"
+              className="button"
+              disabled={isLoading}
+            >
+              {isLoading ? "Cargando..." : "Comenzar ahora"}
+            </Button>
+          </div>
+          <LazyImage src={img3} alt="Plantilla 2" />
         </div>
       </Slider>
     </section>

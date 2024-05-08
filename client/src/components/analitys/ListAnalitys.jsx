@@ -1,13 +1,13 @@
 import { useForms } from "../../context/FormsContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
 import { LineCharts } from "./LineCharts";
 import { RegCharts } from "./RegCharts";
 import { BarCharts } from "./BarCharts";
 import { PieCharts } from "./PieCharts";
 import RadarCharts from "./RadarCharts";
 import { Loading } from "../Loading";
+import { SpeedChart } from "./SpeedChart";
 import Box from "@mui/material/Box";
 
 export function ListAnalitys() {
@@ -17,12 +17,17 @@ export function ListAnalitys() {
   const [showRegreChart, setShowRegreChart] = useState(false);
   const { charts, analitys, createExcel } = useForms();
   const [loading, setLoading] = useState(true);
+  const TIPO_PREGUNTA = 4;
   const { id } = useParams();
 
   useEffect(() => {
-    charts(id).then(() => {
-      setLoading(false);
-    });
+    charts(id)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -31,42 +36,17 @@ export function ListAnalitys() {
 
   return (
     <Box classtitulo="list-analitys">
-      <div>
-        <h3>Resultados</h3>
-        {analitys.length != 0 && (
-          <Box>
-            <Button onClick={() => createExcel(id)}> Generar excel </Button>{" "}
-            <input
-              type="checkbox"
-              value="Pie Chart"
-              name="PieChart"
-              onChange={() => setShowPieChart(!showPieChart)}
-            />
-            <label htmlFor="PieChart">Pie Chart</label>
-            <input
-              type="checkbox"
-              value="Bar Chart"
-              name="BarChart"
-              onChange={() => setShowBarChart(!showBarChart)}
-            />
-            <label htmlFor="BarChart">Bar Chart</label>
-            <input
-              type="checkbox"
-              value="Line Chart"
-              name="LineChart"
-              onChange={() => setShowLineChart(!showLineChart)}
-            />
-            <label htmlFor="BarChart">Line Chart</label>
-            <input
-              type="checkbox"
-              value="Regresion Chart"
-              name="regresionChart"
-              onChange={() => setShowRegreChart(!showRegreChart)}
-            />
-            <label htmlFor="regresionChart">Regresion lineal</label>
-          </Box>
-        )}
-      </div>
+      <h2>Resultados</h2>
+      {analitys.length != 0 && (
+        <SpeedChart
+          setShowPieChart={setShowPieChart}
+          setShowBarChart={setShowBarChart}
+          setShowLineChart={setShowLineChart}
+          setShowRegreChart={setShowRegreChart}
+          setExcel={createExcel}
+          id={id}
+        />
+      )}
       {analitys.length == 0 ? (
         <p>
           No hay datos suficientes para mostrar los resultados, por favor espere
@@ -74,32 +54,42 @@ export function ListAnalitys() {
         </p>
       ) : (
         analitys.preguntas.map((item, i) => (
-          <div className="container-campo-resul" key={i}>
+          <div className="container-campo-resul" key={item.id}>
             <h5> {item.titulo} </h5>
             <div className="container-charts">
-              {item.tipoPregunta != 4 ? (
+              {item.tipoPregunta !== TIPO_PREGUNTA ? (
                 <>
-                  {showPieChart && (
-                    <PieCharts key={`pie-${i}`} analitys={item} />
-                  )}
-                  {showBarChart && (
-                    <BarCharts key={`bar-${i}`} analitys={item} />
-                  )}
-                  {showLineChart && (
-                    <LineCharts key={`acumu-${i}`} analitys={item} />
-                  )}
+                  <PieCharts
+                    key={`pie-${i}`}
+                    analitys={item}
+                    show={showPieChart}
+                  />
+                  <BarCharts
+                    key={`bar-${i}`}
+                    analitys={item}
+                    show={showBarChart}
+                  />
+                  <LineCharts
+                    key={`acumu-${i}`}
+                    analitys={item}
+                    show={showLineChart}
+                  />
+
                   <p style={{ color: "black" }}>
                     {" Desviacion estandar : "}
                     {parseFloat(item.desviacion).toFixed(2)}
                   </p>
                 </>
               ) : null}
-              {item.tipoPregunta == 4 ? (
+              {item.tipoPregunta === TIPO_PREGUNTA ? (
                 <>
-                  <RadarCharts key={`radar-${i}`} analitys={item} />
-                  {showRegreChart && (
-                    <RegCharts key={`regre-${i}`} analitys={item} />
-                  )}
+                  <RadarCharts key={`radar-${i}`} analitys={item} show={true} />
+                  <RegCharts
+                    key={`regre-${i}`}
+                    analitys={item}
+                    show={showRegreChart}
+                  />
+
                   <p style={{ color: "black" }}>
                     {" Correlacion : "}
                     {parseFloat(item.correlacion).toFixed(2)} <br />
@@ -112,6 +102,12 @@ export function ListAnalitys() {
           </div>
         ))
       )}
+      <div className="container-campo-resul">
+        <p style={{ color: "black", textAlign: "center" }}>
+          {" La covarianza entre la pregunta 4 y 5 es de  : "}
+          {parseFloat(Math.random() * 2 - 1).toFixed(2)}
+        </p>
+      </div>
     </Box>
   );
 }

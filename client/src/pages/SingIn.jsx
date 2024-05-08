@@ -2,6 +2,8 @@ import { useState } from "react";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import { FormRegist } from "../components/auth/FormRegist";
 import { FormLogin } from "../components/auth/FormLogin";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { Link } from "react-router-dom";
 
 function Navbar({ onOptionClick }) {
   return (
@@ -48,6 +50,16 @@ export default function SingIn() {
 
   return (
     <main className="login-body">
+      <Box position="fixed" width="fit-content" top="2.5rem" left="4rem">
+        <Link to="/">
+          <Button
+            className="button-black"
+            startIcon={<ArrowBackIosIcon className="icon-black" />}
+          >
+            Home
+          </Button>
+        </Link>
+      </Box>
       <Box
         sx={{
           display: "flex",
