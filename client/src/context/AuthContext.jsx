@@ -15,9 +15,20 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [pendiente, setPendiente] = useState(null);
+  const [pending, setPending] = useState(null);
   const [user, setUser] = useState(null);
   const [errors, setErrors] = useState([]);
+
+  const handleSuccessfulLogin = (res) => {
+    setUser(res.data);
+    setIsAuthenticated(true);
+    window.localStorage.setItem("token", res.data.token);
+    setLoading(false);
+    if (pending) {
+      pending();
+      setPending(null);
+    }
+  };
 
   useEffect(() => {
     let timer;
@@ -60,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
-  const singUp = async (user) => {
+  const signUp = async (user) => {
     try {
       const res = await register(user);
       return res.status === 201 && true;
@@ -69,17 +80,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const singIn = async (user) => {
+  const signIn = async (user) => {
     try {
       const res = await login(user);
-      setUser(res.data);
-      setIsAuthenticated(true);
-      window.localStorage.setItem("token", res.data.token);
-      setLoading(false);
-      if (pendiente) {
-        pendiente();
-        setPendiente(null);
-      }
+      handleSuccessfulLogin(res);
     } catch (error) {
       if (error.response.data.detail != undefined) {
         setErrors(["Usuario o contraseña invalidos"]);
@@ -98,13 +102,7 @@ export const AuthProvider = ({ children }) => {
   const codeAuth = async (code) => {
     try {
       const res = await activeCount(code);
-      setUser(res.data);
-      setIsAuthenticated(true);
-      window.localStorage.setItem("token", res.data.token);
-      if (pendiente) {
-        pendiente();
-        setPendiente(null);
-      }
+      handleSuccessfulLogin(res);
     } catch (error) {
       setErrors(error.response.data);
     }
@@ -113,15 +111,15 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        singUp,
-        singIn,
+        signUp,
+        signIn,
         logout,
         user,
         isAuthenticated,
         errors,
         isLoading,
-        pendiente,
-        setPendiente,
+        pending,
+        setPending,
         codeAuth,
       }}
     >

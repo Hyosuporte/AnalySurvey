@@ -1,10 +1,12 @@
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import { FormRegist } from "../components/auth/FormRegist";
-import { FormLogin } from "../components/auth/FormLogin";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import { CodeEmail } from "../components/auth/CodeEmail";
+import { FormLogin } from "../components/auth/FormLogin";
+import { useAuth } from "../context/AuthContext";
+import { Loading } from "../components/Loading";
+import { useState, useEffect } from "react";
 
 function Navbar({ onOptionClick }) {
   return (
@@ -42,12 +44,28 @@ function Navbar({ onOptionClick }) {
   );
 }
 
-export default function SingIn() {
-  const [ShowComponent, setShowComponent] = useState("CodeEmail");
+export default function SignIn() {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [ShowComponent, setShowComponent] = useState("FormLogin");
+  const [redirect] = useState(location.state?.from || "/dashboard");
+  const [isChecking, setIsChecking] = useState(true);
 
   const handleOptionClick = (component) => {
     setShowComponent(component);
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(redirect);
+    }
+    setIsChecking(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
+  if (isChecking) return <Loading />;
 
   return (
     <main className="login-body">

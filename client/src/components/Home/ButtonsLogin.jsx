@@ -15,7 +15,7 @@ export function ButtonsLogin() {
             border: "1px solid var(--Color-2, #865DFF)",
           }}
         >
-          Log In/Sing Up
+          Log In/Sign Up
         </Button>
         <Button
           className="button"

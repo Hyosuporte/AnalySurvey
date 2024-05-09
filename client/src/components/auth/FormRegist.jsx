@@ -17,11 +17,11 @@ export function FormRegist({ setShowComponent }) {
   } = useForm();
 
   const [loading, setLoading] = useState(false);
-  const { singUp, errors: singUpError } = useAuth();
+  const { signUp, errors: signUpError } = useAuth();
 
   const onSubmit = (data) => {
     setLoading(true);
-    singUp(data).then(() => {
+    signUp(data).then(() => {
       setLoading(false);
       setShowComponent("CodeEmail");
     });
@@ -127,7 +127,7 @@ export function FormRegist({ setShowComponent }) {
         {loading ? <CircularProgress size={24} /> : "Registrar"}
       </Button>
       {/* FIXME:Mejorar styles alert */}
-      {singUpError.map((e, i) => (
+      {signUpError.map((e, i) => (
         <Alert key={i} severity="error">
           {e}
         </Alert>

@@ -1,12 +1,11 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { useState } from "react";
 
 export function CodeEmail() {
   const {
@@ -15,18 +14,8 @@ export function CodeEmail() {
     formState: { errors },
   } = useForm();
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [redirect] = useState(location.state?.from || "/dashboard");
-  const { isAuthenticated, codeAuth } = useAuth();
+  const { codeAuth } = useAuth();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(redirect);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
 
   const onSubmit = (data) => {
     setLoading(true);

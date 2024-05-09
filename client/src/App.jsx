@@ -11,7 +11,7 @@ const FormAnswering = lazy(() => import("./pages/FormAnswering"));
 const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const SurveyGenerator = lazy(() => import("./pages/SurveyGenerator"));
 const Overview = lazy(() => import("./pages/Overiew"));
-const SignIn = lazy(() => import("./pages/SingIn"));
+const SignIn = lazy(() => import("./pages/SignIn"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 
 function App() {
