@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useState, useEffect } from "react";
-import { login, register, verify } from "../api/auth";
+import { login, register, verify, activeCount } from "../api/auth";
 
 export const AuthContext = createContext();
 
@@ -63,10 +63,7 @@ export const AuthProvider = ({ children }) => {
   const singUp = async (user) => {
     try {
       const res = await register(user);
-      setUser(res.data);
-      setIsAuthenticated(true);
-      setLoading(false);
-      window.localStorage.setItem("token", res.data.token);
+      return res.status === 201 && true;
     } catch (error) {
       setErrors(error.response.data);
     }
@@ -98,6 +95,21 @@ export const AuthProvider = ({ children }) => {
     window.localStorage.removeItem("token");
   };
 
+  const codeAuth = async (code) => {
+    try {
+      const res = await activeCount(code);
+      setUser(res.data);
+      setIsAuthenticated(true);
+      window.localStorage.setItem("token", res.data.token);
+      if (pendiente) {
+        pendiente();
+        setPendiente(null);
+      }
+    } catch (error) {
+      setErrors(error.response.data);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -110,6 +122,7 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         pendiente,
         setPendiente,
+        codeAuth,
       }}
     >
       {children}

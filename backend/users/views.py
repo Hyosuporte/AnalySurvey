@@ -5,19 +5,23 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 from rest_framework import status
 from surveys.models import Formulario
 from surveys.serializers import FormSerializer
+from django.core.mail import send_mail
+import random
+import string
 
 
 @api_view(['POST'])
 def login(request):
+    User = get_user_model()
     user = get_object_or_404(User, email=request.data['email'])
 
     if not user.check_password(request.data['password']):
-        return Response(['Ínvalid password'], status=status.HTTP_400_BAD_REQUEST)
+        return Response(['Invalid password'], status=status.HTTP_400_BAD_REQUEST)
 
     Token.objects.filter(user=user).delete()
     token, created = Token.objects.get_or_create(user=user)
@@ -28,17 +32,28 @@ def login(request):
 
 @api_view(['POST'])
 def register(request):
+    User = get_user_model()
     serializer = UserSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        user = User.objects.create_user(
+            username=serializer.validated_data['username'],
+            password=serializer.validated_data['password'],
+            email=serializer.validated_data['email'],
+            is_active=False,
+            activation_code=''.join(random.choices(
+                string.ascii_uppercase + string.digits, k=5))
+        )
 
-        user = User.objects.get(username=serializer.data['username'])
-        user.set_password(serializer.data['password'])
-        user.save()
+        send_mail(
+            'Código de activación',
+            'Tu código de activación es: {}'.format(user.activation_code),
+            'cacuervo120@gmail.com',
+            [user.email],
+            fail_silently=False,
+        )
 
-        token = Token.objects.create(user=user)
-        return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
+        return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
 
     error_messages = []
     for field, errors in serializer.errors.items():
@@ -74,12 +89,26 @@ def verify(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def listForm(request):
+    User = get_user_model()
     user = get_object_or_404(User, pk=request.user.id)
     try:
         forms = Formulario.objects.filter(creador_id=user)
-        # forms_res = forms.prefetch_related('campos__respuestas')
     except Formulario.DoesNotExist:
         forms = []
 
     serializer = FormSerializer(forms, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def active_acount(request):
+    User = get_user_model()
+    user = get_object_or_404(
+        User, activation_code=request.data['code'])
+    user.is_active = True
+    user.activation_code = ''
+    user.save()
+    token, created = Token.objects.get_or_create(user=user)
+    serializer = UserSerializer(instance=user)
+
+    return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)

@@ -296,6 +296,14 @@
   text-align: center;
 }
 
+.form-codeEmail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
 #menu-appbar ul {
   background-color: #191825;
   color: white;

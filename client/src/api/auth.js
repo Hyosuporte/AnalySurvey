@@ -9,3 +9,5 @@ export const verify = (token) =>
   axios.get(`/verify/`, {
     headers: { Authorization: `Token ${token}` },
   });
+
+export const activeCount = (data) => axios.post(`/users/active/`, data);

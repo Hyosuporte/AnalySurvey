@@ -1,33 +1,31 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import { useAuth } from "../../context/AuthContext";
 import TextField from "@mui/material/TextField";
-import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export function FormRegist() {
+export function FormRegist({ setShowComponent }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [redirect] = useState(location.state?.from || "/dashboard");
-  const { singUp, isAuthenticated, errors: singUpError } = useAuth();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(redirect);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  const [loading, setLoading] = useState(false);
+  const { singUp, errors: singUpError } = useAuth();
 
-  const onSubmit = (data) => singUp(data);
+  const onSubmit = (data) => {
+    setLoading(true);
+    singUp(data).then(() => {
+      setLoading(false);
+      setShowComponent("CodeEmail");
+    });
+  };
 
   return (
     <Box
@@ -119,8 +117,14 @@ export function FormRegist() {
           />
         </Grid>
       </Grid>
-      <Button variant="contained" size="large" className="button" type="submit">
-        Enviar
+      <Button
+        variant="contained"
+        size="large"
+        className="button"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? <CircularProgress size={24} /> : "Registrar"}
       </Button>
       {/* FIXME:Mejorar styles alert */}
       {singUpError.map((e, i) => (

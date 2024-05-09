@@ -1,9 +1,10 @@
-import { useState } from "react";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import { FormRegist } from "../components/auth/FormRegist";
 import { FormLogin } from "../components/auth/FormLogin";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { CodeEmail } from "../components/auth/CodeEmail";
 
 function Navbar({ onOptionClick }) {
   return (
@@ -42,7 +43,7 @@ function Navbar({ onOptionClick }) {
 }
 
 export default function SingIn() {
-  const [ShowComponent, setShowComponent] = useState("FormLogin");
+  const [ShowComponent, setShowComponent] = useState("CodeEmail");
 
   const handleOptionClick = (component) => {
     setShowComponent(component);
@@ -71,7 +72,10 @@ export default function SingIn() {
         <Box className="login-container-forms">
           <Navbar onOptionClick={handleOptionClick} />
           {ShowComponent === "FormLogin" && <FormLogin />}
-          {ShowComponent === "FormRegist" && <FormRegist />}
+          {ShowComponent === "FormRegist" && (
+            <FormRegist setShowComponent={setShowComponent} />
+          )}
+          {ShowComponent === "CodeEmail" && <CodeEmail />}
         </Box>
       </Box>
     </main>

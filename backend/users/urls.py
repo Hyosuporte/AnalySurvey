@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/v1/profile/', views.profile),
     path('api/v1/verify/', views.verify),
     path('api/v1/users/forms/', views.listForm),
+    path('api/v1/users/active/', views.active_acount),
 ]

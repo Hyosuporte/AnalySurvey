@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -6,7 +6,8 @@ class Formulario(models.Model):
     id = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField(null=True)
-    creador = models.ForeignKey(User, on_delete=models.CASCADE)
+    creador = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE)
     creado_en = models.DateTimeField(auto_now_add=True, auto_now=False)
     actualizado_en = models.DateTimeField(auto_now_add=True, auto_now=False)
 
@@ -40,6 +41,6 @@ class RespuestaFormulario(models.Model):
     campoFormulario = models.ForeignKey(
         CampoFormulario, on_delete=models.CASCADE, related_name='respuestas')
     usuario = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='respuestas')
+        get_user_model(), on_delete=models.SET_NULL, null=True, related_name='respuestas')
     valor = models.TextField(null=False)
     creado_en = models.DateTimeField(auto_now_add=True, auto_now=False)
