@@ -13,6 +13,7 @@ from surveys.serializers import FormSerializer
 from django.core.mail import send_mail
 import random
 import string
+import requests
 
 
 @api_view(['POST'])
@@ -22,6 +23,11 @@ def login(request):
 
     if not user.check_password(request.data['password']):
         return Response(['Invalid password'], status=status.HTTP_400_BAD_REQUEST)
+
+    print(request.data)
+    hcaptcha_token = request.data['hCaptchaToken']
+    if not verify_hcaptcha(hcaptcha_token):
+        return Response(['Invalid hCaptcha token'], status=status.HTTP_400_BAD_REQUEST)
 
     Token.objects.filter(user=user).delete()
     token, created = Token.objects.get_or_create(user=user)
@@ -112,3 +118,17 @@ def active_acount(request):
     serializer = UserSerializer(instance=user)
 
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
+
+
+def verify_hcaptcha(response):
+    secret = ""
+    data = {
+        'response': response,
+        'secret': secret
+    }
+    try:
+        response = requests.post(
+            'https://hcaptcha.com/siteverify', data=data)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    return response.json()['success']

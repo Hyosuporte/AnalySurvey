@@ -1,4 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
+import { useRef, useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
@@ -12,7 +14,15 @@ export function FormLogin() {
     formState: { errors },
   } = useForm();
   const { signIn, errors: signInError } = useAuth();
-  const onSubmit = (data) => signIn(data);
+  const [token, setToken] = useState(null);
+  const captchaRef = useRef(null);
+
+  const onSubmit = (data) => {
+    if (!token) {
+      return;
+    }
+    signIn(data, token);
+  };
 
   return (
     <Box
@@ -63,6 +73,11 @@ export function FormLogin() {
           })}
         />
       </Box>
+      <HCaptcha
+        ref={captchaRef}
+        sitekey={import.meta.env.VITE_API_KEY_CHAPTER}
+        onVerify={setToken}
+      />
       <Button variant="contained" size="large" className="button" type="submit">
         Enviar
       </Button>

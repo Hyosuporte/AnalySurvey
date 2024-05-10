@@ -80,14 +80,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signIn = async (user) => {
+  const signIn = async (user, token) => {
     try {
-      const res = await login(user);
+      const res = await login(user, token);
       handleSuccessfulLogin(res);
     } catch (error) {
       if (error.response.data.detail != undefined) {
+        console.log(error)
         setErrors(["Usuario o contraseña invalidos"]);
       } else {
+        console.log(error)
         setErrors(error.response.data);
       }
     }
