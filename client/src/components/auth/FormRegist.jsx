@@ -123,6 +123,7 @@ export function FormRegist({ setShowComponent }) {
         className="button"
         type="submit"
         disabled={loading}
+        aria-label="Registrar"
       >
         {loading ? <CircularProgress size={24} /> : "Registrar"}
       </Button>

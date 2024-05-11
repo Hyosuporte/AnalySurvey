@@ -1,10 +1,11 @@
 import { useAuth } from "../../context/AuthContext";
-import { useRef, useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
+import { useRef, useState } from "react";
 import Alert from "@mui/material/Alert";
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 export function FormLogin() {
@@ -72,14 +73,21 @@ export function FormLogin() {
             },
           })}
         />
+        <Link to="/login/forge-password"> Olvide mi contraseña </Link>
       </Box>
       <HCaptcha
         ref={captchaRef}
         sitekey={import.meta.env.VITE_API_KEY_CHAPTER}
         onVerify={setToken}
       />
-      <Button variant="contained" size="large" className="button" type="submit">
-        Enviar
+      <Button
+        variant="contained"
+        size="large"
+        className="button"
+        type="submit"
+        aria-label="Iniciar Sesion"
+      >
+        Iniciar Sesion
       </Button>
       {/* FIXME:Mejorar styles alert */}
       {signInError.map((e, i) => (

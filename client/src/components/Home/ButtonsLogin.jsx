@@ -11,16 +11,19 @@ export function ButtonsLogin() {
           to="/login"
           className="link"
           sx={{
-            mr: 3,
             border: "1px solid var(--Color-2, #865DFF)",
+            padding: "6px",
           }}
+          aria-label="Login/Sign Up"
         >
-          Log In/Sign Up
+          Login/Sign Up
         </Button>
         <Button
           className="button"
           variant="contained"
           component={Link}
+          sx={{ ml: 2 }}
+          aria-label="Comenzar Encuesta"
           to="/login"
         >
           Comenzar Encuesta

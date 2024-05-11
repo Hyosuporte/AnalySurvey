@@ -10,7 +10,11 @@ export default function PageNotFound() {
     <main className="not-found-page">
       <Box position="fixed" width="fit-content" top="2.5rem" left="4rem">
         <Link to="/">
-          <Button className="button-black" startIcon={<ArrowBackIosIcon className="icon-black" />}>
+          <Button
+            className="button-black"
+            aria-label="Volver al inicio"
+            startIcon={<ArrowBackIosIcon className="icon-black" />}
+          >
             Home
           </Button>
         </Link>

@@ -20,7 +20,7 @@ export function Card({ title, content, img, row, maxImg, maxText, clasN }) {
         </div>
       </Grid>
       <Grid item xs={maxImg}>
-        <LazyImage src={img} alt={title} />
+        <LazyImage src={img} alt={title} fetchpriority="low" />
       </Grid>
     </Grid>
   );

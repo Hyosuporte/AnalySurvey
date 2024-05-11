@@ -100,6 +100,7 @@ export function MultipleOption({ question }) {
           color="secondary"
           className="button-option-a"
           onClick={handleAddOption}
+          aria-label="Agregar opción"
         >
           Agregar opción
         </Button>

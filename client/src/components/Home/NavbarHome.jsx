@@ -9,7 +9,6 @@ import { MenuUser } from "../MenuUser";
 import { Link } from "@mui/material";
 import Box from "@mui/material/Box";
 import { MenuNav } from "./MenuNav";
-import { Loading } from "../Loading";
 
 const pages = [
   {
@@ -22,8 +21,6 @@ const pages = [
 
 export function NavbarHome() {
   const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) return <Loading />;
 
   return (
     <AppBar
@@ -58,7 +55,7 @@ export function NavbarHome() {
               mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontWeight: 500,
+              fontWeight: 700,
               color: "#865DFF",
             }}
           >
@@ -66,7 +63,11 @@ export function NavbarHome() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button key={page.title} className="button-white">
+              <Button
+                key={page.title}
+                className="button-white"
+                aria-label={page.title}
+              >
                 <Link href={page.href} className="link">
                   {page.title}
                 </Link>
@@ -75,7 +76,11 @@ export function NavbarHome() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {isAuthenticated == true ? <MenuUser /> : <ButtonsLogin />}
+            {isLoading ? null : isAuthenticated ? (
+              <MenuUser />
+            ) : (
+              <ButtonsLogin />
+            )}
           </Box>
         </Toolbar>
       </Container>

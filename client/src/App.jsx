@@ -1,8 +1,9 @@
-import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
 import { FormProvider } from "./context/FormsContext";
+import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoutes } from "./ProtectedRoutes";
+import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { Loading } from "./components/Loading";
 import "./App.css";
 
 // Importa componentes diferidos
@@ -12,20 +13,21 @@ const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const SurveyGenerator = lazy(() => import("./pages/SurveyGenerator"));
 const Overview = lazy(() => import("./pages/Overiew"));
 const SignIn = lazy(() => import("./pages/SignIn"));
+const ForgetPass = lazy(() => import("./pages/ForgetPass"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 
 function App() {
   return (
     <AuthProvider>
       <FormProvider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<SignIn />} />
+            <Route path="/login/forge-password" element={<ForgetPass />} />
             <Route path="/templates" element={<Overview />} />
             <Route path="*" element={<PageNotFound />} />
 
-            {/* Rutas protegidas */}
             <Route element={<ProtectedRoutes />}>
               <Route path="/dashboard" element={<Overview />} />
               <Route path="/survey/create/:id" element={<SurveyGenerator />} />

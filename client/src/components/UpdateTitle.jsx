@@ -64,6 +64,7 @@ export function UpdateTitle({ id, title, open, setOpen }) {
                 variant="contained"
                 className="button-grey"
                 onClick={handleClose}
+                aria-label="Cancelar"
               >
                 Cancelar
               </Button>
@@ -74,6 +75,7 @@ export function UpdateTitle({ id, title, open, setOpen }) {
                 variant="contained"
                 color="secondary"
                 type="submit"
+                aria-label="Guardar"
               >
                 Guardar
               </Button>

@@ -12,3 +12,8 @@ export const verify = (token) =>
   });
 
 export const activeCount = (data) => axios.post(`/users/active/`, data);
+
+export const resetPassword = (data) => axios.post(`/reset-password/`, data);
+
+export const codeResetPassword = (data) =>
+  axios.post(`/code-reset-password/`, data);

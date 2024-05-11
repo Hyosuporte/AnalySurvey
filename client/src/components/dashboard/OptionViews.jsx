@@ -38,6 +38,7 @@ export function OptionViews({ setAligment }) {
             className="button"
             startIcon={<AddIcon className="icon-white" />}
             onClick={() => createForm()}
+            aria-label="Crear Encuesta"
           >
             Crear Encuesta
           </Button>

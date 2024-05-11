@@ -56,7 +56,13 @@ export default function FormAnswering() {
         <h4 style={{ textAlign: "center", color: "black" }}>
           Ya respondio la encuesta <br />
           <a href="/">
-            <Button variant="contained" color="secondary" >Volver al inicio</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              aria-label="Volver al inicio"
+            >
+              Volver al inicio
+            </Button>
           </a>
         </h4>
       </Box>
@@ -140,7 +146,12 @@ export default function FormAnswering() {
           }
         })}
 
-        <Button type="submit" className="button" disabled={loading}>
+        <Button
+          type="submit"
+          className="button"
+          disabled={loading}
+          aria-label="Enviar"
+        >
           Enviar
         </Button>
         <Box className="alert-clipboard">

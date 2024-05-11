@@ -61,6 +61,7 @@ export function CodeEmail() {
         className="button"
         type="submit"
         disabled={loading}
+        aria-label="Activar cuenta"
       >
         {loading ? <CircularProgress size={24} /> : "Activar cuenta"}
       </Button>

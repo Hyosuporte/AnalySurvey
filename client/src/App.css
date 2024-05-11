@@ -60,13 +60,13 @@
 
 /* Carousel Templates */
 .carusel-template {
-  width: 85%;
+  width: 75%;
   margin: auto;
-  margin-top: 10rem;
+  margin-top: 9rem;
 }
 
 .carusel-template-anali {
-  width: 85%;
+  width: 75%;
   margin: auto;
   margin-top: 10rem;
 }
@@ -108,6 +108,11 @@
 }
 
 .text-carusel h4 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.text-carusel-anali h4 {
   margin-bottom: 1rem;
   font-weight: bold;
 }
@@ -369,6 +374,12 @@ label span:last-child {
   align-items: center;
 }
 
+@media (max-width: 1240px) {
+  .login-container-forms {
+    width: 50%;
+  }
+}
+
 @media (max-width: 1024px) {
   .card {
     width: 90%;
@@ -419,12 +430,15 @@ label span:last-child {
   .bar-chart {
     width: 60% !important;
   }
-
 }
 
 @media (max-width: 899px) {
   .GridView {
     justify-content: center;
+  }
+
+  .login-container-forms {
+    width: 84%;
   }
 }
 
@@ -434,17 +448,22 @@ label span:last-child {
     margin-top: 0rem;
   }
 
-  .text-carusel p {
-    font-size: .8rem;
+  .text-carusel {
+    margin-top: 1rem;
+    width: 85%;
+    float: none;
+    margin: auto;
+  }
+
+  .carusel-template img {
+    width: 50%;
+    margin-left: 3rem;
+    margin-top: 1rem;
   }
 
   .container-nav {
     padding-right: 0 !important;
     padding-left: 0 !important;
-  }
-
-  .login-container-forms {
-    width: 80vw;
   }
 
 }
@@ -479,30 +498,24 @@ label span:last-child {
     margin-top: 2rem;
   }
 
-  .card h4,
-  .card-reverse h4 {
-    font-size: 1rem;
+  .card-container {
+    flex-direction: column !important;
   }
 
-  .card p,
-  .card-reverse p {
-    font-size: .8rem;
+  .card-container div {
+    min-width: 85% !important;
   }
 
-  .text-carusel {
-    margin-top: 1rem;
-    width: 85%;
-    float: none;
-    margin: auto;
+  .card-reverse {
+    width: 90%;
+    margin-bottom: 2rem;
   }
+
+  .card {
+    margin-bottom: 2rem;
+  } 
 
   .text-carusel h4 {
-    margin-top: 1rem;
-  }
-
-  .carusel-template img {
-    width: 85%;
-    margin: auto;
     margin-top: 1rem;
   }
 
@@ -514,9 +527,10 @@ label span:last-child {
     font-size: 0.8rem;
   }
 
+
 }
 
-@media (max-width: 480px) {
+@media (max-width: 487px) {
 
   .title-home {
     font-size: 1.4rem !important;
@@ -526,21 +540,12 @@ label span:last-child {
     font-size: .599rem;
   }
 
-  .card-container {
-    flex-direction: column !important;
+  .text-card {
+    width: 80%;
   }
 
-  .card-container div {
-    min-width: 70% !important;
-  }
-
-  .card-reverse {
-    width: 90%;
-    margin-bottom: 2rem;
-  }
-
-  .card {
-    margin-bottom: 2rem;
+  .text-card p {
+    margin-left: 0rem;
   }
 
   #menu-appbar ul {
@@ -568,10 +573,18 @@ label span:last-child {
     }
   }
 
+  .login-container-forms {
+    width: 90%;
+  }
+
 }
 
 @media (max-width: 375px) {
   .work-space .button {
     margin-bottom: .5rem;
+  }
+
+  .login-container-forms {
+    width: 95vw;
   }
 }

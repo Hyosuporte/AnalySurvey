@@ -66,7 +66,12 @@ export default function HomePage() {
             de datos preciso
           </p>
         </div>
-        <img src={img1} alt="" width="45%" />
+        <img
+          src={img1}
+          alt="analisis software"
+          width="42%"
+          fetchpriority="low"
+        />
       </Grid>
       <section id="CardList">
         {cardData.map((item) => (

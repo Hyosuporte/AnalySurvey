@@ -6,17 +6,15 @@ import img4 from "../../assets/image/regresion.png";
 import img5 from "../../assets/image/desviacion.png";
 import img6 from "../../assets/image/correlacion.jpg";
 import img7 from "../../assets/image/covarianza.png";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 import LazyImage from "../LazyImage";
 import Slider from "react-slick";
 
 let settings = {
-  dots: true,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+  initialSlide: 1,
 };
 
 let analisis = [
@@ -72,8 +70,8 @@ export function CaruselAnaly() {
       </Typography>
       <br />
       <Slider {...settings} className="item-carusel">
-        {analisis.map((item) => (
-          <div>
+        {analisis.map((item, i) => (
+          <div key={item.titulo + "-" + i}>
             <div className="text-carusel-anali">
               <h4> {item.titulo} </h4>
               <p> {item.descripcion} </p>

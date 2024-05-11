@@ -24,7 +24,6 @@ def login(request):
     if not user.check_password(request.data['password']):
         return Response(['Invalid password'], status=status.HTTP_400_BAD_REQUEST)
 
-    print(request.data)
     hcaptcha_token = request.data['hCaptchaToken']
     if not verify_hcaptcha(hcaptcha_token):
         return Response(['Invalid hCaptcha token'], status=status.HTTP_400_BAD_REQUEST)
@@ -120,8 +119,40 @@ def active_acount(request):
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+def code_reset_password(request):
+    User = get_user_model()
+    user = get_object_or_404(User, email=request.data['email'])
+    user.activation_code = ''.join(random.choices(
+        string.ascii_uppercase + string.digits, k=5))
+    user.save()
+
+    send_mail(
+        'Código de reseteo de contraseña',
+        'Tu código de reseteo de contraseña es: {}'.format(
+            user.activation_code),
+        'cacuervo120@gmail.com',
+        [user.email],
+        fail_silently=False
+    )
+
+    return Response({'message': 'Código enviado'}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def reset_password(request):
+    User = get_user_model()
+    user = get_object_or_404(User, email=request.data['email'])
+    if user.activation_code == request.data['code']:
+        user.set_password(request.data['password'])
+        user.activation_code = ''
+        user.save()
+        return Response({'message': 'Contraseña cambiada'}, status=status.HTTP_200_OK)
+    return Response({'message': 'Código incorrecto'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 def verify_hcaptcha(response):
-    secret = ""
+    secret = "01f81fd5-aa24-4b90-963a-36924333a72c"
     data = {
         'response': response,
         'secret': secret

@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useState, useEffect } from "react";
-import { login, register, verify, activeCount } from "../api/auth";
+import {
+  login,
+  register,
+  verify,
+  activeCount,
+  resetPassword,
+  codeResetPassword,
+} from "../api/auth";
 
 export const AuthContext = createContext();
 
@@ -86,10 +93,10 @@ export const AuthProvider = ({ children }) => {
       handleSuccessfulLogin(res);
     } catch (error) {
       if (error.response.data.detail != undefined) {
-        console.log(error)
+        console.log(error);
         setErrors(["Usuario o contraseña invalidos"]);
       } else {
-        console.log(error)
+        console.log(error);
         setErrors(error.response.data);
       }
     }
@@ -110,6 +117,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const codeRecu = async (email) => {
+    try {
+      const res = await codeResetPassword({ email: email });
+      res.status === 200 && true;
+    } catch (error) {
+      setErrors(error.response.data);
+    }
+  };
+
+  const codeReset = async (code, email, password) => {
+    try {
+      const data = { code: code, email: email, password: password };
+      resetPassword(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -123,6 +148,8 @@ export const AuthProvider = ({ children }) => {
         pending,
         setPending,
         codeAuth,
+        codeRecu,
+        codeReset,
       }}
     >
       {children}

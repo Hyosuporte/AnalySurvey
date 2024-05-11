@@ -26,6 +26,7 @@ function Navbar({ onOptionClick }) {
             marginRight: "2rem",
             marginLeft: "2rem",
           }}
+          aria-label="login"
         >
           Iniciar Sesión
         </Button>
@@ -36,6 +37,7 @@ function Navbar({ onOptionClick }) {
             marginRight: "2rem",
             marginLeft: "2rem",
           }}
+          aria-label="register"
         >
           Registrarse
         </Button>
@@ -69,10 +71,11 @@ export default function SignIn() {
 
   return (
     <main className="login-body">
-      <Box position="fixed" width="fit-content" top="2.5rem" left="4rem">
+      <Box position="fixed" width="fit-content" top="2.5rem" left="3.5rem">
         <Link to="/">
           <Button
             className="button-black"
+            aria-label="volver al inicio"
             startIcon={<ArrowBackIosIcon className="icon-black" />}
           >
             Home
