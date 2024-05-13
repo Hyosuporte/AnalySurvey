@@ -11,6 +11,7 @@ import {
   updateOpcionReq,
   updateCampoReq,
   createCampoReq,
+  deleteCampoReq,
   saveAskReq,
   chartsAnalitys,
   createExcelReq,
@@ -132,7 +133,17 @@ export function FormProvider({ children }) {
 
   const updateCampos = (newCampos) => {
     setCampos([...campos, newCampos]);
-    console.log(campos);
+  };
+
+  const deleteCampo = async (id) => {
+    const token = window.localStorage.getItem("token");
+    const res = await deleteCampoReq(id, token);
+    if (res.status == 204) {
+      setCampos(campos.filter((campo) => campo.id !== id));
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const createOption = async (id, data) => {
@@ -237,6 +248,7 @@ export function FormProvider({ children }) {
         createCampo,
         updateCampo,
         updateCampos,
+        deleteCampo,
         createOption,
         deleteOption,
         updateOpcion,

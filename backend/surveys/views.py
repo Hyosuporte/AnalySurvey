@@ -247,6 +247,18 @@ def delete_option(request, pk):
     return Response({"message": "La opcion fue eliminado con exito"}, status=status.HTTP_204_NO_CONTENT)
 
 
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def delete_campo(request, pk):
+    campo = get_object_or_404(CampoFormulario, pk=pk)
+    if campo.formulario.creador != request.user:
+        return Response({"message": "No authorizado para eliminar el campo"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    campo.delete()
+    return Response({"message": "El campo fue eliminado con exito"}, status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(['PATCH'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])

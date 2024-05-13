@@ -39,6 +39,11 @@ export const createCampoReq = (id, token, data) =>
     headers: { Authorization: `Token ${token}` },
   });
 
+export const deleteCampoReq = (id, token) =>
+  axios.delete(`/forms/delete/campo/${id}/`, {
+    headers: { Authorization: `Token ${token}` },
+  });
+
 export const updateCampoReq = (id, token, data) =>
   axios.patch(`/forms/${id}/update/campo/`, data, {
     headers: { Authorization: `Token ${token}` },

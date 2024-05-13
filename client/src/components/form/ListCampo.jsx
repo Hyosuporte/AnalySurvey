@@ -19,14 +19,16 @@ const Colors = (idColor) => {
     case 2:
       return "#191825 !important";
     case 3:
-      return "#E384Fc !important";
+      return "#E383Fc !important";
+    case 4:
+      return "#FFB800 !important";
   }
 };
 
 export function ListP({ data, formId, addCampo }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
-  const { createCampo } = useForms();
+  const { createCampo, deleteCampo } = useForms();
 
   const handleListItemClick = (id) => {
     const element = document.getElementById(id);
@@ -80,7 +82,7 @@ export function ListP({ data, formId, addCampo }) {
           selected={selectedIndex === item.id}
           onClick={() => handleListItemClick(item.id)}
           secondaryAction={
-            <IconButton>
+            <IconButton onClick={() => deleteCampo(item.id)}>
               <DeleteIcon className="icon-red" />
             </IconButton>
           }
