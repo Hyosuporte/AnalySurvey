@@ -44,9 +44,11 @@ export function ListP({ data, formId, addCampo }) {
 
   const handleCloseMenu = async (value) => {
     try {
-      const newCampo = await createCampo(value, formId, data.length);
-      if (newCampo) {
-        addCampo(newCampo);
+      if (typeof value === "number") {
+        const newCampo = await createCampo(value, formId, data.length);
+        if (newCampo) {
+          addCampo(newCampo);
+        }
       }
     } catch (error) {
       console.error("Error al crear campo:", error);

@@ -15,7 +15,6 @@ let settings = {
   infinite: true,
   speed: 500,
   initialSlide: 1,
-  adaptiveHeight: true,
   slidesToShow: 1,
   slidesToScroll: 1,
 };

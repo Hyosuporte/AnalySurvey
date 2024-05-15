@@ -29,7 +29,7 @@ export default function SurveyGenerator() {
         flexWrap={"wrap"}
         height="auto"
       >
-        <Grid item xs={12} md={3}>
+        <Grid item xs={10} md={2.5} >
           <ListP data={campos} formId={form.id} addCampo={updateCampos} />
         </Grid>
         {/* FIXME: arreglar los styles del form editar */}

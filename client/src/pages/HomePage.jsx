@@ -2,6 +2,7 @@ import { CaruselTemplate } from "../components/Home/CaruselTemplate";
 import { CaruselAnaly } from "../components/Home/CaruselAnaly";
 import { NavbarHome } from "../components/Home/NavbarHome";
 import { Card } from "../components/Home/cardLandi";
+import ScrollIn from "../components/ScrollIn";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
@@ -58,20 +59,15 @@ export default function HomePage() {
         className="container-card"
       >
         <div className="text-card">
-          <Typography variant="h5">
-            Bienvenido a Analy Survey una aplicacion gratuita y a tu alcance
-          </Typography>
+          <p>¡Optimiza tus encuestas con Analy Survey!</p>
+          <Typography variant="h4">¡Bienvenido a Analy Survey!</Typography>
           <p>
-            Realiza tus encuestas de manera agil y eficaz junto con un analisis
-            de datos preciso
+            Realiza encuestas de manera ágil y eficaz con análisis de datos
+            preciso. ¡Una aplicación gratuita y a tu alcance!
           </p>
         </div>
-        <img
-          src={img1}
-          alt="analisis software"
-          width="42%"
-          fetchpriority="low"
-        />
+        <img src={img1} alt="analisis software" className="img-card" />
+        <ScrollIn />
       </Grid>
       <section id="CardList">
         {cardData.map((item) => (

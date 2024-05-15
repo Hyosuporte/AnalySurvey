@@ -38,24 +38,49 @@
 .text-card {
   width: 50%;
   margin: auto;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+.img-card {
+  aspect-ratio: 10/9;
+  height: auto;
+  object-fit: cover;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .card {
-  width: 89%;
+  width: 90%;
+}
+
+.card-container img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
 }
 
 .card-reverse {
-  width: 89%;
+  width: 90%;
 }
 
 .card-container img {
-  max-width: 94%;
+  max-width: 95%;
   height: auto;
   object-fit: contain;
 }
 
 #CardList {
-  margin-top: 10rem;
+  margin-top: 12rem;
 }
 
 /* Carousel Templates */
@@ -219,8 +244,11 @@
   background: white;
   flex-direction: column;
   padding: 0 !important;
-  width: 80%;
+  width: 20.6%;
   overflow: hidden;
+  top: calc(14% - 50px);
+  border-radius: 15px;
+  position: fixed !important;
 }
 
 .list-Campos #content-title {
@@ -243,6 +271,9 @@
 
 .list-Campos span {
   color: black !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis
 }
 
 .css-1rki8sg-MuiListItem-root.Mui-selected {
@@ -372,6 +403,12 @@ label span:last-child {
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+}
+
+@media (max-width: 1377px) {
+  .img-card{
+    width: 40% ;
+  }
 }
 
 @media (max-width: 1240px) {
@@ -513,7 +550,7 @@ label span:last-child {
 
   .card {
     margin-bottom: 2rem;
-  } 
+  }
 
   .text-carusel h4 {
     margin-top: 1rem;

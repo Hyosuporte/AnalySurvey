@@ -3,7 +3,7 @@ import img1 from "../../assets/image/relativo.png";
 import img2 from "../../assets/image/absoluta.png";
 import img3 from "../../assets/image/acumulada.png";
 import img4 from "../../assets/image/regresion.png";
-import img5 from "../../assets/image/desviacion.png";
+import img5 from "../../assets/image/desviacion.webp";
 import img6 from "../../assets/image/correlacion.jpg";
 import img7 from "../../assets/image/covarianza.png";
 import LazyImage from "../LazyImage";

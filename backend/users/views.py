@@ -24,8 +24,9 @@ def login(request):
     if not user.check_password(request.data['password']):
         return Response(['Invalid password'], status=status.HTTP_400_BAD_REQUEST)
 
-    hcaptcha_token = request.data['hCaptchaToken']
-    if not verify_hcaptcha(hcaptcha_token):
+    print(request.data['hCaptchaToken'])
+    if not verify_hcaptcha(request.data['hCaptchaToken']):
+        print(verify_hcaptcha(request.data['hCaptchaToken']))
         return Response(['Invalid hCaptcha token'], status=status.HTTP_400_BAD_REQUEST)
 
     Token.objects.filter(user=user).delete()
@@ -151,10 +152,10 @@ def reset_password(request):
     return Response({'message': 'Código incorrecto'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-def verify_hcaptcha(response):
-    secret = "01f81fd5-aa24-4b90-963a-36924333a72c"
+def verify_hcaptcha(token):
+    secret = ""
     data = {
-        'response': response,
+        'response': token,
         'secret': secret
     }
     try:

@@ -1,6 +1,6 @@
 from collections import defaultdict
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from io import BytesIO
 from openpyxl.drawing.image import Image
 from openpyxl import Workbook
@@ -361,6 +361,7 @@ def create_excel(request, pk):
     for usuario_id, respuestas_usuario in respuestas_por_usuario.items():
         row = [respuestas_usuario.get(pregunta.id, "")
                for pregunta in preguntas]
+        User = get_user_model()
         usuario = User.objects.get(id=usuario_id).email
         row.insert(0, usuario)
         ws.append(row)
@@ -500,7 +501,6 @@ def regresion_lineal(preguntas):
 
 
 def desviacion_estandar(preguntas):
-    print([item['total'] for item in preguntas["respuestas"]])
     return np.std([item['total'] for item in preguntas["respuestas"]])
 
 
