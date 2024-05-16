@@ -125,6 +125,17 @@
   background-color: #191825;
 }
 
+.item-carusel-pregunta-text {
+  width: 70%;
+  color: black;
+  & button {
+    background-color: #9678ef;
+  }
+  & button:hover {
+    background-color: #9678ef;
+  }
+}
+
 .text-carusel {
   margin-right: 5rem;
   margin-top: 3.5rem;
@@ -406,8 +417,8 @@ label span:last-child {
 }
 
 @media (max-width: 1377px) {
-  .img-card{
-    width: 40% ;
+  .img-card {
+    width: 40%;
   }
 }
 

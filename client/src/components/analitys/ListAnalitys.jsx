@@ -1,13 +1,14 @@
 import { useForms } from "../../context/FormsContext";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { TextCarusel } from "./TextCarusel";
 import { LineCharts } from "./LineCharts";
+import { SpeedChart } from "./SpeedChart";
 import { RegCharts } from "./RegCharts";
 import { BarCharts } from "./BarCharts";
 import { PieCharts } from "./PieCharts";
 import RadarCharts from "./RadarCharts";
 import { Loading } from "../Loading";
-import { SpeedChart } from "./SpeedChart";
 import Box from "@mui/material/Box";
 
 export function ListAnalitys() {
@@ -56,30 +57,37 @@ export function ListAnalitys() {
           <div className="container-campo-resul" key={item.id}>
             <h5> {item.titulo} </h5>
             <div className="container-charts">
-              {item.tipoPregunta !== TIPO_PREGUNTA ? (
-                <>
-                  <PieCharts
-                    key={`pie-${i}`}
-                    analitys={item}
-                    show={showPieChart}
-                  />
-                  <BarCharts
-                    key={`bar-${i}`}
-                    analitys={item}
-                    show={showBarChart}
-                  />
-                  <LineCharts
-                    key={`acumu-${i}`}
-                    analitys={item}
-                    show={showLineChart}
-                  />
+              {item.tipoPregunta !== TIPO_PREGUNTA &&
+                item.tipoPregunta !== 2 && (
+                  <>
+                    <PieCharts
+                      key={`pie-${i}`}
+                      analitys={item}
+                      show={showPieChart}
+                    />
+                    <BarCharts
+                      key={`bar-${i}`}
+                      analitys={item}
+                      show={showBarChart}
+                    />
+                    <LineCharts
+                      key={`acumu-${i}`}
+                      analitys={item}
+                      show={showLineChart}
+                    />
 
-                  <p style={{ color: "black" }}>
-                    {" Desviacion estandar : "}
-                    {parseFloat(item.desviacion).toFixed(2)}
-                  </p>
+                    <p style={{ color: "black" }}>
+                      {" Desviacion estandar : "}
+                      {parseFloat(item.desviacion).toFixed(2)}
+                    </p>
+                  </>
+                )}
+
+              {item.tipoPregunta === 2 && (
+                <>
+                  <TextCarusel key={`text-${i}`} analitys={item} />
                 </>
-              ) : null}
+              )}
               {item.tipoPregunta === TIPO_PREGUNTA ? (
                 <>
                   <RadarCharts key={`radar-${i}`} analitys={item} show={true} />

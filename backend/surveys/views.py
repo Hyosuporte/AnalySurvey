@@ -322,7 +322,7 @@ def chart_analitys(request, pk):
         if campos.tipoPregunta.id == 1:
             resul_multi(preguntas, campos)
         elif campos.tipoPregunta.id == 2:
-            continue
+            resul_text(preguntas, campos)
         elif campos.tipoPregunta.id == 3:
             resul_check(preguntas, campos)
         elif campos.tipoPregunta.id == 4:
@@ -462,6 +462,14 @@ def resul_multi(preguntas, campos):
             "total": res["count"]
         })
     preguntas["desviacion"] = desviacion_estandar(preguntas)
+
+
+def resul_text(preguntas, campos):
+    res = RespuestaFormulario.objects.filter(campoFormulario_id=campos.id)
+    for respuesta in res:
+        preguntas["respuestas"].append(
+            respuesta.valor
+        )
 
 
 def resul_check(preguntas, campos):
