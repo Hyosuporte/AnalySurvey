@@ -1,3 +1,4 @@
+from uuid import UUID
 from collections import defaultdict
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
@@ -198,6 +199,7 @@ def create_campo(request, pk):
             )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

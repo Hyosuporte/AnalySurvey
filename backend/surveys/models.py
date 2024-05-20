@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+import uuid
 
 
 class Formulario(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,  default=uuid.uuid4, editable=False)
     titulo = models.CharField(max_length=255)
     descripcion = models.TextField(null=True)
     creador = models.ForeignKey(
@@ -18,7 +20,7 @@ class TipoPregunta(models.Model):
 
 
 class CampoFormulario(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     titulo = models.CharField(max_length=255, null=False)
     requerido = models.BooleanField(null=False)
     deshabilitado = models.BooleanField(null=False)
@@ -29,7 +31,8 @@ class CampoFormulario(models.Model):
 
 
 class OpcionCampoFormulario(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(
+        primary_key=True,  default=uuid.uuid4, editable=False)
     titulo = models.CharField(max_length=255, null=True)
     valor = models.CharField(max_length=255, null=False)
     campoFormulario = models.ForeignKey(
@@ -37,7 +40,7 @@ class OpcionCampoFormulario(models.Model):
 
 
 class RespuestaFormulario(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     campoFormulario = models.ForeignKey(
         CampoFormulario, on_delete=models.CASCADE, related_name='respuestas')
     usuario = models.ForeignKey(
