@@ -3,6 +3,7 @@ import FilePresentIcon from "@mui/icons-material/FilePresent";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import DonutLargeIcon from "@mui/icons-material/DonutLarge";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDial from "@mui/material/SpeedDial";
@@ -18,6 +19,9 @@ const handleClick = (action, value, id) => {
     case "LineChart":
       action((prevState) => !prevState);
       break;
+    case "LineAcumChart":
+      action((prevState) => !prevState);
+      break;
     case "ExcelChart":
       action(id);
       break;
@@ -28,6 +32,7 @@ export function SpeedChart({
   setShowPieChart,
   setShowBarChart,
   setShowLineChart,
+  setShowLineAcuChart,
   setShowRegreChart,
   setExcel,
   id,
@@ -50,6 +55,12 @@ export function SpeedChart({
       name: "Grafico Lineal",
       function: setShowLineChart,
       operation: "LineChart",
+    },
+    {
+      icon: <TrendingUpIcon key="LinealAcum" />,
+      name: "Frecuencia Relativa Acumulada",
+      function: setShowLineAcuChart,
+      operation: "LineAcumChart",
     },
     {
       icon: <ScatterPlotIcon key="Regresion" />,

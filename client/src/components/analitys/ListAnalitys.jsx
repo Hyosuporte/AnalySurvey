@@ -10,11 +10,13 @@ import { PieCharts } from "./PieCharts";
 import RadarCharts from "./RadarCharts";
 import { Loading } from "../Loading";
 import Box from "@mui/material/Box";
+import { LineaAcuAchart } from "./LineaAcuChart";
 
 export function ListAnalitys() {
   const [showPieChart, setShowPieChart] = useState(false);
   const [showBarChart, setShowBarChart] = useState(false);
   const [showLineChart, setShowLineChart] = useState(false);
+  const [showLineAcuChart, setShowLineAcuChart] = useState(false);
   const [showRegreChart, setShowRegreChart] = useState(false);
   const { charts, analitys, createExcel } = useForms();
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,7 @@ export function ListAnalitys() {
           setShowPieChart={setShowPieChart}
           setShowBarChart={setShowBarChart}
           setShowLineChart={setShowLineChart}
+          setShowLineAcuChart={setShowLineAcuChart}
           setShowRegreChart={setShowRegreChart}
           setExcel={createExcel}
           id={id}
@@ -71,9 +74,15 @@ export function ListAnalitys() {
                       show={showBarChart}
                     />
                     <LineCharts
-                      key={`acumu-${i}`}
+                      key={`lina-${i}`}
                       analitys={item}
                       show={showLineChart}
+                    />
+
+                    <LineaAcuAchart
+                      key={`acumu-${i}`}
+                      analitys={item}
+                      show={showLineAcuChart}
                     />
 
                     <p style={{ color: "black" }}>
