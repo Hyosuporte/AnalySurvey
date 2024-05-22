@@ -32,30 +32,32 @@ matplotlib.use('Agg')
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def form(request, pk):
+
+    form = get_object_or_404(Formulario, pk=pk)
+
     if request.method == 'GET':
-        form = get_object_or_404(Formulario, pk=pk)
         serializer = FormSerializer(form)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
-        form = get_object_or_404(Formulario, pk=pk)
         if form.creador != request.user:
-            return Response({"message": "No authorizado para elminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"message": "No autorizado para eliminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
 
         try:
             campo = form.campos.first()
             if campo:
-                if campo.opciones.exists():
-                    campo.opciones.all().delete()
-            if campo:
-                if campo.respuestas.exists():
-                    campo.respuestas.all().delete()
+                campo_opciones = campo.opciones.all()
+                campo_respuestas = campo.respuestas.all()
+
+                campo_opciones.delete()
+                campo_respuestas.delete()
+
+                campo.delete()
         except CampoFormulario.DoesNotExist:
             pass
 
-        form.campos.all().delete()
         form.delete()
-        return Response({"message": "El formulario fue eliminado con exito"}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "El formulario fue eliminado con éxito"}, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
@@ -69,8 +71,11 @@ def duplicate_form(request, pk):
         creador=request.user
     )
 
+    nuevos_campos = []
+    nuevos_opciones = []
+
     for campo_origen in form_origen.campos.all():
-        new_campo = CampoFormulario.objects.create(
+        nuevo_campo = CampoFormulario(
             titulo=campo_origen.titulo,
             requerido=campo_origen.requerido,
             deshabilitado=campo_origen.deshabilitado,
@@ -78,13 +83,18 @@ def duplicate_form(request, pk):
             tipoPregunta=campo_origen.tipoPregunta,
             orden=campo_origen.orden
         )
+        nuevos_campos.append(nuevo_campo)
 
         for opcion_origen in campo_origen.opciones.all():
-            OpcionCampoFormulario.objects.create(
+            nueva_opcion = OpcionCampoFormulario(
                 titulo=opcion_origen.titulo,
                 valor=opcion_origen.valor,
-                campoFormulario=new_campo
+                campoFormulario=nuevo_campo
             )
+            nuevos_opciones.append(nueva_opcion)
+
+    CampoFormulario.objects.bulk_create(nuevos_campos)
+    OpcionCampoFormulario.objects.bulk_create(nuevos_opciones)
 
     serializer = FormSerializer(new_form)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -96,15 +106,15 @@ def duplicate_form(request, pk):
 def update_form_title(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
 
-    if request.user != form.creador:
-        return Response({"message": "No Authorizado para la informazion"}, status=status.HTTP_401_UNAUTHORIZED)
-
     serializer = FormSerializer(form, data=request.data, partial=True)
     if serializer.is_valid():
+        if request.user != form.creador:
+            return Response({"message": "No Autorizado para modificar este formulario"}, status=status.HTTP_401_UNAUTHORIZED)
+
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-        return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "La solicitud no fue válida", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -128,53 +138,43 @@ def actualizar_formulario(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
 
     if request.user != form.creador:
-        return Response({"message": "No Authorizado para la informazion"}, status=status.HTTP_403_FORBIDDEN)
+        return Response({"message": "No autorizado para modificar este formulario"}, status=status.HTTP_403_FORBIDDEN)
 
     datos_formulario = request.data
 
-    # Actualizar el formulario
-    serializer = FormSerializer(form, data=datos_formulario)
-    if serializer.is_valid():
-        serializer.save()
-
-        for datos_campo in datos_formulario.get('campos', []):
-            campo_id = datos_campo.get('id')
-            campo = get_object_or_404(
-                CampoFormulario, id=campo_id, formulario=form)
-
-            if campo.formulario != form:
-                return Response({'message': 'El campo no pertenece a este formulario'}, status=status.HTTP_400_BAD_REQUEST)
-
-            campo_serializer = CampoFormularioSerializer(
-                campo, data=datos_campo)
-            if campo_serializer.is_valid():
-                campo_serializer.save()
-
-                opciones_campo = datos_campo.get('opciones', [])
-                for datos_opcion in opciones_campo:
-
-                    opcion_id = datos_opcion.get('id')
-
-                    opcion = get_object_or_404(
-                        OpcionCampoFormulario, id=opcion_id, campoFormulario=campo)
-
-                    # Asegurarse de que la opción pertenezca al campo
-                    if opcion.campoFormulario != campo:
-                        return Response({'message': 'La opción no pertenece a este campo'}, status=status.HTTP_400_BAD_REQUEST)
-
-                    # Actualizar la opción
-                    opcion_serializer = OpcionCampoFormularioSerializer(
-                        opcion, data=datos_opcion)
-                    if opcion_serializer.is_valid():
-                        opcion_serializer.save()
-                    else:
-                        return Response({'message': 'Error al actualizar la opción del campo'}, status=status.HTTP_400_BAD_REQUEST)
-            else:
-                return Response({'message': 'Error al actualizar el campo del formulario'}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response({'message': 'Formulario, campos y opciones actualizados correctamente'})
-    else:
+    form_serializer = FormSerializer(form, data=datos_formulario)
+    if not form_serializer.is_valid():
         return Response({'message': 'Error al actualizar el formulario'}, status=status.HTTP_400_BAD_REQUEST)
+    form_serializer.save()
+
+    for datos_campo in datos_formulario.get('campos', []):
+        campo_id = datos_campo.get('id')
+        campo = get_object_or_404(
+            CampoFormulario, id=campo_id, formulario=form)
+
+        if campo.formulario != form:
+            return Response({'message': 'El campo no pertenece a este formulario'}, status=status.HTTP_400_BAD_REQUEST)
+
+        campo_serializer = CampoFormularioSerializer(campo, data=datos_campo)
+        if not campo_serializer.is_valid():
+            return Response({'message': 'Error al actualizar el campo del formulario'}, status=status.HTTP_400_BAD_REQUEST)
+        campo_serializer.save()
+
+        for datos_opcion in datos_campo.get('opciones', []):
+            opcion_id = datos_opcion.get('id')
+            opcion = get_object_or_404(
+                OpcionCampoFormulario, id=opcion_id, campoFormulario=campo)
+
+            if opcion.campoFormulario != campo:
+                return Response({'message': 'La opción no pertenece a este campo'}, status=status.HTTP_400_BAD_REQUEST)
+
+            opcion_serializer = OpcionCampoFormularioSerializer(
+                opcion, data=datos_opcion)
+            if not opcion_serializer.is_valid():
+                return Response({'message': 'Error al actualizar la opción del campo'}, status=status.HTTP_400_BAD_REQUEST)
+            opcion_serializer.save()
+
+    return Response({'message': 'Formulario, campos y opciones actualizados correctamente'})
 
 
 @api_view(['POST'])
@@ -183,23 +183,21 @@ def actualizar_formulario(request, pk):
 def create_campo(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
     if form.creador != request.user:
-        return Response({"message": "No authorizado para crear la opcion"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"message": "No autorizado para crear el campo"}, status=status.HTTP_403_FORBIDDEN)
 
     datos_campo = request.data
-    datos_campo["formulario"] = form.id
-
     serializer = CampoFormularioSerializer(data=datos_campo)
     if serializer.is_valid():
-        serializer.save()
-        if datos_campo["tipoPregunta"] == 4:
+        serializer.save(formulario=form)
+        # Crear opciones adicionales para ciertos tipos de campo
+        if datos_campo.get("tipoPregunta") == 4:
             OpcionCampoFormulario.objects.create(
-                titulo=3,
-                valor=3,
+                titulo="Opción predeterminada",
+                valor="Opción predeterminada",
                 campoFormulario=serializer.instance
             )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -209,7 +207,7 @@ def create_campo(request, pk):
 def create_option(request, pk):
     campo = get_object_or_404(CampoFormulario, pk=pk)
     if campo.formulario.creador != request.user:
-        return Response({"message": "No authorizado para crear la opcion"}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"message": "No autorizado para crear la opción"}, status=status.HTTP_403_FORBIDDEN)
 
     datos_option = request.data
     datos_option["campoFormulario"] = campo.id
@@ -219,7 +217,7 @@ def create_option(request, pk):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        return Response({"message": "Error al crear la opcion"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PATCH'])

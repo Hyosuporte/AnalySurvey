@@ -14,6 +14,8 @@ from django.core.mail import send_mail
 import random
 import string
 import requests
+from django.conf import settings
+from django.core.cache import cache
 
 
 @api_view(['POST'])
@@ -93,15 +95,23 @@ def verify(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def listForm(request):
-    User = get_user_model()
-    user = get_object_or_404(User, pk=request.user.id)
-    try:
-        forms = Formulario.objects.filter(creador_id=user)
-    except Formulario.DoesNotExist:
-        forms = []
+    user_id = str(request.user.id)
+    user_cache_key = f'user_{user_id}_forms'
+
+    cached_forms = cache.get(user_cache_key)
+    if cached_forms:
+        return Response(cached_forms)
+
+    user = get_object_or_404(get_user_model(), id=user_id)
+    forms = Formulario.objects.filter(
+        creador_id=user_id).select_related('creador')
 
     serializer = FormSerializer(forms, many=True)
-    return Response(serializer.data)
+    serialized_data = serializer.data
+
+    cache.set(user_cache_key, serialized_data, timeout=settings.CACHE_TIMEOUT)
+
+    return Response(serialized_data)
 
 
 @api_view(['POST'])
