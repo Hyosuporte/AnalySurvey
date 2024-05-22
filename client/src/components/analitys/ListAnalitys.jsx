@@ -119,12 +119,12 @@ export function ListAnalitys() {
           </div>
         ))
       )}
-      <div className="container-campo-resul">
+      {/* <div className="container-campo-resul">
         <p style={{ color: "black", textAlign: "center" }}>
           {" La covarianza entre la pregunta 4 y 5 es de  : "}
           {parseFloat(Math.random() * 2 - 1).toFixed(2)}
         </p>
-      </div>
+      </div> */}
     </Box>
   );
 }
