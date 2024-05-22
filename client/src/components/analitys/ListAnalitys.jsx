@@ -22,6 +22,7 @@ export function ListAnalitys() {
   const [loading, setLoading] = useState(true);
   const TIPO_PREGUNTA = 4;
   const { id } = useParams();
+
   useEffect(() => {
     charts(id)
       .then(() => {
