@@ -150,7 +150,8 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = ['https://analy-survey.vercel.app',]
+CORS_ALLOWED_ORIGINS = ['https://analy-survey.vercel.app',
+                        'https://analy-survey-git-deploy-hyosuportes-projects.vercel.app']
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
