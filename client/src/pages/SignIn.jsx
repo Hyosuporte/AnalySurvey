@@ -52,7 +52,7 @@ export default function SignIn() {
   const location = useLocation();
 
   const [ShowComponent, setShowComponent] = useState("FormLogin");
-  const [redirect] = useState(location.state?.from || "/dashboard");
+  const [redirect] = useState(location.state?.from || "/Espacio-de-Trabajo");
   const [isChecking, setIsChecking] = useState(true);
 
   const handleOptionClick = (component) => {

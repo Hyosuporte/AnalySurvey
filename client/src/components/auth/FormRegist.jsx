@@ -1,5 +1,9 @@
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CircularProgress from "@mui/material/CircularProgress";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
 import { useAuth } from "../../context/AuthContext";
+import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
@@ -17,6 +21,7 @@ export function FormRegist({ setShowComponent }) {
   } = useForm();
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { signUp, errors: signUpError } = useAuth();
 
   const onSubmit = (data) => {
@@ -72,7 +77,7 @@ export function FormRegist({ setShowComponent }) {
         <Grid item xs={6}>
           <TextField
             label="Contraseña"
-            type="password"
+            type={showPassword ? "text" : "password"}
             variant="outlined"
             color="secondary"
             fullWidth
@@ -80,6 +85,20 @@ export function FormRegist({ setShowComponent }) {
               errors.password?.message || "Debe tener minimo 8 caracteres"
             }
             error={Boolean(errors.password)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                    onMouseDown={(event) => event.preventDefault()}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             {...register("password", {
               required: {
                 value: true,
@@ -104,7 +123,7 @@ export function FormRegist({ setShowComponent }) {
         <Grid item xs={6}>
           <TextField
             label="Confirmar Contraseña"
-            type="password"
+            type={showPassword ? "text" : "password"}
             variant="outlined"
             color="secondary"
             fullWidth

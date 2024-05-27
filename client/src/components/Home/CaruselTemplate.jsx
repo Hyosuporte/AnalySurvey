@@ -54,7 +54,7 @@ export function CaruselTemplate() {
       setIsLoading(true);
       duplicateForm(id).then((res) => {
         setIsLoading(false);
-        if (res) navigate("/dashboard");
+        if (res) navigate("/Espacio-de-Trabajo");
       });
     } else {
       setPendiente(() => () => duplicateForm(id));

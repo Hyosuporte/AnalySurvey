@@ -161,15 +161,3 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
-
-# settings.py
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    }
-}
-
-# Añadir un timeout para el cache
-CACHE_TIMEOUT = 60 * 15  # 15 minutos

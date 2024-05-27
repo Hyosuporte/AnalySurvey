@@ -1,4 +1,8 @@
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
 import { useAuth } from "../../context/AuthContext";
+import IconButton from "@mui/material/IconButton";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
@@ -16,6 +20,7 @@ export function FormLogin() {
   } = useForm();
   const { signIn, errors: signInError } = useAuth();
   const [token, setToken] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const captchaRef = useRef(null);
 
   const onSubmit = (data) => {
@@ -49,7 +54,7 @@ export function FormLogin() {
       <Box sx={{ marginBottom: "2rem" }}>
         <TextField
           label="Contraseña"
-          type="password"
+          type={showPassword ? "text" : "password"}
           variant="outlined"
           color="secondary"
           helperText={
@@ -58,6 +63,20 @@ export function FormLogin() {
           }
           error={Boolean(errors.password)}
           fullWidth
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={(event) => event.preventDefault()}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           {...register("password", {
             required: {
               value: true,

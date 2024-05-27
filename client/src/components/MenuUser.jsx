@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const settings = ["Dashboard", "Salir"];
+const settings = ["Espacio de Trabajo", "Salir"];
 
 export function MenuUser() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -22,8 +22,8 @@ export function MenuUser() {
 
   const handleOptionMenu = (setting) => (event) => {
     switch (setting) {
-      case "Dashboard":
-        navigate("/dashboard");
+      case "Espacio de Trabajo":
+        navigate("/Espacio-de-Trabajo");
         break;
       case "Salir":
         logout();
