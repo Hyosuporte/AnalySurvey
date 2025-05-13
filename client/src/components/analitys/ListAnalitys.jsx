@@ -1,16 +1,17 @@
-import { useForms } from "../../context/FormsContext";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { TextCarusel } from "./TextCarusel";
-import { LineCharts } from "./LineCharts";
-import { SpeedChart } from "./SpeedChart";
-import { RegCharts } from "./RegCharts";
-import { BarCharts } from "./BarCharts";
-import { PieCharts } from "./PieCharts";
-import RadarCharts from "./RadarCharts";
-import { Loading } from "../Loading";
-import Box from "@mui/material/Box";
-import { LineaAcuAchart } from "./LineaAcuChart";
+import { useForms } from '../../context/FormsContext';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { TextCarusel } from './TextCarusel';
+import { LineCharts } from './LineCharts';
+import { SpeedChart } from './SpeedChart';
+import { RegCharts } from './RegCharts';
+import { BarCharts } from './BarCharts';
+import { PieCharts } from './PieCharts';
+import RadarCharts from './RadarCharts';
+import { Loading } from '../Loading';
+import Box from '@mui/material/Box';
+import { LineaAcuAchart } from './LineaAcuChart';
+import { CovarianzaModal } from './CovarianzaModal';
 
 export function ListAnalitys() {
   const [showPieChart, setShowPieChart] = useState(false);
@@ -22,6 +23,8 @@ export function ListAnalitys() {
   const [loading, setLoading] = useState(true);
   const TIPO_PREGUNTA = 4;
   const { id } = useParams();
+  const [showCova, setShowCova] = useState(false);
+
   useEffect(() => {
     charts(id)
       .then(() => {
@@ -47,6 +50,7 @@ export function ListAnalitys() {
           setShowLineAcuChart={setShowLineAcuChart}
           setShowRegreChart={setShowRegreChart}
           setExcel={createExcel}
+          setCova={setShowCova}
           id={id}
         />
       )}
@@ -85,8 +89,8 @@ export function ListAnalitys() {
                       show={showLineAcuChart}
                     />
 
-                    <p style={{ color: "black" }}>
-                      {" Desviacion estandar : "}
+                    <p style={{ color: 'black' }}>
+                      {' Desviacion estandar : '}
                       {parseFloat(item.desviacion).toFixed(2)}
                     </p>
                   </>
@@ -106,10 +110,10 @@ export function ListAnalitys() {
                     show={showRegreChart}
                   />
 
-                  <p style={{ color: "black" }}>
-                    {" Correlacion : "}
+                  <p style={{ color: 'black' }}>
+                    {' Correlacion : '}
                     {parseFloat(item.correlacion).toFixed(2)} <br />
-                    {" Desviacion estandar : "}
+                    {' Desviacion estandar : '}
                     {parseFloat(item.desviacion).toFixed(2)}
                   </p>
                 </>
@@ -118,12 +122,12 @@ export function ListAnalitys() {
           </div>
         ))
       )}
-      <div className="container-campo-resul">
-        <p style={{ color: "black", textAlign: "center" }}>
-          {" La covarianza entre la pregunta 4 y 5 es de  : "}
-          {parseFloat(Math.random() * 2 - 1).toFixed(2)}
-        </p>
-      </div>
+
+      <CovarianzaModal
+        open={showCova}
+        handleClose={() => setShowCova(false)}
+        ask={analitys.preguntas}
+      />
     </Box>
   );
 }

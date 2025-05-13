@@ -1,4 +1,4 @@
-import { AreaChart, XAxis, Tooltip, Area } from "recharts";
+import { AreaChart, XAxis, Tooltip, Area } from 'recharts';
 
 export function LineaAcuAchart({ analitys, show }) {
   const data = [];
@@ -32,13 +32,13 @@ export function LineaAcuAchart({ analitys, show }) {
 
         <Tooltip
           cursor={false}
-          labelStyle={{ color: "black" }}
-          itemStyle={{ margin: "0rem" }}
+          labelStyle={{ color: 'black' }}
+          itemStyle={{ margin: '0rem' }}
         />
 
         <Area type="monotone" dataKey="total" stroke="#82ca9d" fill="#82ca9d" />
       </AreaChart>
-      <div style={{ textAlign: "center", color: "black" }}>
+      <div style={{ textAlign: 'center', color: 'black' }}>
         Frecuencia Relativa Acumulada
       </div>
     </div>

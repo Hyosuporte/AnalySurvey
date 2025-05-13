@@ -1,15 +1,15 @@
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { useAuth } from "../context/AuthContext";
-import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import Box from "@mui/material/Box";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useAuth } from '../context/AuthContext';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import Box from '@mui/material/Box';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const settings = ["Espacio de Trabajo", "Salir"];
+const settings = ['Espacio de Trabajo', 'Salir'];
 
 export function MenuUser() {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -20,12 +20,12 @@ export function MenuUser() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleOptionMenu = (setting) => (event) => {
+  const handleOptionMenu = (setting) => () => {
     switch (setting) {
-      case "Espacio de Trabajo":
-        navigate("/Espacio-de-Trabajo");
+      case 'Espacio de Trabajo':
+        navigate('/Espacio-de-Trabajo');
         break;
-      case "Salir":
+      case 'Salir':
         logout();
         break;
     }
@@ -44,17 +44,17 @@ export function MenuUser() {
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{ mt: '45px' }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         keepMounted
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}

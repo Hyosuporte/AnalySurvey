@@ -4,13 +4,10 @@ from .models import RespuestaFormulario
 from .models import CampoFormulario
 from .models import OpcionCampoFormulario
 
-# FIXME: Mirar si hay datos que sobren
-
-
 class RespuestaFormularioSerializer(serializers.ModelSerializer):
     class Meta:
         model = RespuestaFormulario
-        fields = ['valor', 'campoFormulario', 'usuario']
+        fields = ['valor', 'campoFormulario', 'usuario', 'anon_id']
 
 
 class OpcionCampoFormularioSerializer(serializers.ModelSerializer):

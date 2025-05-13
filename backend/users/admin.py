@@ -33,7 +33,6 @@ class RespuestaFormularioAdmin(admin.ModelAdmin):
 
 
 class CustomUserAdmin(admin.ModelAdmin):
-    # Ajusta esto a los campos que quieras buscar
     list_display = ['username', 'email', 'is_staff']
     list_filter = ['is_staff']
     search_fields = ['username', 'email']

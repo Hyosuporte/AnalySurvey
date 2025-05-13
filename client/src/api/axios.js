@@ -1,22 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 
 const API = import.meta.env.VITE_API_URL;
 
 const instance = axios.create({
   baseURL: API,
-});
-
-instance.interceptors.response.use(
-  (response) => {
-    return response;
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
   },
-  (error) => {
-    if (error.response.status === 401) {
-      window.localStorage.removeItem("token");
-      window.location = "/login";
-    }
-    return Promise.reject(error);
-  }
-);
+  withCredentials: false,
+});
 
 export default instance;

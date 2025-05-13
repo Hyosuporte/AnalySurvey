@@ -25,19 +25,22 @@ from scipy.stats import linregress, pearsonr
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-
+from rest_framework.permissions import AllowAny
+import uuid
 
 @api_view(['GET', 'DELETE'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def form(request, pk):
+    form = get_object_or_404(Formulario.objects.prefetch_related('campos__opciones', 'campos__respuestas'), pk=pk)
     if request.method == 'GET':
-        form = get_object_or_404(Formulario, pk=pk)
         serializer = FormSerializer(form)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
-        form = get_object_or_404(Formulario, pk=pk)
+        if not request.user.is_authenticated:
+            return Response({"message": "Autenticación requerida"}, status=status.HTTP_401_UNAUTHORIZED)
+
         if form.creador != request.user:
             return Response({"message": "No authorizado para elminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -61,6 +64,7 @@ def form(request, pk):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def duplicate_form(request, pk):
+    print('hola')
     form_origen = get_object_or_404(Formulario, pk=pk)
     new_form = Formulario.objects.create(
         titulo=f"{form_origen.titulo} (Copia)",
@@ -93,7 +97,7 @@ def duplicate_form(request, pk):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def update_form_title(request, pk):
-    form = get_object_or_404(Formulario, pk=pk)
+    form = get_object_or_404(Formulario.objects.select_related('creador'), pk=pk)
 
     if request.user != form.creador:
         return Response({"message": "No Authorizado para la informazion"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -278,11 +282,22 @@ def update_option(request, pk):
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def save_ask(request):
     data = request.data.get("respuestas", [])
+    
+    if not request.user.is_authenticated:
+        anon_id = str(uuid.uuid4())
+
     for ask in data:
-        ask['usuario'] = request.user.id
+
+        if request.user.is_authenticated:
+            ask['usuario'] = request.user.id
+            ask['anon_id'] = None
+        else:
+            ask['usuario'] = None
+            ask['anon_id'] = anon_id
+            
         serializer = RespuestaFormularioSerializer(data=ask)
         if serializer.is_valid():
             serializer.save()
@@ -291,6 +306,19 @@ def save_ask(request):
 
     return Response({"message": "Se guardo la respuesta"}, status=status.HTTP_201_CREATED)
 
+
+def safe_json(data):
+    def replace_invalid(obj):
+        if isinstance(obj, float):
+            if np.isnan(obj) or np.isinf(obj):
+                return None  
+        elif isinstance(obj, dict):
+            return {k: replace_invalid(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [replace_invalid(v) for v in obj]
+        return obj
+
+    return replace_invalid(data)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -328,6 +356,9 @@ def chart_analitys(request, pk):
         elif campos.tipoPregunta.id == 4:
             result_ratin(preguntas, campos)
 
+        preguntas["correlacion"] = None if np.isnan(preguntas["correlacion"]) else preguntas["correlacion"]
+        preguntas["desviacion"] = None if np.isnan(preguntas["desviacion"]) else preguntas["desviacion"]
+
         data["preguntas"].append(preguntas)
     return Response(data, status=status.HTTP_200_OK)
 
@@ -347,7 +378,11 @@ def create_excel(request, pk):
     respuestas_por_usuario = defaultdict(lambda: defaultdict(str))
 
     for respuesta in respuestas:
-        usuario_id = respuesta.usuario.id
+        if respuesta.usuario:
+            usuario_id = f"user_{respuesta.usuario.id}"
+        else:
+            usuario_id = f"anon_{respuesta.anon_id}"
+
         campo_id = respuesta.campoFormulario_id
         respuestas_por_usuario[usuario_id][campo_id] = respuesta.valor
 
@@ -361,8 +396,17 @@ def create_excel(request, pk):
     for usuario_id, respuestas_usuario in respuestas_por_usuario.items():
         row = [respuestas_usuario.get(pregunta.id, "")
                for pregunta in preguntas]
-        User = get_user_model()
-        usuario = User.objects.get(id=usuario_id).email
+
+        if usuario_id.startswith("user_"):
+            user_id = clave_usuario.replace("user_", "")
+            User = get_user_model()
+            try:
+                usuario = User.objects.get(id=usuario_id).email
+            except User.DoesNotExist:
+                usuario = "Usuario desconocido"
+        else:
+            usuario = "Anonimo"
+
         row.insert(0, usuario)
         ws.append(row)
 
@@ -506,14 +550,14 @@ def create_excel(request, pk):
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def ready_Answered(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
     user = request.user
 
-    if RespuestaFormulario.objects.filter(campoFormulario__formulario=form, usuario=user).exists():
+    if user.is_authenticated and RespuestaFormulario.objects.filter(campoFormulario__formulario=form, usuario=user).exists():
         return Response({"message": "Ya has respondido este formulario"}, status=status.HTTP_204_NO_CONTENT)
-    else:
+    else :
         return Response({"message": "Puede responder el formulario"}, status=status.HTTP_200_OK)
 
 
@@ -581,12 +625,19 @@ def total_res(campos):
         campoFormulario_id=campos.id).count()
     return res
 
+@api_view(['POST'])
+def resul_cova(request):
+    pregunta_1 = request.data['pregunta1']
+    pregunta_2 = request.data['pregunta2']
 
-def resul_cova(pregunta_1, pregunta_2,):
-    muestra_1 = np.array(range(1, len(pregunta_1["respuestas"])+1))
-    muestra_2 = np.array(range(1, len(pregunta_2["respuestas"])+1))
-    covariance = np.cov(pregunta_1, pregunta_2)
-    return covariance
+    if not pregunta_1 or not pregunta_2:
+        return Response({"error": "Faltan datos para calcular la covarianza"}, status=400)
+    
+    covariance_matrix = np.cov(pregunta_1, pregunta_2)
+    covariance_value = covariance_matrix[0, 1] 
+
+    return Response({"covarianza": covariance_value}, status=200)
+
 
 
 def total_multi(campos):

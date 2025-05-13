@@ -1,15 +1,15 @@
-import { useForms } from "../../context/FormsContext";
-import { useAuth } from "../../context/AuthContext";
-import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
-import img1 from "../../assets/image/img4.jpg";
-import img2 from "../../assets/image/img5.jpg";
-import img3 from "../../assets/image/img2.jpg";
-import "slick-carousel/slick/slick-theme.css";
-import Button from "@mui/material/Button";
-import "slick-carousel/slick/slick.css";
-import Slider from "react-slick";
-import { useState } from "react";
+import { useForms } from '../../context/FormsContext';
+import { useAuth } from '../../context/AuthContext';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+import img1 from '../../assets/image/img4.jpg';
+import img2 from '../../assets/image/img5.jpg';
+import img3 from '../../assets/image/img2.jpg';
+import 'slick-carousel/slick/slick-theme.css';
+import Button from '@mui/material/Button';
+import 'slick-carousel/slick/slick.css';
+import Slider from 'react-slick';
+import { useState } from 'react';
 
 let settings = {
   infinite: true,
@@ -21,23 +21,23 @@ let settings = {
 
 let plantilla = [
   {
-    titulo: "Escala de licker",
+    titulo: 'Escala de licker',
     descripcion:
-      "La Escala de Licker consiste en una serie de afirmaciones sobre el tema de interés, a las cuales los participantes responden indicando su grado de acuerdo o desacuerdo con cada afirmación. Esta escala la puedes usar para medir aptitudes, opiniones, evaluaciones y entre otras maneras cuantitativas.",
+      'La Escala de Licker consiste en una serie de afirmaciones sobre el tema de interés, a las cuales los participantes responden indicando su grado de acuerdo o desacuerdo con cada afirmación. Esta escala la puedes usar para medir aptitudes, opiniones, evaluaciones y entre otras maneras cuantitativas.',
     img: img1,
-    Survey: 2,
+    Survey: '0ace127c-49d7-416b-bd41-795d8666869a',
   },
   {
-    titulo: "Encuesta de Si o No",
+    titulo: 'Encuesta de Si o No',
     descripcion:
-      "Esta encuesta esta creada con preguntas aleatorias pero con respuestas de si o no. La puedes utilizar en dado caso que necesites opiniones imparciales acerca de un tema en específico.",
+      'Esta encuesta esta creada con preguntas aleatorias pero con respuestas de si o no. La puedes utilizar en dado caso que necesites opiniones imparciales acerca de un tema en específico.',
     img: img2,
-    Survey: 3,
+    Survey: '86b29cb0-bb63-46f8-876f-a84df417d017',
   },
   {
-    titulo: "Encuesta de satisfaccion",
+    titulo: 'Encuesta de satisfaccion',
     descripcion:
-      "Esta encuesta esta pensada para cuando desees calificar una aplicativo, trabajo, software, etc.",
+      'Esta encuesta esta pensada para cuando desees calificar una aplicativo, trabajo, software, etc.',
     img: img3,
     Survey: 4,
   },
@@ -54,11 +54,11 @@ export function CaruselTemplate() {
       setIsLoading(true);
       duplicateForm(id).then((res) => {
         setIsLoading(false);
-        if (res) navigate("/Espacio-de-Trabajo");
+        if (res) navigate('/Espacio-de-Trabajo');
       });
     } else {
       setPendiente(() => () => duplicateForm(id));
-      navigate("/login");
+      navigate('/login');
     }
   };
 
@@ -68,7 +68,7 @@ export function CaruselTemplate() {
       <br />
       <Slider {...settings} className="item-carusel">
         {plantilla.map((item, i) => (
-          <div key={item.titulo + "-" + i}>
+          <div key={item.titulo + '-' + i}>
             <div className="text-carusel">
               <h4> {item.titulo} </h4>
               <p> {item.descripcion} </p>
@@ -79,7 +79,7 @@ export function CaruselTemplate() {
                 className="button"
                 disabled={isLoading}
               >
-                {isLoading ? "Cargando..." : "Comenzar ahora"}
+                {isLoading ? 'Cargando...' : 'Comenzar ahora'}
               </Button>
             </div>
             <img src={item.img} alt={item.titulo} />
