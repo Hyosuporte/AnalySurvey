@@ -17,4 +17,5 @@ urlpatterns = [
     path('api/v1/forms/<uuid:pk>/charts/', views.chart_analitys),
     path('api/v1/forms/<uuid:pk>/excel/', views.create_excel),
     path('api/v1/forms/<uuid:pk>/answered/', views.ready_Answered),
+    path('api/v1/forms/covarianza/', views.resul_cova),
 ]

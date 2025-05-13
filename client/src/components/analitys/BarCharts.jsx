@@ -1,4 +1,4 @@
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, Tooltip, XAxis, YAxis } from 'recharts';
 
 export function BarCharts({ analitys, show }) {
   const data = [];
@@ -24,12 +24,12 @@ export function BarCharts({ analitys, show }) {
         <YAxis />
         <Tooltip
           cursor={false}
-          labelStyle={{ color: "black" }}
-          itemStyle={{ margin: "0rem" }}
+          labelStyle={{ color: 'black' }}
+          itemStyle={{ margin: '0rem' }}
         />
         <Bar dataKey="total" fill="#6b48ff" />
       </BarChart>
-      <div style={{ textAlign: "center", color: "black" }}>
+      <div style={{ textAlign: 'center', color: 'black' }}>
         Frecuencia Absoluta
       </div>
     </div>

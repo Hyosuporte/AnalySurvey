@@ -44,6 +44,7 @@ class RespuestaFormulario(models.Model):
     campoFormulario = models.ForeignKey(
         CampoFormulario, on_delete=models.CASCADE, related_name='respuestas')
     usuario = models.ForeignKey(
-        get_user_model(), on_delete=models.SET_NULL, null=True, related_name='respuestas')
+        get_user_model(), on_delete=models.SET_NULL, null=True, blank=True,related_name='respuestas')
     valor = models.TextField(null=False)
     creado_en = models.DateTimeField(auto_now_add=True, auto_now=False)
+    anon_id = models.CharField(max_length=100, null=True, blank=True)

@@ -1,30 +1,30 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { AppBar, Toolbar, Button, Box } from "@mui/material";
-import { FormRegist } from "../components/auth/FormRegist";
-import { CodeEmail } from "../components/auth/CodeEmail";
-import { FormLogin } from "../components/auth/FormLogin";
-import { useAuth } from "../context/AuthContext";
-import { Loading } from "../components/Loading";
-import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import { FormRegist } from '../components/auth/FormRegist';
+import { CodeEmail } from '../components/auth/CodeEmail';
+import { FormLogin } from '../components/auth/FormLogin';
+import { useAuth } from '../context/AuthContext';
+import { Loading } from '../components/Loading';
+import { useState, useEffect } from 'react';
 
 function Navbar({ onOptionClick }) {
   return (
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#794dff",
-        borderRadius: "10px 10px 0 0",
-        marginBottom: "2rem",
+        backgroundColor: '#794dff',
+        borderRadius: '10px 10px 0 0',
+        marginBottom: '2rem',
       }}
     >
       <Toolbar>
         <Button
           color="inherit"
-          onClick={() => onOptionClick("FormLogin")}
+          onClick={() => onOptionClick('FormLogin')}
           sx={{
-            marginRight: "2rem",
-            marginLeft: "2rem",
+            marginRight: '2rem',
+            marginLeft: '2rem',
           }}
           aria-label="login"
         >
@@ -32,10 +32,10 @@ function Navbar({ onOptionClick }) {
         </Button>
         <Button
           color="inherit"
-          onClick={() => onOptionClick("FormRegist")}
+          onClick={() => onOptionClick('FormRegist')}
           sx={{
-            marginRight: "2rem",
-            marginLeft: "2rem",
+            marginRight: '2rem',
+            marginLeft: '2rem',
           }}
           aria-label="register"
         >
@@ -51,8 +51,8 @@ export default function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [ShowComponent, setShowComponent] = useState("FormLogin");
-  const [redirect] = useState(location.state?.from || "/dashboard");
+  const [ShowComponent, setShowComponent] = useState('FormLogin');
+  const [redirect] = useState(location.state?.from || '/Espacio-de-Trabajo');
   const [isChecking, setIsChecking] = useState(true);
 
   const handleOptionClick = (component) => {
@@ -84,19 +84,19 @@ export default function SignIn() {
       </Box>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "calc(100vh - 10%)",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 'calc(100vh - 10%)',
         }}
       >
         <Box className="login-container-forms">
           <Navbar onOptionClick={handleOptionClick} />
-          {ShowComponent === "FormLogin" && <FormLogin />}
-          {ShowComponent === "FormRegist" && (
+          {ShowComponent === 'FormLogin' && <FormLogin urlForm={redirect} />}
+          {ShowComponent === 'FormRegist' && (
             <FormRegist setShowComponent={setShowComponent} />
           )}
-          {ShowComponent === "CodeEmail" && <CodeEmail />}
+          {ShowComponent === 'CodeEmail' && <CodeEmail />}
         </Box>
       </Box>
     </main>

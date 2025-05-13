@@ -128,7 +128,15 @@ export function FormProvider({ children }) {
   const updateCampo = async (id, data) => {
     const token = window.localStorage.getItem("token");
     const res = await updateCampoReq(id, token, data);
-    res.status == 200 ? true : false;
+    if (res.status === 200) {
+      setCampos((prevCampos) =>
+        prevCampos.map((campo) =>
+          campo.id === id ? { ...campo, ...data } : campo
+        )
+      );
+      return true;
+    }
+    return false;
   };
 
   const updateCampos = (newCampos) => {

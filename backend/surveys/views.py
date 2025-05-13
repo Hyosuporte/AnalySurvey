@@ -1,4 +1,3 @@
-from uuid import UUID
 from collections import defaultdict
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
@@ -26,44 +25,46 @@ from scipy.stats import linregress, pearsonr
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
-
+from rest_framework.permissions import AllowAny
+import uuid
 
 @api_view(['GET', 'DELETE'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def form(request, pk):
-
-    form = get_object_or_404(Formulario, pk=pk)
-
+    form = get_object_or_404(Formulario.objects.prefetch_related('campos__opciones', 'campos__respuestas'), pk=pk)
     if request.method == 'GET':
         serializer = FormSerializer(form)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
+        if not request.user.is_authenticated:
+            return Response({"message": "Autenticación requerida"}, status=status.HTTP_401_UNAUTHORIZED)
+
         if form.creador != request.user:
-            return Response({"message": "No autorizado para eliminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"message": "No authorizado para elminar el formulario"}, status=status.HTTP_401_UNAUTHORIZED)
 
         try:
             campo = form.campos.first()
             if campo:
-                campo_opciones = campo.opciones.all()
-                campo_respuestas = campo.respuestas.all()
-
-                campo_opciones.delete()
-                campo_respuestas.delete()
-
-                campo.delete()
+                if campo.opciones.exists():
+                    campo.opciones.all().delete()
+            if campo:
+                if campo.respuestas.exists():
+                    campo.respuestas.all().delete()
         except CampoFormulario.DoesNotExist:
             pass
 
+        form.campos.all().delete()
         form.delete()
-        return Response({"message": "El formulario fue eliminado con éxito"}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "El formulario fue eliminado con exito"}, status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def duplicate_form(request, pk):
+    print('hola')
     form_origen = get_object_or_404(Formulario, pk=pk)
     new_form = Formulario.objects.create(
         titulo=f"{form_origen.titulo} (Copia)",
@@ -71,11 +72,8 @@ def duplicate_form(request, pk):
         creador=request.user
     )
 
-    nuevos_campos = []
-    nuevos_opciones = []
-
     for campo_origen in form_origen.campos.all():
-        nuevo_campo = CampoFormulario(
+        new_campo = CampoFormulario.objects.create(
             titulo=campo_origen.titulo,
             requerido=campo_origen.requerido,
             deshabilitado=campo_origen.deshabilitado,
@@ -83,18 +81,13 @@ def duplicate_form(request, pk):
             tipoPregunta=campo_origen.tipoPregunta,
             orden=campo_origen.orden
         )
-        nuevos_campos.append(nuevo_campo)
 
         for opcion_origen in campo_origen.opciones.all():
-            nueva_opcion = OpcionCampoFormulario(
+            OpcionCampoFormulario.objects.create(
                 titulo=opcion_origen.titulo,
                 valor=opcion_origen.valor,
-                campoFormulario=nuevo_campo
+                campoFormulario=new_campo
             )
-            nuevos_opciones.append(nueva_opcion)
-
-    CampoFormulario.objects.bulk_create(nuevos_campos)
-    OpcionCampoFormulario.objects.bulk_create(nuevos_opciones)
 
     serializer = FormSerializer(new_form)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -104,17 +97,17 @@ def duplicate_form(request, pk):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def update_form_title(request, pk):
-    form = get_object_or_404(Formulario, pk=pk)
+    form = get_object_or_404(Formulario.objects.select_related('creador'), pk=pk)
+
+    if request.user != form.creador:
+        return Response({"message": "No Authorizado para la informazion"}, status=status.HTTP_401_UNAUTHORIZED)
 
     serializer = FormSerializer(form, data=request.data, partial=True)
     if serializer.is_valid():
-        if request.user != form.creador:
-            return Response({"message": "No Autorizado para modificar este formulario"}, status=status.HTTP_401_UNAUTHORIZED)
-
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-        return Response({"message": "La solicitud no fue válida", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -138,43 +131,53 @@ def actualizar_formulario(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
 
     if request.user != form.creador:
-        return Response({"message": "No autorizado para modificar este formulario"}, status=status.HTTP_403_FORBIDDEN)
+        return Response({"message": "No Authorizado para la informazion"}, status=status.HTTP_403_FORBIDDEN)
 
     datos_formulario = request.data
 
-    form_serializer = FormSerializer(form, data=datos_formulario)
-    if not form_serializer.is_valid():
+    # Actualizar el formulario
+    serializer = FormSerializer(form, data=datos_formulario)
+    if serializer.is_valid():
+        serializer.save()
+
+        for datos_campo in datos_formulario.get('campos', []):
+            campo_id = datos_campo.get('id')
+            campo = get_object_or_404(
+                CampoFormulario, id=campo_id, formulario=form)
+
+            if campo.formulario != form:
+                return Response({'message': 'El campo no pertenece a este formulario'}, status=status.HTTP_400_BAD_REQUEST)
+
+            campo_serializer = CampoFormularioSerializer(
+                campo, data=datos_campo)
+            if campo_serializer.is_valid():
+                campo_serializer.save()
+
+                opciones_campo = datos_campo.get('opciones', [])
+                for datos_opcion in opciones_campo:
+
+                    opcion_id = datos_opcion.get('id')
+
+                    opcion = get_object_or_404(
+                        OpcionCampoFormulario, id=opcion_id, campoFormulario=campo)
+
+                    # Asegurarse de que la opción pertenezca al campo
+                    if opcion.campoFormulario != campo:
+                        return Response({'message': 'La opción no pertenece a este campo'}, status=status.HTTP_400_BAD_REQUEST)
+
+                    # Actualizar la opción
+                    opcion_serializer = OpcionCampoFormularioSerializer(
+                        opcion, data=datos_opcion)
+                    if opcion_serializer.is_valid():
+                        opcion_serializer.save()
+                    else:
+                        return Response({'message': 'Error al actualizar la opción del campo'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'message': 'Error al actualizar el campo del formulario'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'message': 'Formulario, campos y opciones actualizados correctamente'})
+    else:
         return Response({'message': 'Error al actualizar el formulario'}, status=status.HTTP_400_BAD_REQUEST)
-    form_serializer.save()
-
-    for datos_campo in datos_formulario.get('campos', []):
-        campo_id = datos_campo.get('id')
-        campo = get_object_or_404(
-            CampoFormulario, id=campo_id, formulario=form)
-
-        if campo.formulario != form:
-            return Response({'message': 'El campo no pertenece a este formulario'}, status=status.HTTP_400_BAD_REQUEST)
-
-        campo_serializer = CampoFormularioSerializer(campo, data=datos_campo)
-        if not campo_serializer.is_valid():
-            return Response({'message': 'Error al actualizar el campo del formulario'}, status=status.HTTP_400_BAD_REQUEST)
-        campo_serializer.save()
-
-        for datos_opcion in datos_campo.get('opciones', []):
-            opcion_id = datos_opcion.get('id')
-            opcion = get_object_or_404(
-                OpcionCampoFormulario, id=opcion_id, campoFormulario=campo)
-
-            if opcion.campoFormulario != campo:
-                return Response({'message': 'La opción no pertenece a este campo'}, status=status.HTTP_400_BAD_REQUEST)
-
-            opcion_serializer = OpcionCampoFormularioSerializer(
-                opcion, data=datos_opcion)
-            if not opcion_serializer.is_valid():
-                return Response({'message': 'Error al actualizar la opción del campo'}, status=status.HTTP_400_BAD_REQUEST)
-            opcion_serializer.save()
-
-    return Response({'message': 'Formulario, campos y opciones actualizados correctamente'})
 
 
 @api_view(['POST'])
@@ -183,17 +186,18 @@ def actualizar_formulario(request, pk):
 def create_campo(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
     if form.creador != request.user:
-        return Response({"message": "No autorizado para crear el campo"}, status=status.HTTP_403_FORBIDDEN)
+        return Response({"message": "No authorizado para crear la opcion"}, status=status.HTTP_401_UNAUTHORIZED)
 
     datos_campo = request.data
+    datos_campo["formulario"] = form.id
+
     serializer = CampoFormularioSerializer(data=datos_campo)
     if serializer.is_valid():
-        serializer.save(formulario=form)
-        # Crear opciones adicionales para ciertos tipos de campo
-        if datos_campo.get("tipoPregunta") == 4:
+        serializer.save()
+        if datos_campo["tipoPregunta"] == 4:
             OpcionCampoFormulario.objects.create(
-                titulo="Opción predeterminada",
-                valor="Opción predeterminada",
+                titulo=3,
+                valor=3,
                 campoFormulario=serializer.instance
             )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -207,7 +211,7 @@ def create_campo(request, pk):
 def create_option(request, pk):
     campo = get_object_or_404(CampoFormulario, pk=pk)
     if campo.formulario.creador != request.user:
-        return Response({"message": "No autorizado para crear la opción"}, status=status.HTTP_403_FORBIDDEN)
+        return Response({"message": "No authorizado para crear la opcion"}, status=status.HTTP_401_UNAUTHORIZED)
 
     datos_option = request.data
     datos_option["campoFormulario"] = campo.id
@@ -217,7 +221,7 @@ def create_option(request, pk):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Error al crear la opcion"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PATCH'])
@@ -278,11 +282,22 @@ def update_option(request, pk):
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def save_ask(request):
     data = request.data.get("respuestas", [])
+    
+    if not request.user.is_authenticated:
+        anon_id = str(uuid.uuid4())
+
     for ask in data:
-        ask['usuario'] = request.user.id
+
+        if request.user.is_authenticated:
+            ask['usuario'] = request.user.id
+            ask['anon_id'] = None
+        else:
+            ask['usuario'] = None
+            ask['anon_id'] = anon_id
+            
         serializer = RespuestaFormularioSerializer(data=ask)
         if serializer.is_valid():
             serializer.save()
@@ -291,6 +306,19 @@ def save_ask(request):
 
     return Response({"message": "Se guardo la respuesta"}, status=status.HTTP_201_CREATED)
 
+
+def safe_json(data):
+    def replace_invalid(obj):
+        if isinstance(obj, float):
+            if np.isnan(obj) or np.isinf(obj):
+                return None  
+        elif isinstance(obj, dict):
+            return {k: replace_invalid(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [replace_invalid(v) for v in obj]
+        return obj
+
+    return replace_invalid(data)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -328,6 +356,9 @@ def chart_analitys(request, pk):
         elif campos.tipoPregunta.id == 4:
             result_ratin(preguntas, campos)
 
+        preguntas["correlacion"] = None if np.isnan(preguntas["correlacion"]) else preguntas["correlacion"]
+        preguntas["desviacion"] = None if np.isnan(preguntas["desviacion"]) else preguntas["desviacion"]
+
         data["preguntas"].append(preguntas)
     return Response(data, status=status.HTTP_200_OK)
 
@@ -347,7 +378,11 @@ def create_excel(request, pk):
     respuestas_por_usuario = defaultdict(lambda: defaultdict(str))
 
     for respuesta in respuestas:
-        usuario_id = respuesta.usuario.id
+        if respuesta.usuario:
+            usuario_id = f"user_{respuesta.usuario.id}"
+        else:
+            usuario_id = f"anon_{respuesta.anon_id}"
+
         campo_id = respuesta.campoFormulario_id
         respuestas_por_usuario[usuario_id][campo_id] = respuesta.valor
 
@@ -361,8 +396,17 @@ def create_excel(request, pk):
     for usuario_id, respuestas_usuario in respuestas_por_usuario.items():
         row = [respuestas_usuario.get(pregunta.id, "")
                for pregunta in preguntas]
-        User = get_user_model()
-        usuario = User.objects.get(id=usuario_id).email
+
+        if usuario_id.startswith("user_"):
+            user_id = clave_usuario.replace("user_", "")
+            User = get_user_model()
+            try:
+                usuario = User.objects.get(id=usuario_id).email
+            except User.DoesNotExist:
+                usuario = "Usuario desconocido"
+        else:
+            usuario = "Anonimo"
+
         row.insert(0, usuario)
         ws.append(row)
 
@@ -376,21 +420,44 @@ def create_excel(request, pk):
                 opciones = [
                     opcion.titulo for opcion in pregunta.opciones.all()]
                 respuestas_totales = total_multi(pregunta)
+                colores = plt.cm.tab10(range(len(respuestas_totales)))
 
-                plt.bar(opciones, respuestas_totales, color='skyblue')
+                plt.bar(opciones, respuestas_totales, color=colores)
                 plt.title(pregunta.titulo)
                 plt.xlabel('Opciones')
                 buffer_bar = BytesIO()
                 plt.savefig(buffer_bar, format='png')
                 plt.close()
 
-                colores = plt.cm.tab10(range(len(respuestas_totales)))
                 plt.pie(respuestas_totales, labels=opciones, autopct='%1.1f%%',
                         colors=colores)
-                plt.title(pregunta.titulo)
-                plt.xlabel('Opciones')
+                plt.title(pregunta.titulo, fontsize=20)
+                plt.xlabel('Opciones', fontsize=15)
                 buffer_pie = BytesIO()
                 plt.savefig(buffer_pie, format='png')
+                plt.close()
+
+                plt.plot(opciones, total_acumulada_mult(pregunta),
+                         color='orange', linestyle='-', linewidth=2, markersize=8)
+                plt.title(pregunta.titulo)
+                plt.ylabel('Frecuencia Acumulada', fontsize=14)
+                plt.grid(axis='both', linestyle='--', alpha=0.7)
+                buffer_acumu = BytesIO()
+                plt.savefig(buffer_acumu, format='png')
+                plt.close()
+
+                plt.fill_between(opciones, total_relativa_mult(pregunta),
+                                 color=colores, alpha=0.5)
+                plt.plot(opciones, total_relativa_mult(pregunta), marker='o', color='blue',
+                         linestyle='-', linewidth=2, markersize=8)
+                plt.title(pregunta.titulo, fontsize=20)
+                plt.ylabel('Frecuencia Relativa Acumulada', fontsize=14)
+                plt.xticks(fontsize=12)
+                plt.yticks(fontsize=12)
+                plt.ylim(0, 1)
+                plt.grid(axis='both', linestyle='--', alpha=0.7)
+                buffer_relativa = BytesIO()
+                plt.savefig(buffer_relativa, format='png')
                 plt.close()
 
                 buffer_bar.seek(0)
@@ -400,6 +467,15 @@ def create_excel(request, pk):
                 buffer_pie.seek(0)
                 img_pie = Image(buffer_pie)
                 ws_graficos.add_image(img_pie, f"L{indece*10}")
+
+                buffer_acumu.seek(0)
+                img_acumu = Image(buffer_acumu)
+                ws_graficos.add_image(img_acumu, f"z{indece*10}")
+
+                buffer_relativa.seek(0)
+                img_relativa = Image(buffer_relativa)
+                ws_graficos.add_image(img_relativa, f"ak{indece*10}")
+
                 indece += 3
 
             elif pregunta.tipoPregunta.id == 3:
@@ -407,7 +483,7 @@ def create_excel(request, pk):
                     opcion.titulo for opcion in pregunta.opciones.all()]
                 respuestas_totales = total_check(pregunta)
 
-                plt.bar(opciones, respuestas_totales, color='skyblue')
+                plt.bar(opciones, respuestas_totales, color=colores)
                 plt.title(pregunta.titulo)
                 plt.xlabel('Opciones')
                 buffer_bar = BytesIO()
@@ -423,6 +499,29 @@ def create_excel(request, pk):
                 plt.savefig(buffer_pie, format='png')
                 plt.close()
 
+                plt.plot(opciones, total_acumulada_check(pregunta),
+                         color='orange', linestyle='-', linewidth=2, markersize=8)
+                plt.title(pregunta.titulo)
+                plt.ylabel('Frecuencia Acumulada', fontsize=14)
+                plt.grid(axis='both', linestyle='--', alpha=0.7)
+                buffer_acumu = BytesIO()
+                plt.savefig(buffer_acumu, format='png')
+                plt.close()
+
+                plt.fill_between(opciones, total_relativa_check(pregunta),
+                                 color=colores, alpha=0.5)
+                plt.plot(opciones, total_relativa_check(pregunta), marker='o', color='blue',
+                         linestyle='-', linewidth=2, markersize=8)
+                plt.title(pregunta.titulo, fontsize=20)
+                plt.ylabel('Frecuencia Relativa Acumulada', fontsize=14)
+                plt.xticks(fontsize=12)
+                plt.yticks(fontsize=12)
+                plt.ylim(0, 1)
+                plt.grid(axis='both', linestyle='--', alpha=0.7)
+                buffer_relativa = BytesIO()
+                plt.savefig(buffer_relativa, format='png')
+                plt.close()
+
                 buffer_bar.seek(0)
                 img_bar = Image(buffer_bar)
                 ws_graficos.add_image(img_bar, f"A{indece*10}")
@@ -430,6 +529,15 @@ def create_excel(request, pk):
                 buffer_pie.seek(0)
                 img_pie = Image(buffer_pie)
                 ws_graficos.add_image(img_pie, f"L{indece*10}")
+
+                buffer_acumu.seek(0)
+                img_acumu = Image(buffer_acumu)
+                ws_graficos.add_image(img_acumu, f"z{indece*10}")
+
+                buffer_relativa.seek(0)
+                img_relativa = Image(buffer_relativa)
+                ws_graficos.add_image(img_relativa, f"ak{indece*10}")
+
                 indece += 3
 
     response = HttpResponse(
@@ -442,14 +550,14 @@ def create_excel(request, pk):
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def ready_Answered(request, pk):
     form = get_object_or_404(Formulario, pk=pk)
     user = request.user
 
-    if RespuestaFormulario.objects.filter(campoFormulario__formulario=form, usuario=user).exists():
+    if user.is_authenticated and RespuestaFormulario.objects.filter(campoFormulario__formulario=form, usuario=user).exists():
         return Response({"message": "Ya has respondido este formulario"}, status=status.HTTP_204_NO_CONTENT)
-    else:
+    else :
         return Response({"message": "Puede responder el formulario"}, status=status.HTTP_200_OK)
 
 
@@ -517,12 +625,19 @@ def total_res(campos):
         campoFormulario_id=campos.id).count()
     return res
 
+@api_view(['POST'])
+def resul_cova(request):
+    pregunta_1 = request.data['pregunta1']
+    pregunta_2 = request.data['pregunta2']
 
-def resul_cova(pregunta_1, pregunta_2,):
-    muestra_1 = np.array(range(1, len(pregunta_1["respuestas"])+1))
-    muestra_2 = np.array(range(1, len(pregunta_2["respuestas"])+1))
-    covariance = np.cov(pregunta_1, pregunta_2)
-    return covariance
+    if not pregunta_1 or not pregunta_2:
+        return Response({"error": "Faltan datos para calcular la covarianza"}, status=400)
+    
+    covariance_matrix = np.cov(pregunta_1, pregunta_2)
+    covariance_value = covariance_matrix[0, 1] 
+
+    return Response({"covarianza": covariance_value}, status=200)
+
 
 
 def total_multi(campos):
@@ -540,4 +655,52 @@ def total_check(campos):
         res = RespuestaFormulario.objects.filter(
             campoFormulario_id=campos.id, valor__contains=opciones.valor).count()
         resultados.append(res)
+    return resultados
+
+
+def total_acumulada_mult(campos):
+    resultados = []
+    count = 0
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor=opciones.valor).count()
+        count = count + res
+        resultados.append(count)
+    return resultados
+
+
+def total_relativa_mult(campos):
+    resultados = []
+    total = RespuestaFormulario.objects.filter(
+        campoFormulario_id=campos.id).count()
+    count = 0
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor=opciones.valor).count()
+        count = count + res
+        resultados.append((count/total))
+    return resultados
+
+
+def total_acumulada_check(campos):
+    resultados = []
+    count = 0
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor__contains=opciones.valor).count()
+        count = count + res
+        resultados.append(count)
+    return resultados
+
+
+def total_relativa_check(campos):
+    resultados = []
+    total = RespuestaFormulario.objects.filter(
+        campoFormulario_id=campos.id).count()
+    count = 0
+    for opciones in campos.opciones.all():
+        res = RespuestaFormulario.objects.filter(
+            campoFormulario_id=campos.id, valor__contains=opciones.valor).count()
+        count = count + res
+        resultados.append((count/total))
     return resultados

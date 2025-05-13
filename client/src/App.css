@@ -128,9 +128,11 @@
 .item-carusel-pregunta-text {
   width: 70%;
   color: black;
+
   & button {
     background-color: #9678ef;
   }
+
   & button:hover {
     background-color: #9678ef;
   }
@@ -414,6 +416,11 @@ label span:last-child {
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
+}
+
+.form-covarianza label,
+span {
+  color: #191825;
 }
 
 @media (max-width: 1377px) {

@@ -29,7 +29,7 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
 
             <Route element={<ProtectedRoutes />}>
-              <Route path="/dashboard" element={<Overview />} />
+              <Route path="/Espacio-de-Trabajo" element={<Overview />} />
               <Route path="/survey/create/:id" element={<SurveyGenerator />} />
               <Route path="/survey/analysis/:id" element={<SurveyAnalysis />} />
               <Route path="/forms/aswering/:id" element={<FormAnswering />} />

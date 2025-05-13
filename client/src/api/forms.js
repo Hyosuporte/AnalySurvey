@@ -1,14 +1,14 @@
-import axios from "./axios";
+import axios from './axios';
 
 export const getFormsUser = (token) =>
   axios.get(`/users/forms/`, {
     headers: { Authorization: `Token ${token}` },
   });
 
-export const getFormResponder = (id, token) =>
-  axios.get(`/forms/${id}/`, {
-    headers: { Authorization: `Token ${token}` },
-  });
+export const getFormResponder = (id, token) => {
+  const headers = token ? { Authorization: `Token ${token}` } : {};
+  return axios.get(`/forms/${id}/`, { headers });
+};
 
 export const deleteFormReq = (id, token) =>
   axios.delete(`/forms/${id}/`, {
@@ -64,10 +64,10 @@ export const updateOpcionReq = (token, data) =>
     headers: { Authorization: `Token ${token}` },
   });
 
-export const saveAskReq = (token, data) =>
-  axios.post(`/forms/ask/`, data, {
-    headers: { Authorization: `Token ${token}` },
-  });
+export const saveAskReq = (token, data) => {
+  const headers = token ? { Authorization: `Token ${token}` } : {};
+  return axios.post(`/forms/ask/`, data, { headers });
+};
 
 export const chartsAnalitys = (token, id) =>
   axios.get(`/forms/${id}/charts/`, {
@@ -77,10 +77,12 @@ export const chartsAnalitys = (token, id) =>
 export const createExcelReq = (token, id) =>
   axios.get(`/forms/${id}/excel/`, {
     headers: { Authorization: `Token ${token}` },
-    responseType: "blob",
+    responseType: 'blob',
   });
 
-export const verifyAnswer = (token, id) =>
-  axios.get(`/forms/${id}/answered/`, {
-    headers: { Authorization: `Token ${token}` },
-  });
+export const verifyAnswer = (token, id) => {
+  const headers = token ? { Authorization: `Token ${token}` } : {};
+  return axios.get(`/forms/${id}/answered/`, { headers });
+};
+
+export const getCovarianza = (data) => axios.post('forms/covarianza/', data);

@@ -1,11 +1,11 @@
-import ChecklistIcon from "@mui/icons-material/Checklist";
-import { useForms } from "../../context/FormsContext";
-import ClearIcon from "@mui/icons-material/Clear";
-import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import { useState } from "react";
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import { useForms } from '../../context/FormsContext';
+import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import { useState } from 'react';
 
 export function CheckOption({ question }) {
   const [options, setOptions] = useState(question.opciones);
@@ -14,8 +14,8 @@ export function CheckOption({ question }) {
 
   const handleAddOption = async () => {
     const data = {
-      titulo: "nueva opcion",
-      valor: "nueva opcion",
+      titulo: 'nueva opcion',
+      valor: 'nueva opcion',
     };
     const newOption = await createOption(question.id, data);
     if (newOption !== undefined) {
@@ -56,7 +56,7 @@ export function CheckOption({ question }) {
     <Box className="container-campo" id={question.id}>
       <div className="container-titulo-quest">
         <h4 htmlFor="question-text">
-          <ChecklistIcon sx={{ color: "#865dff" }} fontSize="medium" />{" "}
+          <ChecklistIcon sx={{ color: '#865dff' }} fontSize="medium" />{' '}
           {question.orden}
         </h4>
 
@@ -87,7 +87,7 @@ export function CheckOption({ question }) {
                 className="button-option-d"
                 onClick={() => handleRemoveOption(index, option.id)}
               >
-                <ClearIcon sx={{ color: "#ff00009c" }} />
+                <ClearIcon sx={{ color: '#ff00009c' }} />
               </IconButton>
             </li>
           ))}

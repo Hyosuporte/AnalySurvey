@@ -41,6 +41,7 @@ export function LogMenu({ id, title, alert }) {
         duplicateForm(id);
         break;
       case "Eliminar":
+        
         deleteForm(id);
         break;
     }

@@ -1,11 +1,11 @@
-import { useForms } from "../context/FormsContext";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { useForms } from '../context/FormsContext';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import { useForm } from 'react-hook-form';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 export function UpdateTitle({ id, title, open, setOpen }) {
   const {
@@ -19,12 +19,7 @@ export function UpdateTitle({ id, title, open, setOpen }) {
 
   return (
     <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose}>
         <Box
           className="form-title"
           component="form"
@@ -44,10 +39,10 @@ export function UpdateTitle({ id, title, open, setOpen }) {
             autoComplete="off"
             size="small"
             sx={{ mt: 3 }}
-            {...register("titulo", {
+            {...register('titulo', {
               required: {
                 value: true,
-                message: "Es obligatorio poner un nombre*",
+                message: 'Es obligatorio poner un nombre*',
               },
             })}
           />
