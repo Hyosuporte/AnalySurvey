@@ -99,12 +99,14 @@ export function FormLogin({ urlForm }) {
           })}
         />
         <Box sx={{ marginTop: '1rem' }}>
-          <Link to="/login/forge-password"> Olvide mi contraseña </Link>
+          <Link className="link-login" to="/login/forge-password">
+            Olvide mi contraseña{' '}
+          </Link>
           {urlForm != '/Espacio-de-Trabajo' && (
             <>
               <br />
               <br />
-              <Link to={urlForm} state={{ guest: true }}>
+              <Link className="link-login" to={urlForm} state={{ guest: true }}>
                 Continuar como anonimo
               </Link>
             </>

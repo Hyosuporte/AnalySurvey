@@ -281,8 +281,12 @@ a {
   text-decoration: none;
 }
 
+a.link-login {
+  color: black;
+}
+
 a:hover {
-  color: #ffa3fd;
+  color: #ec54ea;
 }
 
 footer {
