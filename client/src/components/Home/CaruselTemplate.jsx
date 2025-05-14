@@ -25,7 +25,7 @@ let plantilla = [
     descripcion:
       'La Escala de Licker consiste en una serie de afirmaciones sobre el tema de interés, a las cuales los participantes responden indicando su grado de acuerdo o desacuerdo con cada afirmación. Esta escala la puedes usar para medir aptitudes, opiniones, evaluaciones y entre otras maneras cuantitativas.',
     img: img1,
-    Survey: '0ace127c-49d7-416b-bd41-795d8666869a',
+    Survey: 'd6323c02-a6c6-48e1-9369-100f4bafd27c',
   },
   {
     titulo: 'Encuesta de Si o No',
@@ -35,11 +35,11 @@ let plantilla = [
     Survey: '8ce6a363-7a8a-4b0b-91b4-25baebd1d815',
   },
   {
-    titulo: 'Encuesta de satisfaccion',
+    titulo: 'Encuesta de analisis',
     descripcion:
-      'Esta encuesta esta pensada para cuando desees calificar una aplicativo, trabajo, software, etc.',
+      'Esta encuesta esta pensada para cuando desees recopilar datos y analizarlos',
     img: img3,
-    Survey: 4,
+    Survey: '61103457-00d6-4435-8839-8a19a3707012',
   },
 ];
 
