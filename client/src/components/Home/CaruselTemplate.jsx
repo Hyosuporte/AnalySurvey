@@ -32,7 +32,7 @@ let plantilla = [
     descripcion:
       'Esta encuesta esta creada con preguntas aleatorias pero con respuestas de si o no. La puedes utilizar en dado caso que necesites opiniones imparciales acerca de un tema en específico.',
     img: img2,
-    Survey: '86b29cb0-bb63-46f8-876f-a84df417d017',
+    Survey: '8ce6a363-7a8a-4b0b-91b4-25baebd1d815',
   },
   {
     titulo: 'Encuesta de satisfaccion',
